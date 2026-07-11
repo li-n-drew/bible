@@ -1,0 +1,1339 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Учебная Библия — глубокое понимание Писания</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f9f7f4;
+      color: #1e1e1e;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    h1, h2, h3 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+    h2 {
+      font-size: 2.4rem;
+      margin-bottom: 1rem;
+      position: relative;
+    }
+    h2::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -10px;
+      width: 60px;
+      height: 4px;
+      background: #b8860b;
+      border-radius: 4px;
+    }
+    h2.centered::after {
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    .centered { text-align: center; }
+    .btn {
+      display: inline-block;
+      background: #b8860b;
+      color: #fff;
+      padding: 16px 48px;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      text-decoration: none;
+      transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+      box-shadow: 0 8px 20px rgba(184, 134, 11, 0.3);
+      border: none;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+    }
+    .btn:hover {
+      background: #a0750a;
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px rgba(184, 134, 11, 0.4);
+    }
+    section { padding: 80px 0; }
+
+    /* Hero */
+    .hero {
+      background: linear-gradient(135deg, #1a2a3a 0%, #2c3e50 100%);
+      color: #fff;
+      padding: 100px 0 80px;
+      overflow: hidden;
+    }
+    .hero .container {
+      display: flex;
+      align-items: center;
+      gap: 60px;
+      flex-wrap: wrap;
+    }
+    .hero-content { flex: 1 1 45%; }
+    .hero-content .badge {
+      display: inline-block;
+      background: #b8860b;
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.8rem;
+      padding: 6px 18px;
+      border-radius: 20px;
+      letter-spacing: 0.5px;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+    }
+    .hero-content h1 {
+      font-size: 3.6rem;
+      line-height: 1.1;
+      margin-bottom: 20px;
+    }
+    .hero-content h1 span { color: #d4a373; }
+    .hero-content p {
+      font-size: 1.2rem;
+      opacity: 0.9;
+      max-width: 500px;
+      margin-bottom: 32px;
+    }
+    .hero-image { flex: 1 1 40%; display: flex; justify-content: center; }
+    .book-cover {
+      width: 100%;
+      max-width: 320px;
+      border-radius: 12px;
+      box-shadow: 0 30px 50px rgba(0,0,0,0.6);
+      transition: transform 0.4s ease;
+      background: #3a2c1b;
+      padding: 20px;
+      text-align: center;
+      color: #d4a373;
+    }
+    .book-cover:hover { transform: scale(1.02) rotate(-2deg); }
+    .book-cover .title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      font-weight: 700;
+      margin: 20px 0 10px;
+      color: #f0e6d3;
+    }
+    .book-cover .sub {
+      font-size: 1rem;
+      opacity: 0.8;
+      border-top: 1px solid #b8860b;
+      padding-top: 10px;
+    }
+
+    /* Блок "О книге" */
+    .about-book {
+      background: #f9f7f4;
+    }
+    .about-book .about-text {
+      max-width: 800px;
+      margin: 0 auto;
+      font-size: 1.15rem;
+      text-align: center;
+      color: #333;
+    }
+    .about-book .about-text p {
+      margin-bottom: 20px;
+    }
+
+    /* Секции содержания с чередованием фонов */
+    .feature-section {
+      padding: 60px 0;
+    }
+    .bg-dark { background: #f0ede8; }
+    .bg-light { background: #f9f7f4; }
+
+    .content-block {
+      display: flex;
+      align-items: center;
+      gap: 50px;
+      flex-wrap: wrap;
+    }
+    .direction-reversed .content-block {
+      flex-direction: row-reverse;
+    }
+    .content-text {
+      flex: 1 1 45%;
+    }
+    .content-text h3 {
+      font-size: 2rem;
+      margin-bottom: 10px;
+      color: #1e2a3a;
+    }
+    .content-text p {
+      font-size: 1.05rem;
+      color: #333;
+      margin-bottom: 16px;
+    }
+    .content-text ul {
+      padding-left: 20px;
+      color: #444;
+    }
+    .content-text ul li {
+      margin-bottom: 6px;
+    }
+
+    /* Карточка с слайдером (без 3D) */
+    .page-preview {
+      flex: 1 1 40%;
+    }
+    .page-card {
+      background: #fefcf7;
+      border-radius: 12px;
+      padding: 20px 20px 16px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+      border: 1px solid #e8e0d5;
+      min-height: 320px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transform: scale(0.9);
+      opacity: 0;
+      transition: transform 0.8s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.8s ease;
+    }
+    .page-card.animated {
+      transform: scale(1);
+      opacity: 1;
+    }
+
+    /* Слайдер — анимация слайда (translateX) */
+    .page-slider {
+      position: relative;
+      width: 100%;
+      height: 280px;
+      margin: 0 0 6px;
+      overflow: hidden;
+      border-radius: 8px;
+      background: #fff;
+      box-shadow: inset 0 0 0 1px #e8e0d5;
+      cursor: pointer;
+    }
+    .slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.5s ease, opacity 0.5s ease;
+      transform: translateX(100%);
+      opacity: 0;
+      background: #fff;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .slide.active {
+      transform: translateX(0);
+      opacity: 1;
+      z-index: 2;
+    }
+    .slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.2s;
+    }
+    .slide img:hover {
+      transform: scale(1.02);
+    }
+    .slide .slide-label {
+      position: absolute;
+      bottom: 8px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      font-size: 0.75rem;
+      color: #fff;
+      background: rgba(0,0,0,0.5);
+      padding: 4px 0;
+      font-weight: 500;
+      pointer-events: none;
+    }
+
+    .flip-controls {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      margin-top: 0;
+      padding-top: 4px;
+    }
+    .flip-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 1px solid #b8860b;
+      background: #fff;
+      color: #b8860b;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+      font-weight: 700;
+    }
+    .flip-btn:hover {
+      background: #b8860b;
+      color: #fff;
+    }
+    .flip-indicator {
+      display: flex;
+      gap: 6px;
+    }
+    .flip-indicator span {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #ccc;
+      transition: background 0.3s;
+      cursor: pointer;
+    }
+    .flip-indicator span.active {
+      background: #b8860b;
+    }
+
+    /* Полноэкранный оверлей с навигацией */
+    .image-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.85);
+      z-index: 9999;
+      justify-content: center;
+      align-items: center;
+      padding: 30px;
+      box-sizing: border-box;
+      cursor: zoom-out;
+    }
+    .image-overlay.active {
+      display: flex;
+    }
+    .image-overlay .overlay-content {
+      position: relative;
+      max-width: 90%;
+      max-height: 90%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .image-overlay img {
+      max-width: 100%;
+      max-height: 80vh;
+      object-fit: contain;
+      border-radius: 8px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+      cursor: default;
+    }
+    .image-overlay .close-overlay {
+      position: absolute;
+      top: -40px;
+      right: -40px;
+      color: #fff;
+      font-size: 3rem;
+      font-weight: 300;
+      cursor: pointer;
+      transition: transform 0.2s;
+      background: none;
+      border: none;
+      line-height: 1;
+    }
+    .image-overlay .close-overlay:hover {
+      transform: rotate(90deg);
+    }
+
+    /* Новый блок контролов (счетчик + стрелки) */
+    .overlay-controls {
+      position: absolute;
+      bottom: -50px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(0,0,0,0.4);
+      padding: 6px 16px;
+      border-radius: 30px;
+      backdrop-filter: blur(4px);
+    }
+    .overlay-counter {
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+    .overlay-nav {
+      background: rgba(255,255,255,0.2);
+      border: none;
+      color: #fff;
+      font-size: 1.2rem;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: background 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(4px);
+    }
+    .overlay-nav:hover {
+      background: rgba(255,255,255,0.4);
+    }
+
+    /* Остальные блоки */
+    .audience-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 24px;
+      margin-top: 40px;
+    }
+    .audience-item {
+      background: #fff;
+      padding: 24px 20px;
+      border-radius: 16px;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+    }
+    .audience-item .icon { font-size: 2.2rem; margin-bottom: 10px; }
+    .audience-item p { font-weight: 500; }
+
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 30px;
+      margin-top: 40px;
+    }
+    .review-card {
+      background: #fff;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+      border: 1px solid #eee;
+    }
+    .review-card .stars {
+      color: #f4b942;
+      font-size: 1.2rem;
+      letter-spacing: 2px;
+      margin-bottom: 12px;
+    }
+    .review-card blockquote {
+      font-style: italic;
+      color: #333;
+      margin-bottom: 16px;
+      font-size: 1rem;
+    }
+    .review-card .author {
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .review-card .author .avatar-sm {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #b8860b;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: 700;
+    }
+
+    .faq-list {
+      max-width: 800px;
+      margin: 40px auto 0;
+    }
+    .faq-item {
+      border-bottom: 1px solid #ddd;
+      padding: 18px 0;
+    }
+    .faq-question {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 1.1rem;
+      user-select: none;
+    }
+    .faq-question .arrow {
+      font-size: 1.4rem;
+      transition: transform 0.3s ease;
+    }
+    .faq-question.active .arrow { transform: rotate(180deg); }
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease, padding 0.3s ease;
+      padding-top: 0;
+      color: #555;
+    }
+    .faq-answer.open {
+      max-height: 300px;
+      padding-top: 16px;
+    }
+
+    .final-cta {
+      background: linear-gradient(135deg, #1a2a3a, #2c3e50);
+      color: #fff;
+      text-align: center;
+    }
+    .final-cta h2 { color: #fff; }
+    .final-cta h2::after { background: #b8860b; }
+    .final-cta p {
+      font-size: 1.2rem;
+      max-width: 600px;
+      margin: 0 auto 32px;
+      opacity: 0.9;
+    }
+    .contacts {
+      margin-top: 24px;
+      font-size: 0.95rem;
+      color: #ccc;
+    }
+    .contacts a {
+      color: #d4a373;
+      text-decoration: none;
+    }
+
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.6);
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 20px;
+    }
+    .modal-overlay.active { display: flex; }
+    .modal {
+      background: #fff;
+      max-width: 500px;
+      width: 100%;
+      border-radius: 24px;
+      padding: 40px 30px;
+      position: relative;
+      box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+      animation: modalFade 0.3s ease;
+    }
+    @keyframes modalFade {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    .modal-close {
+      position: absolute;
+      top: 16px;
+      right: 20px;
+      font-size: 2rem;
+      line-height: 1;
+      cursor: pointer;
+      color: #999;
+      background: none;
+      border: none;
+    }
+    .modal-close:hover { color: #333; }
+    .modal h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      margin-bottom: 8px;
+      color: #1e1e1e;
+    }
+    .modal p.sub {
+      color: #666;
+      margin-bottom: 24px;
+      font-size: 0.95rem;
+    }
+    .modal label {
+      display: block;
+      margin-bottom: 4px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: #333;
+    }
+    .modal input {
+      width: 100%;
+      padding: 12px 16px;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+      margin-bottom: 16px;
+      font-size: 1rem;
+      background: #fafafa;
+      transition: border 0.2s;
+    }
+    .modal input:focus {
+      border-color: #b8860b;
+      outline: none;
+      background: #fff;
+    }
+    .modal .btn {
+      width: 100%;
+      text-align: center;
+      margin-top: 8px;
+    }
+
+    footer {
+      background: #111;
+      color: #aaa;
+      padding: 32px 0;
+      text-align: center;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 992px) {
+      .hero .container {
+        flex-direction: column-reverse;
+        text-align: center;
+      }
+      .hero-content p { margin-left: auto; margin-right: auto; }
+      .hero-content h1 { font-size: 2.8rem; }
+      .content-block {
+        flex-direction: column !important;
+        text-align: center;
+      }
+      .direction-reversed .content-block { flex-direction: column !important; }
+      .page-card {
+        transform: scale(1);
+        opacity: 1;
+      }
+      .page-card.animated { transform: none; opacity: 1; }
+      .slide {
+        position: relative;
+        transform: none !important;
+        opacity: 1 !important;
+        display: none;
+        height: auto;
+        min-height: 150px;
+      }
+      .slide.active { display: flex; }
+      .page-slider { height: auto; min-height: 220px; overflow: visible; }
+      .image-overlay .close-overlay {
+        top: 10px;
+        right: 10px;
+        font-size: 2.5rem;
+      }
+      .overlay-controls {
+        bottom: -40px;
+        padding: 4px 12px;
+        gap: 8px;
+      }
+      .overlay-nav {
+        width: 28px;
+        height: 28px;
+        font-size: 1rem;
+      }
+    }
+    @media (max-width: 600px) {
+      .hero-content h1 { font-size: 2.2rem; }
+      h2 { font-size: 2rem; }
+      .btn { padding: 14px 32px; font-size: 1rem; }
+      .modal { padding: 30px 20px; }
+      .page-slider { height: 200px; }
+      .image-overlay { padding: 10px; }
+      .image-overlay .close-overlay { top: 5px; right: 5px; font-size: 2rem; }
+      .overlay-controls {
+        bottom: -35px;
+        padding: 4px 10px;
+        gap: 6px;
+      }
+      .overlay-nav {
+        width: 24px;
+        height: 24px;
+        font-size: 0.9rem;
+      }
+      .overlay-counter {
+        font-size: 0.85rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-content">
+      <span class="badge">Новое издание</span>
+      <h1>Ваше чтение Библии станет <span>максимально глубоким</span> и увлекательным</h1>
+      <p>Вы часто ловите себя на мысли, что при чтении Священного Писания некоторые детали ускользают, имена кажутся незнакомыми, а хронология запутывается? Наше издание позволит вам увидеть мир Библии, скрытый за древними текстами.</p>
+      <button class="btn" onclick="openModal()">Оформить заказ</button>
+      <p style="margin-top:20px;font-size:0.9rem;opacity:0.7;">Электронная и печатная версии</p>
+    </div>
+    <div class="hero-image">
+      <div class="book-cover">
+        <div style="font-size:4rem;">📖</div>
+        <div class="title">Учебная Библия</div>
+        <div class="sub"></div>
+        <div style="margin-top:10px;font-size:0.8rem;opacity:0.7;">карты · хронологии · археология</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- О книге -->
+<section class="about-book">
+  <div class="container">
+    <h2 class="centered">О книге</h2>
+    <div class="about-text">
+      <p><strong>Учебная Библия</strong> — это ваш личный путеводитель по древнему миру. Вы найдёте полезные заметки, открытия археологов, наглядные схемы и исторические справки, которые помогут вам читать Писание с полным пониманием контекста.</p>
+      <p>Это издание создано специально для тех, кто хочет не просто читать, а глубоко понимать Священное Писание. Каждая таблица, карта и историческая справка работают на то, чтобы древний мир стал для вас осязаемым, понятным и живым.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Блоки содержания с чередованием фонов и направлений -->
+<section class="feature-section bg-dark direction-normal">
+  <div class="container">
+    <div class="content-block">
+      <div class="content-text">
+        <h3>География веры и неопровержимая точность Библии</h3>
+        <p>Городам и ключевым локациям посвящены целые разделы — от масштабных панорамных разворотов до небольших исторических заметок с уникальными фотографиями. Вы сможете мысленно пройтись по городам, перевалам, долинам и горам, где вершилась история.</p>
+        <ul>
+          <li>Детальные карты с подписями древних городов и границ</li>
+          <li>Пути странствий патриархов и апостолов</li>
+          <li>Современные спутниковые снимки для сравнения</li>
+        </ul>
+      </div>
+      <div class="page-preview">
+        <div class="page-card" data-animate>
+          <div class="page-slider" data-slider>
+            <div class="slide active">
+              <img src="1.jpg" alt="Скриншот карты 1">
+              <div class="slide-label">Карта Святой Земли</div>
+            </div>
+            <div class="slide">
+              <img src="2.jpg" alt="Скриншот карты 2">
+              <div class="slide-label">Пути апостолов</div>
+            </div>
+            <div class="slide">
+              <img src="3.jpg" alt="Скриншот карты 3">
+              <div class="slide-label">Горы и долины</div>
+            </div>
+          </div>
+          <div class="flip-controls">
+            <button class="flip-btn flip-prev">◀</button>
+            <div class="flip-indicator">
+              <span class="active"></span><span></span><span></span>
+            </div>
+            <button class="flip-btn flip-next">▶</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="feature-section bg-light direction-reversed">
+  <div class="container">
+    <div class="content-block">
+      <div class="content-text">
+        <h3>Забудьте о путанице в датах, именах и пророчествах</h3>
+        <p>Благодаря удобным хронологическим таблицам вы сможете мгновенно сопоставлять параллельные библейские события и сюжеты. Удобные схемы помогут легко разобраться в сложных исторических периодах и проследить, как сбывались древние пророчества.</p>
+        <ul>
+          <li>Ленты времени от сотворения до новозаветной эпохи</li>
+          <li>Сравнительные таблицы правления царей</li>
+          <li>Исполнение пророчеств с указанием дат</li>
+        </ul>
+      </div>
+      <div class="page-preview">
+        <div class="page-card" data-animate>
+          <div class="page-slider" data-slider>
+            <div class="slide active">
+              <img src="1.jpg" alt="Хронология 1">
+              <div class="slide-label">Временная шкала</div>
+            </div>
+            <div class="slide">
+              <img src="2.jpg" alt="Хронология 2">
+              <div class="slide-label">Цари Израиля</div>
+            </div>
+            <div class="slide">
+              <img src="3.jpg" alt="Хронология 3">
+              <div class="slide-label">Исполнение пророчеств</div>
+            </div>
+          </div>
+          <div class="flip-controls">
+            <button class="flip-btn flip-prev">◀</button>
+            <div class="flip-indicator">
+              <span class="active"></span><span></span><span></span>
+            </div>
+            <button class="flip-btn flip-next">▶</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="feature-section bg-dark direction-normal">
+  <div class="container">
+    <div class="content-block">
+      <div class="content-text">
+        <h3>Познакомьтесь ближе с персонажами Библии, чьи имена веками оставались загадкой</h3>
+        <p>Уникальные археологические находки подтвердили историчность многих библейских личностей. Печати, каменные стелы и древние хроники раскрывают захватывающие детали о жизни царей и пророков. Наше издание покажет эти неопровержимые научные доказательства.</p>
+        <ul>
+          <li>Фотографии артефактов с пояснениями</li>
+          <li>Истории открытий, сделавших имена реальными</li>
+          <li>Сравнение библейского текста с находками</li>
+        </ul>
+      </div>
+      <div class="page-preview">
+        <div class="page-card" data-animate>
+          <div class="page-slider" data-slider>
+            <div class="slide active">
+              <img src="1.jpg" alt="Артефакт 1">
+              <div class="slide-label">Каменная стела</div>
+            </div>
+            <div class="slide">
+              <img src="2.jpg" alt="Артефакт 2">
+              <div class="slide-label">Печать царя</div>
+            </div>
+            <div class="slide">
+              <img src="3.jpg" alt="Артефакт 3">
+              <div class="slide-label">Древняя хроника</div>
+            </div>
+          </div>
+          <div class="flip-controls">
+            <button class="flip-btn flip-prev">◀</button>
+            <div class="flip-indicator">
+              <span class="active"></span><span></span><span></span>
+            </div>
+            <button class="flip-btn flip-next">▶</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="feature-section bg-light direction-reversed">
+  <div class="container">
+    <div class="content-block">
+      <div class="content-text">
+        <h3>Подробные родословные и скрытые смыслы имен</h3>
+        <p>Генеалогии помогут разобраться в сложных родственных связях. Вы удивитесь, но многие библейские имена, которые мы привыкли считать личными, на самом деле были прозвищами или титулами. Эти глубокие комментарии позволят увидеть текст Писания совершенно другими глазами!</p>
+        <ul>
+          <li>Схемы родословных от Адама до Иисуса</li>
+          <li>Значение каждого имени и его роль в сюжете</li>
+          <li>Титулы и прозвища правителей</li>
+        </ul>
+      </div>
+      <div class="page-preview">
+        <div class="page-card" data-animate>
+          <div class="page-slider" data-slider>
+            <div class="slide active">
+              <img src="1.jpg" alt="Родословная 1">
+              <div class="slide-label">От Адама до Ноя</div>
+            </div>
+            <div class="slide">
+              <img src="2.jpg" alt="Родословная 2">
+              <div class="slide-label">Династия Давида</div>
+            </div>
+            <div class="slide">
+              <img src="3.jpg" alt="Родословная 3">
+              <div class="slide-label">Генеалогия Христа</div>
+            </div>
+          </div>
+          <div class="flip-controls">
+            <button class="flip-btn flip-prev">◀</button>
+            <div class="flip-indicator">
+              <span class="active"></span><span></span><span></span>
+            </div>
+            <button class="flip-btn flip-next">▶</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="feature-section bg-dark direction-normal">
+  <div class="container">
+    <div class="content-block">
+      <div class="content-text">
+        <h3>Прочитайте о древних верованиях и быте библейских людей</h3>
+        <p>Археологические открытия наглядно показывают, как выглядели идолы и что они значили для людей древности. Подробности быта помогут преодолеть культурный барьер веков, понять логику поступков людей того времени и увидеть библейские сюжеты во всей полноте.</p>
+        <ul>
+          <li>Иллюстрации идолов и культовых предметов</li>
+          <li>Описание повседневной жизни, одежды, пищи</li>
+          <li>Как жили пророки и простые люди</li>
+        </ul>
+      </div>
+      <div class="page-preview">
+        <div class="page-card" data-animate>
+          <div class="page-slider" data-slider>
+            <div class="slide active">
+              <img src="1.jpg" alt="Быт 1">
+              <div class="slide-label">Идолы древности</div>
+            </div>
+            <div class="slide">
+              <img src="2.jpg" alt="Быт 2">
+              <div class="slide-label">Повседневная жизнь</div>
+            </div>
+            <div class="slide">
+              <img src="3.jpg" alt="Быт 3">
+              <div class="slide-label">Пророки и народ</div>
+            </div>
+          </div>
+          <div class="flip-controls">
+            <button class="flip-btn flip-prev">◀</button>
+            <div class="flip-indicator">
+              <span class="active"></span><span></span><span></span>
+            </div>
+            <button class="flip-btn flip-next">▶</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="feature-section bg-light direction-reversed">
+  <div class="container">
+    <div class="content-block">
+      <div class="content-text">
+        <h3>Почувствуйте атмосферу библейской эпохи</h3>
+        <p>Каждая таблица, карта и историческая справка работают на то, чтобы древний мир стал для вас осязаемым, понятным и живым. Это издание создано специально для тех, кто хочет не просто читать, а глубоко понимать Священное Писание.</p>
+        <ul>
+          <li>Комментарии к трудным местам</li>
+          <li>Исторический контекст каждой книги</li>
+          <li>Связь Ветхого и Нового Заветов</li>
+        </ul>
+      </div>
+      <div class="page-preview">
+        <div class="page-card" data-animate>
+          <div class="page-slider" data-slider>
+            <div class="slide active">
+              <img src="1.jpg" alt="Комментарий 1">
+              <div class="slide-label">Разбор стиха</div>
+            </div>
+            <div class="slide">
+              <img src="2.jpg" alt="Комментарий 2">
+              <div class="slide-label">Исторический контекст</div>
+            </div>
+            <div class="slide">
+              <img src="3.jpg" alt="Комментарий 3">
+              <div class="slide-label">Ветхий и Новый Завет</div>
+            </div>
+          </div>
+          <div class="flip-controls">
+            <button class="flip-btn flip-prev">◀</button>
+            <div class="flip-indicator">
+              <span class="active"></span><span></span><span></span>
+            </div>
+            <button class="flip-btn flip-next">▶</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Для кого -->
+<section style="background:#f0ede8;">
+  <div class="container">
+    <h2 class="centered">Эта книга для вас, если…</h2>
+    <div class="audience-list">
+      <div class="audience-item">
+        <span class="icon">🤔</span>
+        <p>Вы теряете нить повествования из‑за множества имён и событий</p>
+      </div>
+      <div class="audience-item">
+        <span class="icon">🗺️</span>
+        <p>Хотите видеть географию Писания и понимать контекст</p>
+      </div>
+      <div class="audience-item">
+        <span class="icon">⏳</span>
+        <p>Путаетесь в хронологии и пророчествах</p>
+      </div>
+      <div class="audience-item">
+        <span class="icon">🔍</span>
+        <p>Интересуетесь археологией и исторической достоверностью</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Отзывы -->
+<section>
+  <div class="container">
+    <h2 class="centered">Что говорят читатели</h2>
+    <div class="reviews-grid">
+      <div class="review-card">
+        <div class="stars">★★★★★</div>
+        <blockquote>«Благодаря этой книге я впервые увидел Библию объёмно. Карты и хронологии — просто спасение. Теперь я не путаю царей и могу проследить путь апостолов».</blockquote>
+        <div class="author"><span class="avatar-sm">А</span> Андрей, пастор</div>
+      </div>
+      <div class="review-card">
+        <div class="stars">★★★★★</div>
+        <blockquote>«Археологические вставки — это нечто! Я и не знал, сколько находок подтверждают библейские тексты. Очень познавательно и вдохновляет».</blockquote>
+        <div class="author"><span class="avatar-sm">Е</span> Екатерина, преподаватель</div>
+      </div>
+      <div class="review-card">
+        <div class="stars">★★★★★</div>
+        <blockquote>«Родословные и значения имён открыли для меня новый слой смыслов. Книга написана доступно, но научно. Рекомендую всем, кто хочет изучать Писание серьёзно».</blockquote>
+        <div class="author"><span class="avatar-sm">М</span> Михаил, историк</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section style="background:#f9f7f4;">
+  <div class="container">
+    <h2 class="centered">Часто задаваемые вопросы</h2>
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-question active" onclick="toggleFAQ(this)">
+          <span>В каком формате доступна книга?</span>
+          <span class="arrow">▾</span>
+        </div>
+        <div class="faq-answer open">Доступна в твёрдой обложке и электронном виде (PDF, EPUB). Также есть подарочное издание с расширенными картами.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFAQ(this)">
+          <span>Есть ли доставка за пределы России?</span>
+          <span class="arrow">▾</span>
+        </div>
+        <div class="faq-answer">Да, мы отправляем по всему миру. Стоимость и сроки рассчитываются индивидуально.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFAQ(this)">
+          <span>Можно ли получить книгу в подарок?</span>
+          <span class="arrow">▾</span>
+        </div>
+        <div class="faq-answer">Конечно, при оформлении укажите подарочную упаковку и текст поздравления.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFAQ(this)">
+          <span>Подойдёт ли это издание для изучения в группе?</span>
+          <span class="arrow">▾</span>
+        </div>
+        <div class="faq-answer">Да, оно идеально для библейских кружков, так как содержит множество наглядных материалов и вопросов для обсуждения.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Финальный CTA -->
+<section class="final-cta" id="order">
+  <div class="container">
+    <h2>Оформите заказ прямо сейчас</h2>
+    <p>Начните своё путешествие по библейскому миру с полным пониманием каждой детали. Нажмите на кнопку, заполните форму, и мы свяжемся с вами для уточнения деталей.</p>
+    <button class="btn" onclick="openModal()">Оформить заказ</button>
+    <div class="contacts">
+      📧 По вопросам: <a href="mailto:u.bible@mail.ru">u.bible@mail.ru</a>
+    </div>
+  </div>
+</section>
+
+<!-- Модальное окно для заказа -->
+<div class="modal-overlay" id="orderModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">&times;</button>
+    <h3>Оформление заказа</h3>
+    <p class="sub">Заполните все поля, и мы свяжемся с вами в ближайшее время.</p>
+    <form onsubmit="alert('Спасибо! Ваша заявка принята. Мы свяжемся с вами в ближайшее время.'); closeModal(); return false;">
+      <label for="lastname">Фамилия</label>
+      <input type="text" id="lastname" name="lastname" required>
+      <label for="firstname">Имя</label>
+      <input type="text" id="firstname" name="firstname" required>
+      <label for="middlename">Отчество</label>
+      <input type="text" id="middlename" name="middlename">
+      <label for="index">Индекс</label>
+      <input type="text" id="index" name="index" required>
+      <label for="address">Почтовый адрес</label>
+      <input type="text" id="address" name="address" required>
+      <label for="phone">Телефон</label>
+      <input type="tel" id="phone" name="phone" required>
+      <button type="submit" class="btn">Отправить заявку</button>
+    </form>
+  </div>
+</div>
+
+<!-- Полноэкранный просмотр изображения с навигацией -->
+<div class="image-overlay" id="imageOverlay">
+  <div class="overlay-content">
+    <img id="fullscreenImage" src="" alt="Полноэкранный скриншот">
+    <button class="close-overlay" id="closeOverlay">&times;</button>
+    <div class="overlay-controls">
+      <div class="overlay-counter" id="overlayCounter">1 / 3</div>
+      <button class="overlay-nav prev" id="overlayPrev">◀</button>
+      <button class="overlay-nav next" id="overlayNext">▶</button>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="container">
+    <p>© 2026 Учебная Библия. Все права защищены.</p>
+  </div>
+</footer>
+
+<script>
+  // FAQ
+  function toggleFAQ(el) {
+    const answer = el.nextElementSibling;
+    const arrow = el.querySelector('.arrow');
+    const isOpen = answer.classList.contains('open');
+    if (isOpen) {
+      answer.classList.remove('open');
+      el.classList.remove('active');
+    } else {
+      answer.classList.add('open');
+      el.classList.add('active');
+    }
+  }
+  document.querySelector('.faq-question').classList.add('active');
+
+  // Модалка заказа
+  function openModal() {
+    document.getElementById('orderModal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal() {
+    document.getElementById('orderModal').classList.remove('active');
+    document.body.style.overflow = '';
+  }
+  document.getElementById('orderModal').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeModal();
+  });
+
+  // Анимация появления карточек
+  document.addEventListener('DOMContentLoaded', function() {
+    const cards = document.querySelectorAll('.page-card[data-animate]');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animated');
+        }
+      });
+    }, { threshold: 0.4, rootMargin: '0px 0px -50px 0px' });
+    cards.forEach(card => observer.observe(card));
+  });
+
+  // Управление слайдерами (анимация слайда — translateX)
+  document.querySelectorAll('[data-slider]').forEach(slider => {
+    const slides = slider.querySelectorAll('.slide');
+    const indicators = slider.parentElement.querySelector('.flip-indicator');
+    const prevBtn = slider.parentElement.querySelector('.flip-prev');
+    const nextBtn = slider.parentElement.querySelector('.flip-next');
+    if (!slides.length) return;
+
+    let current = 0;
+    const total = slides.length;
+
+    function goTo(index, direction) {
+      if (index === current) return;
+      if (index < 0) index = total - 1;
+      if (index >= total) index = 0;
+
+      const currentSlide = slides[current];
+      const nextSlide = slides[index];
+      const dir = direction || (index > current ? 1 : -1);
+
+      currentSlide.classList.remove('active');
+      if (dir === 1) {
+        currentSlide.style.transform = 'translateX(-100%)';
+        currentSlide.style.opacity = '0';
+      } else {
+        currentSlide.style.transform = 'translateX(100%)';
+        currentSlide.style.opacity = '0';
+      }
+
+      nextSlide.style.transition = 'none';
+      if (dir === 1) {
+        nextSlide.style.transform = 'translateX(100%)';
+        nextSlide.style.opacity = '0';
+      } else {
+        nextSlide.style.transform = 'translateX(-100%)';
+        nextSlide.style.opacity = '0';
+      }
+      void nextSlide.offsetWidth;
+      nextSlide.style.transition = 'transform 0.5s ease, opacity 0.5s ease';
+
+      nextSlide.classList.add('active');
+      nextSlide.style.transform = 'translateX(0)';
+      nextSlide.style.opacity = '1';
+
+      setTimeout(() => {
+        currentSlide.style.transform = '';
+        currentSlide.style.opacity = '';
+        currentSlide.style.transition = '';
+      }, 500);
+
+      if (indicators) {
+        const dots = indicators.querySelectorAll('span');
+        dots.forEach((dot, i) => dot.classList.toggle('active', i === index));
+      }
+      current = index;
+    }
+
+    if (prevBtn) {
+      prevBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        const newIndex = (current - 1 + total) % total;
+        goTo(newIndex, -1);
+      });
+    }
+    if (nextBtn) {
+      nextBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        const newIndex = (current + 1) % total;
+        goTo(newIndex, 1);
+      });
+    }
+    if (indicators) {
+      const dots = indicators.querySelectorAll('span');
+      dots.forEach((dot, idx) => {
+        dot.addEventListener('click', function(e) {
+          e.stopPropagation();
+          if (idx === current) return;
+          const dir = idx > current ? 1 : -1;
+          goTo(idx, dir);
+        });
+      });
+    }
+
+    // Инициализация
+    slides.forEach((slide, i) => {
+      if (i === 0) {
+        slide.classList.add('active');
+        slide.style.transform = 'translateX(0)';
+        slide.style.opacity = '1';
+        slide.style.transition = 'transform 0.5s ease, opacity 0.5s ease';
+      } else {
+        slide.classList.remove('active');
+        slide.style.transform = 'translateX(100%)';
+        slide.style.opacity = '0';
+        slide.style.transition = 'transform 0.5s ease, opacity 0.5s ease';
+      }
+    });
+    if (indicators) {
+      const dots = indicators.querySelectorAll('span');
+      dots.forEach((dot, i) => dot.classList.toggle('active', i === 0));
+    }
+  });
+
+  // Полноэкранный просмотр с навигацией по слайдам текущего слайдера
+  (function() {
+    const overlay = document.getElementById('imageOverlay');
+    const fullImg = document.getElementById('fullscreenImage');
+    const closeBtn = document.getElementById('closeOverlay');
+    const prevBtn = document.getElementById('overlayPrev');
+    const nextBtn = document.getElementById('overlayNext');
+    const counter = document.getElementById('overlayCounter');
+
+    let currentSlider = null;
+    let currentIndex = 0;
+    let totalSlides = 0;
+
+    function openOverlay(slider, index) {
+      currentSlider = slider;
+      const slides = slider.querySelectorAll('.slide');
+      totalSlides = slides.length;
+      currentIndex = Math.min(index, totalSlides - 1);
+      updateFullscreenImage();
+      overlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function updateFullscreenImage() {
+      if (!currentSlider) return;
+      const slides = currentSlider.querySelectorAll('.slide');
+      if (currentIndex >= 0 && currentIndex < slides.length) {
+        const img = slides[currentIndex].querySelector('img');
+        if (img) {
+          fullImg.src = img.src;
+          counter.textContent = (currentIndex + 1) + ' / ' + totalSlides;
+        }
+      }
+    }
+
+    function closeFullscreen() {
+      overlay.classList.remove('active');
+      document.body.style.overflow = '';
+      currentSlider = null;
+    }
+
+    function prevSlide() {
+      if (!currentSlider) return;
+      const newIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+      currentIndex = newIndex;
+      updateFullscreenImage();
+    }
+
+    function nextSlide() {
+      if (!currentSlider) return;
+      const newIndex = (currentIndex + 1) % totalSlides;
+      currentIndex = newIndex;
+      updateFullscreenImage();
+    }
+
+    document.querySelectorAll('.slide img').forEach(img => {
+      img.addEventListener('click', function(e) {
+        e.stopPropagation();
+        const slide = this.closest('.slide');
+        const slider = slide.closest('.page-slider');
+        if (!slider) return;
+        const slides = slider.querySelectorAll('.slide');
+        const index = Array.from(slides).indexOf(slide);
+        if (index !== -1) {
+          openOverlay(slider, index);
+        }
+      });
+    });
+
+    overlay.addEventListener('click', function(e) {
+      if (e.target === overlay) closeFullscreen();
+    });
+    closeBtn.addEventListener('click', closeFullscreen);
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && overlay.classList.contains('active')) {
+        closeFullscreen();
+      }
+      if (e.key === 'ArrowLeft' && overlay.classList.contains('active')) {
+        prevSlide();
+        e.preventDefault();
+      }
+      if (e.key === 'ArrowRight' && overlay.classList.contains('active')) {
+        nextSlide();
+        e.preventDefault();
+      }
+    });
+
+    prevBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      prevSlide();
+    });
+    nextBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      nextSlide();
+    });
+  })();
+</script>
+
+</body>
+</html>
