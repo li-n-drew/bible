@@ -105,37 +105,27 @@
       max-width: 500px;
       margin-bottom: 32px;
     }
-    .hero-image { flex: 1 1 40%; display: flex; justify-content: center; }
-    .book-cover {
-      width: 100%;
-      max-width: 320px;
+    .hero-image {
+      flex: 1 1 40%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .hero-image img {
+      max-width: 100%;
+      height: auto;
+      max-height: 400px;
       border-radius: 12px;
       box-shadow: 0 30px 50px rgba(0,0,0,0.6);
-      transition: transform 0.4s ease;
-      background: #3a2c1b;
-      padding: 20px;
-      text-align: center;
-      color: #d4a373;
+      transition: transform 0.5s ease, box-shadow 0.5s ease;
     }
-    .book-cover:hover { transform: scale(1.02) rotate(-2deg); }
-    .book-cover .title {
-      font-family: 'Playfair Display', serif;
-      font-size: 2.2rem;
-      font-weight: 700;
-      margin: 20px 0 10px;
-      color: #f0e6d3;
-    }
-    .book-cover .sub {
-      font-size: 1rem;
-      opacity: 0.8;
-      border-top: 1px solid #b8860b;
-      padding-top: 10px;
+    .hero-image img:hover {
+      transform: scale(1.08);
+      box-shadow: 0 40px 70px rgba(0,0,0,0.75);
     }
 
-    /* Блок "О книге" */
-    .about-book {
-      background: #f9f7f4;
-    }
+    /* О книге */
+    .about-book { background: #f9f7f4; }
     .about-book .about-text {
       max-width: 800px;
       margin: 0 auto;
@@ -143,14 +133,10 @@
       text-align: center;
       color: #333;
     }
-    .about-book .about-text p {
-      margin-bottom: 20px;
-    }
+    .about-book .about-text p { margin-bottom: 20px; }
 
-    /* Секции содержания с чередованием фонов */
-    .feature-section {
-      padding: 60px 0;
-    }
+    /* Секции */
+    .feature-section { padding: 60px 0; }
     .bg-dark { background: #f0ede8; }
     .bg-light { background: #f9f7f4; }
 
@@ -160,12 +146,8 @@
       gap: 50px;
       flex-wrap: wrap;
     }
-    .direction-reversed .content-block {
-      flex-direction: row-reverse;
-    }
-    .content-text {
-      flex: 1 1 45%;
-    }
+    .direction-reversed .content-block { flex-direction: row-reverse; }
+    .content-text { flex: 1 1 45%; }
     .content-text h3 {
       font-size: 2rem;
       margin-bottom: 10px;
@@ -176,230 +158,258 @@
       color: #333;
       margin-bottom: 16px;
     }
-    .content-text ul {
-      padding-left: 20px;
-      color: #444;
-    }
-    .content-text ul li {
-      margin-bottom: 6px;
-    }
 
-    /* Карточка с слайдером (без 3D) */
-    .page-preview {
-      flex: 1 1 40%;
-    }
-    .page-card {
-      background: #fefcf7;
-      border-radius: 12px;
-      padding: 20px 20px 16px;
-      box-shadow: 0 8px 30px rgba(0,0,0,0.12);
-      border: 1px solid #e8e0d5;
-      min-height: 320px;
+    /* Мини-книга */
+    .mini-book-wrapper {
+      flex: 1 1 45%;
       display: flex;
-      flex-direction: column;
+      justify-content: center;
       align-items: center;
-      transform: scale(0.9);
-      opacity: 0;
-      transition: transform 0.8s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.8s ease;
     }
-    .page-card.animated {
-      transform: scale(1);
-      opacity: 1;
+    .mini-book-container {
+      position: relative;
+      width: 500px;
+      height: 340px;
+      border-radius: 14px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.2);
+      background: #dacbb8;
+      padding: 10px;
+      cursor: default;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border: 1px solid #c4b4a0;
+    }
+    .mini-book-container:hover {
+      transform: translateY(-6px) scale(1.01);
+      box-shadow: 0 20px 56px rgba(0,0,0,0.25);
+    }
+    .mini-book-container .mini-book-inner {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      height: 100%;
+      border-radius: 10px;
+      overflow: hidden;
+      background: #fcf9f5;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.6);
+    }
+    .mini-book-container .mini-book-inner .st-page,
+    .mini-book-container .mini-book-inner .st-cover,
+    .mini-book-container .mini-book-inner .st-hard,
+    .mini-book-container .mini-book-inner .st-flip {
+      border-radius: 10px !important;
+      overflow: hidden !important;
+    }
+    .mini-book-container .mini-book-inner img {
+      border-radius: 10px !important;
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
 
-    /* Слайдер — анимация слайда (translateX) */
-    .page-slider {
-      position: relative;
-      width: 100%;
-      height: 280px;
-      margin: 0 0 6px;
-      overflow: hidden;
-      border-radius: 8px;
-      background: #fff;
-      box-shadow: inset 0 0 0 1px #e8e0d5;
-      cursor: pointer;
-    }
-    .slide {
+    /* Псевдо-обложка – градиент и тень */
+    .mini-book-container::after {
+      content: '';
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
+      border-radius: 14px;
+      background: linear-gradient(135deg, rgba(255,255,240,0.15) 0%, rgba(0,0,0,0.05) 100%);
+      pointer-events: none;
+      z-index: 0;
+      box-shadow: inset 0 0 30px rgba(0,0,0,0.08);
+    }
+
+    /* Корешок — на всю высоту */
+    .mini-book-container::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 0;
+      transform: translateX(-50%);
+      width: 8px;
+      height: 100%;
+      background: linear-gradient(to right, #b8a58b 0%, #dacbb8 30%, #f0e6d8 50%, #dacbb8 70%, #b8a58b 100%);
+      box-shadow: inset 0 0 12px rgba(0,0,0,0.12), 0 0 8px rgba(0,0,0,0.05);
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.8;
+    }
+
+    /* Значок приближения — лупа с плюсом */
+    .zoom-icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 52px;
+      height: 52px;
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
-      transition: transform 0.5s ease, opacity 0.5s ease;
-      transform: translateX(100%);
+      cursor: pointer;
+      z-index: 5;
       opacity: 0;
-      background: #fff;
-      border-radius: 8px;
-      overflow: hidden;
-    }
-    .slide.active {
-      transform: translateX(0);
-      opacity: 1;
-      z-index: 2;
-    }
-    .slide img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      transition: transform 0.2s;
-    }
-    .slide img:hover {
-      transform: scale(1.02);
-    }
-    .slide .slide-label {
-      position: absolute;
-      bottom: 8px;
-      left: 0;
-      right: 0;
-      text-align: center;
-      font-size: 0.75rem;
-      color: #fff;
-      background: rgba(0,0,0,0.5);
-      padding: 4px 0;
-      font-weight: 500;
+      transition: opacity 0.3s ease, transform 0.2s ease;
       pointer-events: none;
     }
-
-    .flip-controls {
-      display: flex;
-      gap: 12px;
-      align-items: center;
-      margin-top: 0;
-      padding-top: 4px;
+    .mini-book-container:hover .zoom-icon {
+      opacity: 1;
+      pointer-events: auto;
     }
-    .flip-btn {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      border: 1px solid #b8860b;
-      background: #fff;
-      color: #b8860b;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: background 0.2s, color 0.2s;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      line-height: 1;
-      font-weight: 700;
+    .zoom-icon:hover {
+      transform: translate(-50%, -50%) scale(1.1);
     }
-    .flip-btn:hover {
-      background: #b8860b;
-      color: #fff;
+    .zoom-icon:active {
+      transform: translate(-50%, -50%) scale(0.9);
     }
-    .flip-indicator {
-      display: flex;
-      gap: 6px;
-    }
-    .flip-indicator span {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: #ccc;
-      transition: background 0.3s;
-      cursor: pointer;
-    }
-    .flip-indicator span.active {
-      background: #b8860b;
+    .zoom-icon svg {
+      width: 100%;
+      height: 100%;
+      filter: drop-shadow(0 2px 10px rgba(0,0,0,0.4));
     }
 
-    /* Полноэкранный оверлей с навигацией */
-    .image-overlay {
+    /* Оверлей полноразмерной книги */
+    .book-overlay {
       display: none;
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0,0,0,0.85);
-      z-index: 9999;
+      background: rgba(0,0,0,0.8);
+      z-index: 10000;
       justify-content: center;
       align-items: center;
-      padding: 30px;
+      padding: 20px;
       box-sizing: border-box;
-      cursor: zoom-out;
     }
-    .image-overlay.active {
-      display: flex;
-    }
-    .image-overlay .overlay-content {
+    .book-overlay.active { display: flex; }
+    .book-overlay-content {
       position: relative;
-      max-width: 90%;
-      max-height: 90%;
       display: flex;
-      align-items: center;
       justify-content: center;
+      align-items: center;
     }
-    .image-overlay img {
-      max-width: 100%;
-      max-height: 80vh;
-      object-fit: contain;
-      border-radius: 8px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.6);
-      cursor: default;
-    }
-    .image-overlay .close-overlay {
+    .book-close {
       position: absolute;
-      top: -40px;
-      right: -40px;
+      top: -44px;
+      right: -44px;
+      background: none;
+      border: none;
       color: #fff;
-      font-size: 3rem;
+      font-size: 3.2rem;
       font-weight: 300;
       cursor: pointer;
       transition: transform 0.2s;
-      background: none;
-      border: none;
       line-height: 1;
+      z-index: 10;
     }
-    .image-overlay .close-overlay:hover {
-      transform: rotate(90deg);
-    }
+    .book-close:hover { transform: rotate(90deg); }
 
-    /* Новый блок контролов (счетчик + стрелки) */
-    .overlay-controls {
-      position: absolute;
-      bottom: -50px;
-      left: 50%;
-      transform: translateX(-50%);
+    .book-spread {
+      width: 900px;
+      height: 670px;
+      background: #e8dccc;
+      border-radius: 16px;
+      box-shadow: inset 0 0 40px rgba(0,0,0,0.08), 0 20px 40px rgba(0,0,0,0.3);
+      position: relative;
+      overflow: hidden;
       display: flex;
-      align-items: center;
-      gap: 12px;
-      background: rgba(0,0,0,0.4);
-      padding: 6px 16px;
-      border-radius: 30px;
-      backdrop-filter: blur(4px);
-    }
-    .overlay-counter {
-      color: #fff;
-      font-size: 1rem;
-      font-weight: 500;
-      white-space: nowrap;
-    }
-    .overlay-nav {
-      background: rgba(255,255,255,0.2);
-      border: none;
-      color: #fff;
-      font-size: 1.2rem;
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      cursor: pointer;
-      transition: background 0.3s;
-      display: flex;
-      align-items: center;
       justify-content: center;
-      backdrop-filter: blur(4px);
+      align-items: center;
+      padding: 20px;
     }
-    .overlay-nav:hover {
-      background: rgba(255,255,255,0.4);
+    .book-spread::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 0;
+      transform: translateX(-50%);
+      width: 26px;
+      height: 100%;
+      background: linear-gradient(to right, #b8a58b 0%, #dacbb8 20%, #f0e6d8 50%, #dacbb8 80%, #b8a58b 100%);
+      box-shadow: inset 0 0 20px rgba(0,0,0,0.15), 0 0 15px rgba(0,0,0,0.1);
+      z-index: 1;
+      pointer-events: none;
+      border-left: 1px solid rgba(255,255,255,0.3);
+      border-right: 1px solid rgba(255,255,255,0.3);
+    }
+    .book-spread::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 12%;
+      transform: translateX(-50%);
+      width: 12px;
+      height: 76%;
+      border-left: 1px solid rgba(0,0,0,0.06);
+      border-right: 1px solid rgba(0,0,0,0.06);
+      z-index: 2;
+      pointer-events: none;
     }
 
-    /* Остальные блоки */
+    #book-container {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      z-index: 3;
+      background: transparent;
+      border-radius: 12px;
+      box-shadow: 0 0 30px rgba(0,0,0,0.1);
+    }
+    #book-container *,
+    #book-container .page,
+    #book-container .st-page,
+    #book-container .hard,
+    #book-container .st-hard,
+    #book-container .flip,
+    #book-container .st-flip,
+    #book-container .cover,
+    #book-container .st-cover {
+      border-radius: 12px !important;
+      overflow: hidden !important;
+    }
+    #book-container img {
+      border-radius: 12px !important;
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    @media (max-width: 820px) {
+      .book-spread {
+        width: 90vw;
+        height: calc(90vw * 670 / 900);
+        padding: 12px;
+      }
+    }
+    @media (max-width: 600px) {
+      .book-spread { padding: 8px; }
+      .mini-book-container {
+        width: 340px;
+        height: 230px;
+      }
+      .zoom-icon {
+        width: 38px;
+        height: 38px;
+      }
+    }
+    @media (max-width: 400px) {
+      .mini-book-container {
+        width: 280px;
+        height: 190px;
+      }
+      .zoom-icon {
+        width: 30px;
+        height: 30px;
+      }
+    }
+
+    /* Другие блоки */
     .audience-list {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -511,10 +521,7 @@
       font-size: 0.95rem;
       color: #ccc;
     }
-    .contacts a {
-      color: #d4a373;
-      text-decoration: none;
-    }
+    .contacts a { color: #d4a373; text-decoration: none; }
 
     .modal-overlay {
       display: none;
@@ -612,35 +619,10 @@
         text-align: center;
       }
       .direction-reversed .content-block { flex-direction: column !important; }
-      .page-card {
-        transform: scale(1);
-        opacity: 1;
-      }
-      .page-card.animated { transform: none; opacity: 1; }
-      .slide {
-        position: relative;
-        transform: none !important;
-        opacity: 1 !important;
-        display: none;
-        height: auto;
-        min-height: 150px;
-      }
-      .slide.active { display: flex; }
-      .page-slider { height: auto; min-height: 220px; overflow: visible; }
-      .image-overlay .close-overlay {
-        top: 10px;
-        right: 10px;
-        font-size: 2.5rem;
-      }
-      .overlay-controls {
-        bottom: -40px;
-        padding: 4px 12px;
-        gap: 8px;
-      }
-      .overlay-nav {
-        width: 28px;
-        height: 28px;
-        font-size: 1rem;
+      .mini-book-wrapper { flex: 1 1 100%; }
+      .mini-book-container {
+        width: 420px;
+        height: 285px;
       }
     }
     @media (max-width: 600px) {
@@ -648,21 +630,15 @@
       h2 { font-size: 2rem; }
       .btn { padding: 14px 32px; font-size: 1rem; }
       .modal { padding: 30px 20px; }
-      .page-slider { height: 200px; }
-      .image-overlay { padding: 10px; }
-      .image-overlay .close-overlay { top: 5px; right: 5px; font-size: 2rem; }
-      .overlay-controls {
-        bottom: -35px;
-        padding: 4px 10px;
-        gap: 6px;
+      .mini-book-container {
+        width: 340px;
+        height: 230px;
       }
-      .overlay-nav {
-        width: 24px;
-        height: 24px;
-        font-size: 0.9rem;
-      }
-      .overlay-counter {
-        font-size: 0.85rem;
+    }
+    @media (max-width: 400px) {
+      .mini-book-container {
+        width: 280px;
+        height: 190px;
       }
     }
   </style>
@@ -675,17 +651,12 @@
     <div class="hero-content">
       <span class="badge">Новое издание</span>
       <h1>Ваше чтение Библии станет <span>максимально глубоким</span> и увлекательным</h1>
-      <p>Вы часто ловите себя на мысли, что при чтении Священного Писания некоторые детали ускользают, имена кажутся незнакомыми, а хронология запутывается? Наше издание позволит вам увидеть мир Библии, скрытый за древними текстами.</p>
+      <p>Вы часто ловите себя на мысли, что при чтении Священного Писания некоторые детали ускользают, имена кажутся незнакомыми, а хронология событий запутывается? Наше издание — это ваш личный путеводитель по древнему миру.</p>
       <button class="btn" onclick="openModal()">Оформить заказ</button>
-      <p style="margin-top:20px;font-size:0.9rem;opacity:0.7;">Электронная и печатная версии</p>
+      <p style="margin-top:20px;font-size:0.9rem;opacity:0.7;"></p>
     </div>
     <div class="hero-image">
-      <div class="book-cover">
-        <div style="font-size:4rem;">📖</div>
-        <div class="title">Учебная Библия</div>
-        <div class="sub"></div>
-        <div style="margin-top:10px;font-size:0.8rem;opacity:0.7;">карты · хронологии · археология</div>
-      </div>
+      <img src="book.png" alt="Учебная Библия" />
     </div>
   </div>
 </section>
@@ -695,47 +666,30 @@
   <div class="container">
     <h2 class="centered">О книге</h2>
     <div class="about-text">
-      <p><strong>Учебная Библия</strong> — это ваш личный путеводитель по древнему миру. Вы найдёте полезные заметки, открытия археологов, наглядные схемы и исторические справки, которые помогут вам читать Писание с полным пониманием контекста.</p>
-      <p>Это издание создано специально для тех, кто хочет не просто читать, а глубоко понимать Священное Писание. Каждая таблица, карта и историческая справка работают на то, чтобы древний мир стал для вас осязаемым, понятным и живым.</p>
+      <p>Уникальная цветная Библия, аналогов которой нет в России. В ней вы найдете: энциклопедические статьи, археологические доказательства библейских событий и личностей, полезные карты, удобные таблицы, генеалогии и родословные, справочные материалы, множественные заметки к библейскому тексту, помогающие понять культурно-исторический фон того времени.</p>
+      <p>Текст Библии написан крупным шрифтом. Новый русский перевод с постраничными ссылками делает содержание Писания доступным для современного читателя.</p>
     </div>
   </div>
 </section>
 
-<!-- Блоки содержания с чередованием фонов и направлений -->
+<!-- Блок 1: Города -->
 <section class="feature-section bg-dark direction-normal">
   <div class="container">
     <div class="content-block">
       <div class="content-text">
-        <h3>География веры и неопровержимая точность Библии</h3>
+        <h3>Города</h3>
         <p>Городам и ключевым локациям посвящены целые разделы — от масштабных панорамных разворотов до небольших исторических заметок с уникальными фотографиями. Вы сможете мысленно пройтись по городам, перевалам, долинам и горам, где вершилась история.</p>
-        <ul>
-          <li>Детальные карты с подписями древних городов и границ</li>
-          <li>Пути странствий патриархов и апостолов</li>
-          <li>Современные спутниковые снимки для сравнения</li>
-        </ul>
       </div>
-      <div class="page-preview">
-        <div class="page-card" data-animate>
-          <div class="page-slider" data-slider>
-            <div class="slide active">
-              <img src="1.jpg" alt="Скриншот карты 1">
-              <div class="slide-label">Карта Святой Земли</div>
-            </div>
-            <div class="slide">
-              <img src="2.jpg" alt="Скриншот карты 2">
-              <div class="slide-label">Пути апостолов</div>
-            </div>
-            <div class="slide">
-              <img src="3.jpg" alt="Скриншот карты 3">
-              <div class="slide-label">Горы и долины</div>
-            </div>
-          </div>
-          <div class="flip-controls">
-            <button class="flip-btn flip-prev">◀</button>
-            <div class="flip-indicator">
-              <span class="active"></span><span></span><span></span>
-            </div>
-            <button class="flip-btn flip-next">▶</button>
+      <div class="mini-book-wrapper">
+        <div class="mini-book-container" data-book="0">
+          <div class="mini-book-inner" id="miniBook0"></div>
+          <div class="zoom-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"/>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+              <line x1="11" y1="7" x2="11" y2="15"/>
+              <line x1="7" y1="11" x2="15" y2="11"/>
+            </svg>
           </div>
         </div>
       </div>
@@ -743,40 +697,24 @@
   </div>
 </section>
 
+<!-- Блок 2: Таблицы -->
 <section class="feature-section bg-light direction-reversed">
   <div class="container">
     <div class="content-block">
       <div class="content-text">
-        <h3>Забудьте о путанице в датах, именах и пророчествах</h3>
-        <p>Благодаря удобным хронологическим таблицам вы сможете мгновенно сопоставлять параллельные библейские события и сюжеты. Удобные схемы помогут легко разобраться в сложных исторических периодах и проследить, как сбывались древние пророчества.</p>
-        <ul>
-          <li>Ленты времени от сотворения до новозаветной эпохи</li>
-          <li>Сравнительные таблицы правления царей</li>
-          <li>Исполнение пророчеств с указанием дат</li>
-        </ul>
+        <h3>Таблицы</h3>
+        <p>Благодаря удобным хронологическим таблицам вы сможете мгновенно сопоставлять параллельные библейские события и сюжеты. Удобные схемы помогут вам легко разобраться в сложных исторических периодах и проследить то, как сбывались древние пророчества.</p>
       </div>
-      <div class="page-preview">
-        <div class="page-card" data-animate>
-          <div class="page-slider" data-slider>
-            <div class="slide active">
-              <img src="1.jpg" alt="Хронология 1">
-              <div class="slide-label">Временная шкала</div>
-            </div>
-            <div class="slide">
-              <img src="2.jpg" alt="Хронология 2">
-              <div class="slide-label">Цари Израиля</div>
-            </div>
-            <div class="slide">
-              <img src="3.jpg" alt="Хронология 3">
-              <div class="slide-label">Исполнение пророчеств</div>
-            </div>
-          </div>
-          <div class="flip-controls">
-            <button class="flip-btn flip-prev">◀</button>
-            <div class="flip-indicator">
-              <span class="active"></span><span></span><span></span>
-            </div>
-            <button class="flip-btn flip-next">▶</button>
+      <div class="mini-book-wrapper">
+        <div class="mini-book-container" data-book="1">
+          <div class="mini-book-inner" id="miniBook1"></div>
+          <div class="zoom-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"/>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+              <line x1="11" y1="7" x2="11" y2="15"/>
+              <line x1="7" y1="11" x2="15" y2="11"/>
+            </svg>
           </div>
         </div>
       </div>
@@ -784,40 +722,24 @@
   </div>
 </section>
 
+<!-- Блок 3: Личности -->
 <section class="feature-section bg-dark direction-normal">
   <div class="container">
     <div class="content-block">
       <div class="content-text">
-        <h3>Познакомьтесь ближе с персонажами Библии, чьи имена веками оставались загадкой</h3>
-        <p>Уникальные археологические находки подтвердили историчность многих библейских личностей. Печати, каменные стелы и древние хроники раскрывают захватывающие детали о жизни царей и пророков. Наше издание покажет эти неопровержимые научные доказательства.</p>
-        <ul>
-          <li>Фотографии артефактов с пояснениями</li>
-          <li>Истории открытий, сделавших имена реальными</li>
-          <li>Сравнение библейского текста с находками</li>
-        </ul>
+        <h3>Личности</h3>
+        <p>Уникальные археологические находки подтвердили историчность многих библейских личностей. Печати, каменные стелы и древние хроники раскрывают захватывающие и неизвестные ранее детали о жизни многих людей, оставивших свой след в мировой истории.</p>
       </div>
-      <div class="page-preview">
-        <div class="page-card" data-animate>
-          <div class="page-slider" data-slider>
-            <div class="slide active">
-              <img src="1.jpg" alt="Артефакт 1">
-              <div class="slide-label">Каменная стела</div>
-            </div>
-            <div class="slide">
-              <img src="2.jpg" alt="Артефакт 2">
-              <div class="slide-label">Печать царя</div>
-            </div>
-            <div class="slide">
-              <img src="3.jpg" alt="Артефакт 3">
-              <div class="slide-label">Древняя хроника</div>
-            </div>
-          </div>
-          <div class="flip-controls">
-            <button class="flip-btn flip-prev">◀</button>
-            <div class="flip-indicator">
-              <span class="active"></span><span></span><span></span>
-            </div>
-            <button class="flip-btn flip-next">▶</button>
+      <div class="mini-book-wrapper">
+        <div class="mini-book-container" data-book="2">
+          <div class="mini-book-inner" id="miniBook2"></div>
+          <div class="zoom-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"/>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+              <line x1="11" y1="7" x2="11" y2="15"/>
+              <line x1="7" y1="11" x2="15" y2="11"/>
+            </svg>
           </div>
         </div>
       </div>
@@ -825,40 +747,24 @@
   </div>
 </section>
 
+<!-- Блок 4: Родословные -->
 <section class="feature-section bg-light direction-reversed">
   <div class="container">
     <div class="content-block">
       <div class="content-text">
-        <h3>Подробные родословные и скрытые смыслы имен</h3>
-        <p>Генеалогии помогут разобраться в сложных родственных связях. Вы удивитесь, но многие библейские имена, которые мы привыкли считать личными, на самом деле были прозвищами или титулами. Эти глубокие комментарии позволят увидеть текст Писания совершенно другими глазами!</p>
-        <ul>
-          <li>Схемы родословных от Адама до Иисуса</li>
-          <li>Значение каждого имени и его роль в сюжете</li>
-          <li>Титулы и прозвища правителей</li>
-        </ul>
+        <h3>Родословные</h3>
+        <p>Генеалогии помогут разобраться в сложных родственных связях. Вы удивитесь, но многие библейские имена, которые мы привыкли считать личными, на самом деле были прозвищами или титулами. Эти глубокие комментарии позволят вам увидеть текст Писания совершенно другими глазами!</p>
       </div>
-      <div class="page-preview">
-        <div class="page-card" data-animate>
-          <div class="page-slider" data-slider>
-            <div class="slide active">
-              <img src="1.jpg" alt="Родословная 1">
-              <div class="slide-label">От Адама до Ноя</div>
-            </div>
-            <div class="slide">
-              <img src="2.jpg" alt="Родословная 2">
-              <div class="slide-label">Династия Давида</div>
-            </div>
-            <div class="slide">
-              <img src="3.jpg" alt="Родословная 3">
-              <div class="slide-label">Генеалогия Христа</div>
-            </div>
-          </div>
-          <div class="flip-controls">
-            <button class="flip-btn flip-prev">◀</button>
-            <div class="flip-indicator">
-              <span class="active"></span><span></span><span></span>
-            </div>
-            <button class="flip-btn flip-next">▶</button>
+      <div class="mini-book-wrapper">
+        <div class="mini-book-container" data-book="3">
+          <div class="mini-book-inner" id="miniBook3"></div>
+          <div class="zoom-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"/>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+              <line x1="11" y1="7" x2="11" y2="15"/>
+              <line x1="7" y1="11" x2="15" y2="11"/>
+            </svg>
           </div>
         </div>
       </div>
@@ -866,40 +772,24 @@
   </div>
 </section>
 
+<!-- Блок 5: Древние верования и быт -->
 <section class="feature-section bg-dark direction-normal">
   <div class="container">
     <div class="content-block">
       <div class="content-text">
-        <h3>Прочитайте о древних верованиях и быте библейских людей</h3>
-        <p>Археологические открытия наглядно показывают, как выглядели идолы и что они значили для людей древности. Подробности быта помогут преодолеть культурный барьер веков, понять логику поступков людей того времени и увидеть библейские сюжеты во всей полноте.</p>
-        <ul>
-          <li>Иллюстрации идолов и культовых предметов</li>
-          <li>Описание повседневной жизни, одежды, пищи</li>
-          <li>Как жили пророки и простые люди</li>
-        </ul>
+        <h3>Древние верования и быт</h3>
+        <p>Археологические открытия наглядно показывают, как выглядели идолы и что они значили для людей древности. Подробности быта помогут вам преодолеть культурный барьер веков, понять логику поступков людей того времени и увидеть библейские сюжеты во всей их полноте и красках.</p>
       </div>
-      <div class="page-preview">
-        <div class="page-card" data-animate>
-          <div class="page-slider" data-slider>
-            <div class="slide active">
-              <img src="1.jpg" alt="Быт 1">
-              <div class="slide-label">Идолы древности</div>
-            </div>
-            <div class="slide">
-              <img src="2.jpg" alt="Быт 2">
-              <div class="slide-label">Повседневная жизнь</div>
-            </div>
-            <div class="slide">
-              <img src="3.jpg" alt="Быт 3">
-              <div class="slide-label">Пророки и народ</div>
-            </div>
-          </div>
-          <div class="flip-controls">
-            <button class="flip-btn flip-prev">◀</button>
-            <div class="flip-indicator">
-              <span class="active"></span><span></span><span></span>
-            </div>
-            <button class="flip-btn flip-next">▶</button>
+      <div class="mini-book-wrapper">
+        <div class="mini-book-container" data-book="4">
+          <div class="mini-book-inner" id="miniBook4"></div>
+          <div class="zoom-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"/>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+              <line x1="11" y1="7" x2="11" y2="15"/>
+              <line x1="7" y1="11" x2="15" y2="11"/>
+            </svg>
           </div>
         </div>
       </div>
@@ -907,40 +797,24 @@
   </div>
 </section>
 
+<!-- Блок 6: Карты -->
 <section class="feature-section bg-light direction-reversed">
   <div class="container">
     <div class="content-block">
       <div class="content-text">
-        <h3>Почувствуйте атмосферу библейской эпохи</h3>
-        <p>Каждая таблица, карта и историческая справка работают на то, чтобы древний мир стал для вас осязаемым, понятным и живым. Это издание создано специально для тех, кто хочет не просто читать, а глубоко понимать Священное Писание.</p>
-        <ul>
-          <li>Комментарии к трудным местам</li>
-          <li>Исторический контекст каждой книги</li>
-          <li>Связь Ветхого и Нового Заветов</li>
-        </ul>
+        <h3>Карты</h3>
+        <p>Больше не придется гадать, где именно происходило то или иное сражение или по каким местам ходил Иисус и апостолы. На каждой карте подробно подписаны названия древних городов, горных перевалов, ключевых долин, рек и границы государств.</p>
       </div>
-      <div class="page-preview">
-        <div class="page-card" data-animate>
-          <div class="page-slider" data-slider>
-            <div class="slide active">
-              <img src="1.jpg" alt="Комментарий 1">
-              <div class="slide-label">Разбор стиха</div>
-            </div>
-            <div class="slide">
-              <img src="2.jpg" alt="Комментарий 2">
-              <div class="slide-label">Исторический контекст</div>
-            </div>
-            <div class="slide">
-              <img src="3.jpg" alt="Комментарий 3">
-              <div class="slide-label">Ветхий и Новый Завет</div>
-            </div>
-          </div>
-          <div class="flip-controls">
-            <button class="flip-btn flip-prev">◀</button>
-            <div class="flip-indicator">
-              <span class="active"></span><span></span><span></span>
-            </div>
-            <button class="flip-btn flip-next">▶</button>
+      <div class="mini-book-wrapper">
+        <div class="mini-book-container" data-book="5">
+          <div class="mini-book-inner" id="miniBook5"></div>
+          <div class="zoom-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"/>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+              <line x1="11" y1="7" x2="11" y2="15"/>
+              <line x1="7" y1="11" x2="15" y2="11"/>
+            </svg>
           </div>
         </div>
       </div>
@@ -985,7 +859,7 @@
       </div>
       <div class="review-card">
         <div class="stars">★★★★★</div>
-        <blockquote>«Археологические вставки — это нечто! Я и не знал, сколько находок подтверждают библейские тексты. Очень познавательно и вдохновляет».</blockquote>
+        <blockquote>«Археологические вставки — это нечто! Я и не знала, сколько исторических находок подтверждают библейские тексты. Очень познавательно и вдохновляет».</blockquote>
         <div class="author"><span class="avatar-sm">Е</span> Екатерина, преподаватель</div>
       </div>
       <div class="review-card">
@@ -1007,7 +881,7 @@
           <span>В каком формате доступна книга?</span>
           <span class="arrow">▾</span>
         </div>
-        <div class="faq-answer open">Доступна в твёрдой обложке и электронном виде (PDF, EPUB). Также есть подарочное издание с расширенными картами.</div>
+        <div class="faq-answer open">Доступна только в твёрдой обложке.</div>
       </div>
       <div class="faq-item">
         <div class="faq-question" onclick="toggleFAQ(this)">
@@ -1028,7 +902,7 @@
           <span>Подойдёт ли это издание для изучения в группе?</span>
           <span class="arrow">▾</span>
         </div>
-        <div class="faq-answer">Да, оно идеально для библейских кружков, так как содержит множество наглядных материалов и вопросов для обсуждения.</div>
+        <div class="faq-answer">Да, оно идеально для групп по изучению Библии, так как содержит множество наглядных материалов и вопросов для обсуждения.</div>
       </div>
     </div>
   </div>
@@ -1037,7 +911,7 @@
 <!-- Финальный CTA -->
 <section class="final-cta" id="order">
   <div class="container">
-    <h2>Оформите заказ прямо сейчас</h2>
+    <h2 class="centered">Оформите заказ прямо сейчас</h2>
     <p>Начните своё путешествие по библейскому миру с полным пониманием каждой детали. Нажмите на кнопку, заполните форму, и мы свяжемся с вами для уточнения деталей.</p>
     <button class="btn" onclick="openModal()">Оформить заказ</button>
     <div class="contacts">
@@ -1070,15 +944,12 @@
   </div>
 </div>
 
-<!-- Полноэкранный просмотр изображения с навигацией -->
-<div class="image-overlay" id="imageOverlay">
-  <div class="overlay-content">
-    <img id="fullscreenImage" src="" alt="Полноэкранный скриншот">
-    <button class="close-overlay" id="closeOverlay">&times;</button>
-    <div class="overlay-controls">
-      <div class="overlay-counter" id="overlayCounter">1 / 3</div>
-      <button class="overlay-nav prev" id="overlayPrev">◀</button>
-      <button class="overlay-nav next" id="overlayNext">▶</button>
+<!-- Оверлей для полноразмерной книги -->
+<div class="book-overlay" id="bookOverlay">
+  <div class="book-overlay-content">
+    <button class="book-close" id="bookClose">&times;</button>
+    <div class="book-spread">
+      <div id="book-container"></div>
     </div>
   </div>
 </div>
@@ -1089,6 +960,7 @@
   </div>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/page-flip@1.2.0/dist/js/page-flip.browser.js"></script>
 <script>
   // FAQ
   function toggleFAQ(el) {
@@ -1121,219 +993,143 @@
     if (e.key === 'Escape') closeModal();
   });
 
-  // Анимация появления карточек
-  document.addEventListener('DOMContentLoaded', function() {
-    const cards = document.querySelectorAll('.page-card[data-animate]');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('animated');
-        }
-      });
-    }, { threshold: 0.4, rootMargin: '0px 0px -50px 0px' });
-    cards.forEach(card => observer.observe(card));
+  // ========== Полноразмерная книга ==========
+  const bookOverlay = document.getElementById('bookOverlay');
+  const bookClose = document.getElementById('bookClose');
+  const bookContainer = document.getElementById('book-container');
+  let fullFlipbook = null;
+  let fullBookInitialized = false;
+
+  const fullPages = [
+    'images/page1.jpg',
+    'images/page2.jpg',
+    'images/page3.jpg',
+    'images/page4.jpg',
+    'images/page5.jpg',
+    'images/page6.jpg'
+  ];
+
+  function initFullBook() {
+    if (fullBookInitialized) return;
+    fullFlipbook = new St.PageFlip(bookContainer, {
+      width: 430,
+      height: 650,
+      size: 'fixed',
+      pageMode: 'double',
+      showCover: false,
+      drawShadow: true,
+      flippingTime: 1000,
+      usePortrait: true,
+      autoSize: true,
+      maxShadowOpacity: 1,
+      mobileScrollSupport: false,
+      gap: 20,
+      clickFlip: true
+    });
+    fullFlipbook.loadFromImages(fullPages);
+    fullBookInitialized = true;
+  }
+
+  function openBookOverlay() {
+    bookOverlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    if (!fullBookInitialized) {
+      initFullBook();
+    } else {
+      fullFlipbook.update();
+    }
+    if (fullFlipbook) {
+      fullFlipbook.flipToPage(0);
+    }
+  }
+
+  function closeBookOverlay() {
+    bookOverlay.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  bookClose.addEventListener('click', closeBookOverlay);
+  bookOverlay.addEventListener('click', function(e) {
+    if (e.target === bookOverlay) closeBookOverlay();
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && bookOverlay.classList.contains('active')) {
+      closeBookOverlay();
+    }
   });
 
-  // Управление слайдерами (анимация слайда — translateX)
-  document.querySelectorAll('[data-slider]').forEach(slider => {
-    const slides = slider.querySelectorAll('.slide');
-    const indicators = slider.parentElement.querySelector('.flip-indicator');
-    const prevBtn = slider.parentElement.querySelector('.flip-prev');
-    const nextBtn = slider.parentElement.querySelector('.flip-next');
-    if (!slides.length) return;
+  // ========== Мини-книги ==========
+  const miniBooks = [];
 
-    let current = 0;
-    const total = slides.length;
+  function initMiniBooks() {
+    const containers = document.querySelectorAll('.mini-book-container');
+    containers.forEach((container, index) => {
+      const inner = container.querySelector('.mini-book-inner');
+      if (!inner) return;
 
-    function goTo(index, direction) {
-      if (index === current) return;
-      if (index < 0) index = total - 1;
-      if (index >= total) index = 0;
+      const rect = inner.getBoundingClientRect();
+      const gap = 14;
+      const pageWidth = (rect.width - gap) / 2;
+      const pageHeight = rect.height;
 
-      const currentSlide = slides[current];
-      const nextSlide = slides[index];
-      const dir = direction || (index > current ? 1 : -1);
+      const w = pageWidth > 0 ? pageWidth : 240;
+      const h = pageHeight > 0 ? pageHeight : 320;
 
-      currentSlide.classList.remove('active');
-      if (dir === 1) {
-        currentSlide.style.transform = 'translateX(-100%)';
-        currentSlide.style.opacity = '0';
-      } else {
-        currentSlide.style.transform = 'translateX(100%)';
-        currentSlide.style.opacity = '0';
-      }
-
-      nextSlide.style.transition = 'none';
-      if (dir === 1) {
-        nextSlide.style.transform = 'translateX(100%)';
-        nextSlide.style.opacity = '0';
-      } else {
-        nextSlide.style.transform = 'translateX(-100%)';
-        nextSlide.style.opacity = '0';
-      }
-      void nextSlide.offsetWidth;
-      nextSlide.style.transition = 'transform 0.5s ease, opacity 0.5s ease';
-
-      nextSlide.classList.add('active');
-      nextSlide.style.transform = 'translateX(0)';
-      nextSlide.style.opacity = '1';
-
-      setTimeout(() => {
-        currentSlide.style.transform = '';
-        currentSlide.style.opacity = '';
-        currentSlide.style.transition = '';
-      }, 500);
-
-      if (indicators) {
-        const dots = indicators.querySelectorAll('span');
-        dots.forEach((dot, i) => dot.classList.toggle('active', i === index));
-      }
-      current = index;
-    }
-
-    if (prevBtn) {
-      prevBtn.addEventListener('click', function(e) {
-        e.stopPropagation();
-        const newIndex = (current - 1 + total) % total;
-        goTo(newIndex, -1);
+      const flip = new St.PageFlip(inner, {
+        width: w,
+        height: h,
+        size: 'fixed',
+        pageMode: 'double',
+        showCover: false,
+        drawShadow: true,
+        flippingTime: 600,
+        usePortrait: true,
+        autoSize: false,
+        maxShadowOpacity: 0.8,
+        mobileScrollSupport: false,
+        gap: gap,
+        clickFlip: true
       });
-    }
-    if (nextBtn) {
-      nextBtn.addEventListener('click', function(e) {
-        e.stopPropagation();
-        const newIndex = (current + 1) % total;
-        goTo(newIndex, 1);
-      });
-    }
-    if (indicators) {
-      const dots = indicators.querySelectorAll('span');
-      dots.forEach((dot, idx) => {
-        dot.addEventListener('click', function(e) {
+
+      flip.loadFromImages(fullPages);
+      miniBooks.push(flip);
+
+      // Обработчик клика по значку лупы
+      const zoomIcon = container.querySelector('.zoom-icon');
+      if (zoomIcon) {
+        zoomIcon.addEventListener('click', function(e) {
           e.stopPropagation();
-          if (idx === current) return;
-          const dir = idx > current ? 1 : -1;
-          goTo(idx, dir);
+          openBookOverlay();
         });
-      });
-    }
-
-    // Инициализация
-    slides.forEach((slide, i) => {
-      if (i === 0) {
-        slide.classList.add('active');
-        slide.style.transform = 'translateX(0)';
-        slide.style.opacity = '1';
-        slide.style.transition = 'transform 0.5s ease, opacity 0.5s ease';
-      } else {
-        slide.classList.remove('active');
-        slide.style.transform = 'translateX(100%)';
-        slide.style.opacity = '0';
-        slide.style.transition = 'transform 0.5s ease, opacity 0.5s ease';
       }
     });
-    if (indicators) {
-      const dots = indicators.querySelectorAll('span');
-      dots.forEach((dot, i) => dot.classList.toggle('active', i === 0));
-    }
+  }
+
+  // ========== Инициализация ==========
+  function initAll() {
+    initMiniBooks();
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    requestAnimationFrame(initAll);
+
+    let resizeTimer;
+    window.addEventListener('resize', function() {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        miniBooks.forEach(flip => {
+          try { flip.update(); } catch (e) {}
+        });
+        if (fullBookInitialized) {
+          try { fullFlipbook.update(); } catch (e) {}
+        }
+      }, 200);
+    });
   });
 
-  // Полноэкранный просмотр с навигацией по слайдам текущего слайдера
-  (function() {
-    const overlay = document.getElementById('imageOverlay');
-    const fullImg = document.getElementById('fullscreenImage');
-    const closeBtn = document.getElementById('closeOverlay');
-    const prevBtn = document.getElementById('overlayPrev');
-    const nextBtn = document.getElementById('overlayNext');
-    const counter = document.getElementById('overlayCounter');
-
-    let currentSlider = null;
-    let currentIndex = 0;
-    let totalSlides = 0;
-
-    function openOverlay(slider, index) {
-      currentSlider = slider;
-      const slides = slider.querySelectorAll('.slide');
-      totalSlides = slides.length;
-      currentIndex = Math.min(index, totalSlides - 1);
-      updateFullscreenImage();
-      overlay.classList.add('active');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function updateFullscreenImage() {
-      if (!currentSlider) return;
-      const slides = currentSlider.querySelectorAll('.slide');
-      if (currentIndex >= 0 && currentIndex < slides.length) {
-        const img = slides[currentIndex].querySelector('img');
-        if (img) {
-          fullImg.src = img.src;
-          counter.textContent = (currentIndex + 1) + ' / ' + totalSlides;
-        }
-      }
-    }
-
-    function closeFullscreen() {
-      overlay.classList.remove('active');
-      document.body.style.overflow = '';
-      currentSlider = null;
-    }
-
-    function prevSlide() {
-      if (!currentSlider) return;
-      const newIndex = (currentIndex - 1 + totalSlides) % totalSlides;
-      currentIndex = newIndex;
-      updateFullscreenImage();
-    }
-
-    function nextSlide() {
-      if (!currentSlider) return;
-      const newIndex = (currentIndex + 1) % totalSlides;
-      currentIndex = newIndex;
-      updateFullscreenImage();
-    }
-
-    document.querySelectorAll('.slide img').forEach(img => {
-      img.addEventListener('click', function(e) {
-        e.stopPropagation();
-        const slide = this.closest('.slide');
-        const slider = slide.closest('.page-slider');
-        if (!slider) return;
-        const slides = slider.querySelectorAll('.slide');
-        const index = Array.from(slides).indexOf(slide);
-        if (index !== -1) {
-          openOverlay(slider, index);
-        }
-      });
-    });
-
-    overlay.addEventListener('click', function(e) {
-      if (e.target === overlay) closeFullscreen();
-    });
-    closeBtn.addEventListener('click', closeFullscreen);
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape' && overlay.classList.contains('active')) {
-        closeFullscreen();
-      }
-      if (e.key === 'ArrowLeft' && overlay.classList.contains('active')) {
-        prevSlide();
-        e.preventDefault();
-      }
-      if (e.key === 'ArrowRight' && overlay.classList.contains('active')) {
-        nextSlide();
-        e.preventDefault();
-      }
-    });
-
-    prevBtn.addEventListener('click', function(e) {
-      e.stopPropagation();
-      prevSlide();
-    });
-    nextBtn.addEventListener('click', function(e) {
-      e.stopPropagation();
-      nextSlide();
-    });
-  })();
+  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    setTimeout(() => requestAnimationFrame(initAll), 100);
+  }
 </script>
-
 </body>
 </html>
