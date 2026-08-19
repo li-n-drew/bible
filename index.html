@@ -190,15 +190,15 @@
     }
     .mini-book-container {
       position: relative;
-      width: 500px;
-      height: 340px;
+      width: 520px;
+      height: 350px;
       border-radius: 14px;
       box-shadow: 0 12px 40px rgba(0,0,0,0.2);
-      background: #dacbb8;
+      background: #c99a2e;
       padding: 10px;
       cursor: default;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
-      border: 1px solid #c4b4a0;
+      border: none;
     }
     .mini-book-container:hover {
       transform: translateY(-6px) scale(1.01);
@@ -238,10 +238,13 @@
       width: 100%;
       height: 100%;
       border-radius: 14px;
-      background: linear-gradient(135deg, rgba(255,255,240,0.15) 0%, rgba(0,0,0,0.05) 100%);
+      background:
+        linear-gradient(135deg, rgba(255,255,240,0.2) 0%, rgba(0,0,0,0.1) 100%),
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.6' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+      opacity: 0.55;
       pointer-events: none;
       z-index: 0;
-      box-shadow: inset 0 0 30px rgba(0,0,0,0.08);
+      box-shadow: inset 0 0 40px rgba(0,0,0,0.15);
     }
 
     /* Корешок — на всю высоту */
@@ -253,7 +256,7 @@
       transform: translateX(-50%);
       width: 8px;
       height: 100%;
-      background: linear-gradient(to right, #b8a58b 0%, #dacbb8 30%, #f0e6d8 50%, #dacbb8 70%, #b8a58b 100%);
+      background: linear-gradient(to right, #a67e1a 0%, #c99a2e 30%, #e6c36e 50%, #c99a2e 70%, #a67e1a 100%);
       box-shadow: inset 0 0 12px rgba(0,0,0,0.12), 0 0 8px rgba(0,0,0,0.05);
       z-index: 0;
       pointer-events: none;
@@ -304,11 +307,15 @@
     .book-close:hover { transform: rotate(90deg); }
 
     .book-spread {
-      width: 900px;
-      height: 670px;
-      background: #e8dccc;
+      width: 1000px;
+      height: 740px;
+      background-color: #c99a2e;
+      background-image:
+        linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(0,0,0,0.1) 100%),
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.6' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+      background-blend-mode: overlay;
       border-radius: 16px;
-      box-shadow: inset 0 0 40px rgba(0,0,0,0.08), 0 20px 40px rgba(0,0,0,0.3);
+      box-shadow: inset 0 0 50px rgba(0,0,0,0.2), 0 20px 40px rgba(0,0,0,0.3);
       position: relative;
       overflow: hidden;
       display: flex;
@@ -324,7 +331,7 @@
       transform: translateX(-50%);
       width: 26px;
       height: 100%;
-      background: linear-gradient(to right, #b8a58b 0%, #dacbb8 20%, #f0e6d8 50%, #dacbb8 80%, #b8a58b 100%);
+      background: linear-gradient(to right, #a67e1a 0%, #c99a2e 20%, #e6c36e 50%, #c99a2e 80%, #a67e1a 100%);
       box-shadow: inset 0 0 20px rgba(0,0,0,0.15), 0 0 15px rgba(0,0,0,0.1);
       z-index: 1;
       pointer-events: none;
@@ -596,11 +603,17 @@
     .color-picker-label {
       font-size: 12px;
       color: #666;
-      margin-bottom: 8px;
-      align-self: center;
+      margin-bottom: 0;
+    }
+
+    .color-picker-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       width: 100%;
       max-width: 235px;
-      text-align: left;
+      margin-bottom: 8px;
+      min-height: 26px;
     }
 
     .color-grid {
@@ -632,6 +645,46 @@
       transform: scale(1.15);
       box-shadow: 0 2px 5px rgba(0,0,0,0.3);
       z-index: 2;
+    }
+
+    /* Варианты обложки */
+    .variant-picker {
+      display: none; /* Скрыт по умолчанию */
+      background: #eee;
+      padding: 2px;
+      border-radius: 6px;
+      transition: opacity 0.3s ease;
+      opacity: 0.7;
+    }
+
+    .variant-picker:hover {
+      opacity: 1;
+    }
+
+    .variant-toggle {
+      display: flex;
+      gap: 1px;
+    }
+
+    .variant-btn {
+      padding: 4px 8px;
+      border: none;
+      border-radius: 4px;
+      font-size: 9px;
+      font-weight: 700;
+      cursor: pointer;
+      background: transparent;
+      color: #777;
+      transition: all 0.2s;
+      font-family: 'Inter', sans-serif;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .variant-btn.active {
+      background: white;
+      color: #1e1e1e;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
     }
 
     /* --- Правая колонка --- */
@@ -859,8 +912,8 @@
       .direction-reversed .content-block { flex-direction: column !important; }
       .mini-book-wrapper { flex: 1 1 100%; }
       .mini-book-container {
-        width: 420px;
-        height: 285px;
+        width: 440px;
+        height: 300px;
       }
     }
     @media (max-width: 600px) {
@@ -1116,18 +1169,29 @@
         <img src="covers/book-black.png" alt="Обложка книги" class="book-cover-img" id="bookCoverImg">
       </div>
 
-      <div class="color-picker-label">Цвет обложки:</div>
+      <div class="color-picker-header">
+        <div class="color-picker-label">Цвет обложки:</div>
+
+        <!-- Переключатель вариантов -->
+        <div class="variant-picker" id="variantPicker">
+          <div class="variant-toggle">
+            <button type="button" class="variant-btn active" data-variant="cross">С крестом</button>
+            <button type="button" class="variant-btn" data-variant="no-cross">Без креста</button>
+          </div>
+        </div>
+      </div>
+
       <div class="color-grid" id="colorGrid">
-        <div class="color-option active" style="background-color: #7A6ABE;" data-color="#7A6ABE" data-name="Фиолетовый" data-image="covers/book-purple.png"></div>
+        <div class="color-option selected" style="background-color: #7A6ABE;" data-color="#7A6ABE" data-name="Фиолетовый" data-image="covers/book-purple.png"></div>
         <div class="color-option" style="background-color: #D6206E;" data-color="#D6206E" data-name="Розовый" data-image="covers/book-pink.png"></div>
         <div class="color-option" style="background-color: #F0D41E;" data-color="#F0D41E" data-name="Жёлтый" data-image="covers/book-yellow.png"></div>
         <div class="color-option" style="background-color: #F0A828;" data-color="#F0A828" data-name="Оранжевый" data-image="covers/book-orange.png"></div>
         <div class="color-option" style="background-color: #1EBEEB;" data-color="#1EBEEB" data-name="Голубой" data-image="covers/book-lightblue.png"></div>
         <div class="color-option" style="background-color: #147A8D;" data-color="#147A8D" data-name="Бирюзовый" data-image="covers/book-teal.png"></div>
-        <div class="color-option" style="background-color: #2E5F91;" data-color="#2E5F91" data-name="Синий" data-image="covers/book-blue.png"></div>
+        <div class="color-option" style="background-color: #2E5F91;" data-color="#2E5F91" data-name="Синий" data-image="covers/book-blue.png" data-image-no-cross="covers/book-blue-no-cross.png"></div>
         <div class="color-option" style="background-color: #9AA0A8;" data-color="#9AA0A8" data-name="Серый" data-image="covers/book-gray.png"></div>
-        <div class="color-option" style="background-color: #10161A;" data-color="#10161A" data-name="Чёрный" data-image="covers/book-black.png"></div>
-        <div class="color-option" style="background-color: #1E5434;" data-color="#1E5434" data-name="Тёмно-зелёный" data-image="covers/book-green.png"></div>
+        <div class="color-option" style="background-color: #10161A;" data-color="#10161A" data-name="Чёрный" data-image="covers/book-black.png" data-image-no-cross="covers/book-black-no-cross.png"></div>
+        <div class="color-option" style="background-color: #1E5434;" data-color="#1E5434" data-name="Тёмно-зелёный" data-image="covers/book-green.png" data-image-no-cross="covers/book-green-no-cross.png"></div>
       </div>
     </div>
 
@@ -1264,26 +1328,59 @@
     'images/page6.jpg'
   ];
 
-  // Массив страниц для каждой мини-книги (по 4 PNG на блок)
+  // Массив страниц для каждой мини-книги
   const miniBookPages = [
-    ['images/1286.png', 'images/1287.png', 'images/1292.png', 'images/1293.png'], // Города
-    ['images/1318.png', 'images/1319.png', 'images/1434.png', 'images/1435.png'], // Таблицы
-    ['images/1454.png', 'images/1455.png', 'images/1468.png', 'images/1469.png'], // Личности
-    ['images/1516.png', 'images/1517.png', 'images/1518.png', 'images/1519.png'], // Родословные
-    ['images/1558.png', 'images/1559.png', 'images/1588.png', 'images/1589.png'], // Быт
-    ['images/1286.png', 'images/1287.png', 'images/1292.png', 'images/1293.png']  // Карты (пока дубль первого)
+    [
+      'images/cities/1.jpg', 'images/cities/2.jpg', 'images/cities/3.jpg', 'images/cities/4.jpg',
+      'images/cities/5.jpg', 'images/cities/6.jpg', 'images/cities/7.jpg', 'images/cities/8.jpg',
+      'images/cities/9.jpg', 'images/cities/10.jpg', 'images/cities/11.jpg', 'images/cities/12.jpg',
+      'images/cities/13.jpg', 'images/cities/14.jpg', 'images/cities/15.jpg', 'images/cities/16.jpg',
+      'images/cities/17.jpg', 'images/cities/18.jpg', 'images/cities/19.jpg', 'images/cities/20.jpg',
+      'images/cities/21.jpg', 'images/cities/22.jpg'
+    ], // Города
+    [
+      'images/tabs/1.jpg', 'images/tabs/2.jpg', 'images/tabs/3.jpg', 'images/tabs/4.jpg',
+      'images/tabs/5.jpg', 'images/tabs/6.jpg', 'images/tabs/7.jpg', 'images/tabs/8.jpg',
+      'images/tabs/9.jpg', 'images/tabs/10.jpg'
+    ], // Таблицы
+    [
+      'images/persons/1.jpg', 'images/persons/2.jpg', 'images/persons/3.jpg', 'images/persons/4.jpg',
+      'images/persons/5.jpg', 'images/persons/6.jpg', 'images/persons/7.jpg', 'images/persons/8.jpg',
+      'images/persons/9.jpg', 'images/persons/10.jpg', 'images/persons/11.jpg', 'images/persons/12.jpg',
+      'images/persons/13.jpg', 'images/persons/14.jpg', 'images/persons/15.jpg', 'images/persons/16.jpg',
+      'images/persons/17.jpg', 'images/persons/18.jpg'
+    ], // Личности
+    [
+      'images/trees/1.jpg', 'images/trees/2.jpg', 'images/trees/3.jpg', 'images/trees/4.jpg',
+      'images/trees/5.jpg', 'images/trees/6.jpg', 'images/trees/7.jpg', 'images/trees/8.jpg',
+      'images/trees/9.jpg', 'images/trees/10.jpg', 'images/trees/11.jpg', 'images/trees/12.jpg'
+    ], // Родословные
+    [
+      'images/culture/1.jpg', 'images/culture/2.jpg', 'images/culture/3.jpg', 'images/culture/4.jpg',
+      'images/culture/5.jpg', 'images/culture/6.jpg', 'images/culture/7.jpg', 'images/culture/8.jpg',
+      'images/culture/9.jpg', 'images/culture/10.jpg', 'images/culture/11.jpg', 'images/culture/12.jpg',
+      'images/culture/13.jpg', 'images/culture/14.jpg', 'images/culture/15.jpg', 'images/culture/16.jpg',
+      'images/culture/17.jpg', 'images/culture/18.jpg', 'images/culture/19.jpg', 'images/culture/20.jpg',
+      'images/culture/21.jpg', 'images/culture/22.jpg', 'images/culture/23.jpg', 'images/culture/24.jpg'
+    ], // Быт
+    [
+      'images/maps/1.jpg', 'images/maps/2.jpg', 'images/maps/3.jpg', 'images/maps/4.jpg',
+      'images/maps/5.jpg', 'images/maps/6.jpg', 'images/maps/7.jpg', 'images/maps/8.jpg',
+      'images/maps/9.jpg', 'images/maps/10.jpg', 'images/maps/11.jpg', 'images/maps/12.jpg',
+      'images/maps/13.jpg', 'images/maps/14.jpg'
+    ] // Карты
   ];
 
   function initFullBook() {
     if (fullBookInitialized) return;
     fullFlipbook = new St.PageFlip(bookContainer, {
-      width: 430,
-      height: 630, // Точная высота за вычетом padding (670 - 40)
+      width: 480,
+      height: 700, // Точная высота за вычетом padding (740 - 40)
       size: 'stretch',
       pageMode: 'double',
       showCover: false,
       drawShadow: true,
-      flippingTime: 1000,
+      flippingTime: 2000,
       usePortrait: true,
       autoSize: true,
       maxShadowOpacity: 1,
@@ -1326,9 +1423,13 @@
   // Мини-книги
   const miniBooks = [];
   const autoFlipTimers = new Map();
+  let visibleIndices = [];
 
-  function startAutoFlip(flip, index) {
+  function startAutoFlip(index) {
     if (autoFlipTimers.has(index)) return;
+    const flip = miniBooks[index];
+    if (!flip) return;
+
     const timer = setInterval(() => {
       if (flip.getState() === 'read') {
         const pageCount = flip.getPageCount();
@@ -1339,7 +1440,7 @@
           flip.flipNext();
         }
       }
-    }, 3000);
+    }, 3500);
     autoFlipTimers.set(index, timer);
   }
 
@@ -1347,6 +1448,18 @@
     if (autoFlipTimers.has(index)) {
       clearInterval(autoFlipTimers.get(index));
       autoFlipTimers.delete(index);
+    }
+  }
+
+  function updateActiveAutoFlip() {
+    // Останавливаем все таймеры
+    for (let i = 0; i < miniBooks.length; i++) {
+      stopAutoFlip(i);
+    }
+    // Запускаем только для первой видимой книги в DOM-порядке
+    if (visibleIndices.length > 0) {
+      const activeIndex = Math.min(...visibleIndices);
+      startAutoFlip(activeIndex);
     }
   }
 
@@ -1360,15 +1473,15 @@
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         const index = parseInt(entry.target.dataset.bookIndex);
-        const flip = miniBooks[index];
-        if (!flip) return;
-
         if (entry.isIntersecting) {
-          startAutoFlip(flip, index);
+          if (!visibleIndices.includes(index)) {
+            visibleIndices.push(index);
+          }
         } else {
-          stopAutoFlip(index);
+          visibleIndices = visibleIndices.filter(i => i !== index);
         }
       });
+      updateActiveAutoFlip();
     }, observerOptions);
 
     containers.forEach((container, index) => {
@@ -1378,13 +1491,13 @@
       container.dataset.bookIndex = index;
 
       const flip = new St.PageFlip(inner, {
-        width: 240, // Ровно половина внутренней ширины (480 / 2)
-        height: 320, // Ровно внутренняя высота (340 - 20)
+        width: 250, // Ровно половина внутренней ширины (500 / 2)
+        height: 330, // Ровно внутренняя высота (350 - 20)
         size: 'stretch',
         pageMode: 'double',
         showCover: false,
         drawShadow: true,
-        flippingTime: 800,
+        flippingTime: 1500,
         usePortrait: true,
         autoSize: true,
         maxShadowOpacity: 0.8,
@@ -1446,47 +1559,83 @@
     const colorInputName = document.getElementById('selectedColor');
     const colorInputFile = document.getElementById('selectedColorFile');
 
+    const variantPicker = document.getElementById('variantPicker');
+    const variantButtons = document.querySelectorAll('.variant-btn');
+    let currentVariant = 'cross'; // 'cross' или 'no-cross'
+    let hintTimeout;
+
     if (!colorOptions.length || !bookCoverImg) return;
 
-    const hueMap = {
-      '#7A6ABE': '260deg',
-      '#D6206E': '330deg',
-      '#F0D41E': '50deg',
-      '#F0A828': '35deg',
-      '#1EBEEB': '190deg',
-      '#147A8D': '185deg',
-      '#2E5F91': '215deg',
-      '#9AA0A8': '0deg',
-      '#10161A': '0deg',
-      '#1E5434': '140deg'
-    };
+    function updateCoverImage() {
+      const selectedOption = document.querySelector('.color-option.selected');
+      if (!selectedOption) return;
 
-    function applyColor(option) {
-      colorOptions.forEach(opt => opt.classList.remove('selected'));
-      option.classList.add('selected');
+      const hasNoCross = selectedOption.hasAttribute('data-image-no-cross');
 
-      const colorName = option.getAttribute('data-name');
-      const imageName = option.getAttribute('data-image');
+      // Показываем/скрываем выбор варианта
+      if (hasNoCross) {
+        variantPicker.style.display = 'block';
+
+        // Эффект временной видимости при выборе
+        clearTimeout(hintTimeout);
+        variantPicker.style.opacity = '1';
+        hintTimeout = setTimeout(() => {
+          variantPicker.style.opacity = '0.7';
+        }, 1500); // 1.5 секунды
+      } else {
+        variantPicker.style.display = 'none';
+        currentVariant = 'cross'; // Сбрасываем на дефолт если нет варианта
+        variantButtons.forEach(btn => {
+          btn.classList.toggle('active', btn.dataset.variant === 'cross');
+        });
+      }
+
+      const colorName = selectedOption.getAttribute('data-name');
+      let imageName = selectedOption.getAttribute('data-image');
+
+      if (currentVariant === 'no-cross' && hasNoCross) {
+        imageName = selectedOption.getAttribute('data-image-no-cross');
+      }
 
       // Меняем путь к изображению
       bookCoverImg.style.opacity = '0.5';
       setTimeout(() => {
         bookCoverImg.src = imageName;
-        bookCoverImg.style.filter = 'none'; // Убираем фильтры, так как теперь используем реальные фото
         bookCoverImg.style.opacity = '1';
       }, 150);
 
-      colorInputName.value = colorName;
+      colorInputName.value = currentVariant === 'no-cross' ? `${colorName} (без креста)` : colorName;
       colorInputFile.value = imageName;
     }
 
     colorOptions.forEach(option => {
-      option.addEventListener('click', () => applyColor(option));
+      option.addEventListener('click', () => {
+        colorOptions.forEach(opt => opt.classList.remove('selected'));
+        option.classList.add('selected');
+        updateCoverImage();
+      });
     });
 
-    // Инициализация первого цвета
-    applyColor(colorOptions[0]);
+    variantButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        variantButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentVariant = btn.dataset.variant;
+        updateCoverImage();
+      });
+    });
+
+    // Инициализация
+    updateCoverImage();
   })();
+
+  // Блокировка сохранения изображений (контекстное меню и перетаскивание)
+  document.addEventListener('contextmenu', function(e) {
+    if (e.target.tagName === 'IMG') e.preventDefault();
+  }, false);
+  document.addEventListener('dragstart', function(e) {
+    if (e.target.tagName === 'IMG') e.preventDefault();
+  }, false);
 </script>
 </body>
 </html>
