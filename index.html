@@ -150,12 +150,12 @@
     }
     .hero-book-img {
       display: block;
-      flex: 0 0 auto; /* Запрещаем растягивание и сжатие по flex-базису */
-      width: auto;    /* Позволяем браузеру самому определять ширину */
-      max-width: 45%; /* Но не шире 45% контейнера */
+      flex: 0 0 auto;
+      width: auto;
+      max-width: 45%;
       height: auto;
-      max-height: 520px; /* Ограничиваем высоту */
-      object-fit: contain; /* Гарантируем сохранение пропорций */
+      max-height: 520px;
+      object-fit: contain;
       filter: drop-shadow(0 30px 60px rgba(0,0,0,0.7));
       transition: transform 0.5s ease, filter 0.5s ease;
       z-index: 5;
@@ -281,11 +281,6 @@
       pointer-events: none;
       opacity: 0.8;
     }
-
-      /* Значок приближения убран по требованию */
-      /*
-      .zoom-icon { ... }
-      */
 
     /* Оверлей полноразмерной книги */
     .book-overlay {
@@ -413,19 +408,11 @@
         width: 340px;
         height: 230px;
       }
-      .zoom-icon {
-        width: 38px;
-        height: 38px;
-      }
     }
     @media (max-width: 400px) {
       .mini-book-container {
         width: 280px;
         height: 190px;
-      }
-      .zoom-icon {
-        width: 30px;
-        height: 30px;
       }
     }
 
@@ -637,7 +624,7 @@
 
     .color-grid {
       display: grid;
-      grid-template-columns: repeat(5, 1fr); /* 5 колонок для 10 цветов */
+      grid-template-columns: repeat(5, 1fr);
       grid-template-rows: repeat(2, 1fr);
       gap: 8px;
       width: 100%;
@@ -668,7 +655,7 @@
 
     /* Варианты обложки */
     .variant-picker {
-      display: none; /* Скрыт по умолчанию */
+      display: none;
       background: #eee;
       padding: 2px;
       border-radius: 6px;
@@ -763,6 +750,17 @@
       accent-color: #b8860b;
     }
 
+    /* Стили для ссылок в чекбоксе */
+    .checkbox-group label a {
+      color: #b8860b;
+      text-decoration: underline;
+      transition: color 0.2s, text-decoration 0.2s;
+    }
+    .checkbox-group label a:hover {
+      color: #a0750a;
+      text-decoration: none;
+    }
+
     .submit-btn {
       width: 100%;
       padding: 15px;
@@ -786,66 +784,6 @@
       cursor: not-allowed;
     }
 
-    .form-group {
-      margin-bottom: 20px;
-    }
-
-    .form-group label {
-      display: block;
-      margin-bottom: 8px;
-      font-size: 14px;
-      color: #555;
-      font-weight: 600;
-    }
-
-    .form-input {
-      width: 100%;
-      padding: 12px 15px;
-      border: 1px solid #ddd;
-      border-radius: 6px;
-      font-size: 16px;
-      transition: border-color 0.2s;
-      font-family: 'Inter', sans-serif;
-    }
-
-    .form-input:focus {
-      outline: none;
-      border-color: #b8860b;
-    }
-
-    .checkbox-group {
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-      margin-bottom: 25px;
-      font-size: 13px;
-      color: #666;
-    }
-
-    .checkbox-group input {
-      margin-top: 3px;
-      cursor: pointer;
-      accent-color: #b8860b;
-    }
-
-    .submit-btn {
-      width: 100%;
-      padding: 15px;
-      background-color: #b8860b;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: background-color 0.2s;
-      font-family: 'Inter', sans-serif;
-    }
-
-    .submit-btn:hover {
-      background-color: #a0750a;
-    }
-
     .close-modal {
       position: absolute;
       top: 15px;
@@ -867,12 +805,12 @@
         grid-template-columns: 1fr;
         max-height: 90vh;
         overflow-y: auto;
-        border-radius: 12px; /* Явно подтверждаем скругление для всех сторон */
-        scrollbar-width: none; /* Firefox */
-        -ms-overflow-style: none;  /* IE and Edge */
+        border-radius: 12px;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
       }
       .modal-container::-webkit-scrollbar {
-        display: none; /* Chrome, Safari, Opera */
+        display: none;
       }
       .modal-visual {
         border-right: none;
@@ -899,37 +837,6 @@
       .submit-btn {
         padding: 12px;
       }
-    }
-
-    footer {
-      background: #111;
-      color: #aaa;
-      padding: 40px 0;
-      text-align: center;
-      font-size: 0.9rem;
-    }
-    footer a {
-      color: #aaa;
-      text-decoration: none;
-      transition: color 0.3s;
-    }
-    footer a:hover {
-      color: #b8860b;
-    }
-    .footer-contacts {
-      margin: 15px 0;
-    }
-    .footer-links {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      flex-wrap: wrap;
-      margin-top: 15px;
-      font-size: 0.8rem;
-      opacity: 0.7;
-    }
-    .footer-links a:hover {
-      opacity: 1;
     }
 
     /* Cookie Banner */
@@ -1016,6 +923,68 @@
         height: 190px;
       }
     }
+
+    /* ===== Стили для нового футера ===== */
+    .footer-new {
+      background: #111;
+      color: #aaa;
+      padding: 60px 0 40px;
+      border-top: 1px solid #2a2a2a;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+    .footer-col .footer-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 20px;
+    }
+    .footer-col p {
+      color: #aaa;
+      font-size: 0.9rem;
+      line-height: 1.8;
+    }
+    .footer-links {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .footer-links li {
+      margin-bottom: 10px;
+    }
+    .footer-links a {
+      color: #aaa;
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.3s;
+    }
+    .footer-links a:hover {
+      color: #b8860b;
+    }
+    .footer-bottom {
+      text-align: center;
+      padding-top: 30px;
+      border-top: 1px solid #2a2a2a;
+    }
+    .footer-bottom p {
+      color: #666;
+      font-size: 0.85rem;
+    }
+    @media (max-width: 768px) {
+      .footer-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 30px;
+      }
+      .footer-col .footer-title {
+        text-align: center;
+      }
+    }
   </style>
 </head>
 <body>
@@ -1056,7 +1025,6 @@
       <div class="mini-book-wrapper">
         <div class="mini-book-container" data-book="0">
           <div class="mini-book-inner" id="miniBook0"></div>
-          <!-- zoom-icon removed -->
         </div>
       </div>
     </div>
@@ -1073,7 +1041,6 @@
       <div class="mini-book-wrapper">
         <div class="mini-book-container" data-book="1">
           <div class="mini-book-inner" id="miniBook1"></div>
-          <!-- zoom-icon removed -->
         </div>
       </div>
     </div>
@@ -1090,7 +1057,6 @@
       <div class="mini-book-wrapper">
         <div class="mini-book-container" data-book="2">
           <div class="mini-book-inner" id="miniBook2"></div>
-          <!-- zoom-icon removed -->
         </div>
       </div>
     </div>
@@ -1107,7 +1073,6 @@
       <div class="mini-book-wrapper">
         <div class="mini-book-container" data-book="3">
           <div class="mini-book-inner" id="miniBook3"></div>
-          <!-- zoom-icon removed -->
         </div>
       </div>
     </div>
@@ -1124,7 +1089,6 @@
       <div class="mini-book-wrapper">
         <div class="mini-book-container" data-book="4">
           <div class="mini-book-inner" id="miniBook4"></div>
-          <!-- zoom-icon removed -->
         </div>
       </div>
     </div>
@@ -1141,7 +1105,6 @@
       <div class="mini-book-wrapper">
         <div class="mini-book-container" data-book="5">
           <div class="mini-book-inner" id="miniBook5"></div>
-          <!-- zoom-icon removed -->
         </div>
       </div>
     </div>
@@ -1310,7 +1273,9 @@
 
         <div class="checkbox-group">
           <input type="checkbox" id="pd-agree" required>
-          <label for="pd-agree">Я согласен на обработку персональных данных и принимаю условия политики конфиденциальности.</label>
+          <label for="pd-agree">
+            Я согласен на <a href="personal-data-processing.html" target="_blank">обработку персональных данных</a> и принимаю условия <a href="privacy-policy.html" target="_blank">политики конфиденциальности</a>.
+          </label>
         </div>
 
         <button type="submit" class="submit-btn" id="submitBtn">Отправить заявку</button>
@@ -1329,16 +1294,34 @@
   </div>
 </div>
 
-<footer>
+<!-- ===== НОВЫЙ ФУТЕР (аккуратно обновлён) ===== -->
+<footer class="footer-new">
   <div class="container">
-    <p>© 2026 Учебная Библия. Все права защищены.</p>
-    <div class="footer-contacts">
-      По вопросам: <a href="mailto:u.bible@mail.ru">u.bible@mail.ru</a>
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4 class="footer-title">Учебная Библия</h4>
+        <p>Уникальное цветное издание с археологическими комментариями, картами, таблицами и родословными. Создано для глубокого понимания Писания.</p>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-title">Контакты</h4>
+        <ul class="footer-links">
+          <li><a href="mailto:u.bible@mail.ru">u.bible@mail.ru</a></li>
+          <li><a href="tel:+79006249457">+7 (900) 624-94-57</a></li>
+          <li>198152, г. Санкт-Петербург,<br>ул. Краснопутиловская, д. 42, кв. 23</li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-title">Правовая информация</h4>
+        <ul class="footer-links">
+          <li><a href="privacy-policy.html">Политика конфиденциальности</a></li>
+          <li><a href="personal-data-processing.html">Обработка персональных данных</a></li>
+          <li><a href="cookies-policy.html">Файлы cookie</a></li>
+          <li><a href="offer.html">Договор оферты</a></li>
+        </ul>
+      </div>
     </div>
-    <div class="footer-links">
-      <a href="privacy-policy.html" target="_blank">Политика конфиденциальности</a>
-      <a href="personal-data-processing.html" target="_blank">Обработка персональных данных</a>
-      <a href="cookies-policy.html" target="_blank">Файлы cookie</a>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Учебная Библия. Все права защищены.</p>
     </div>
   </div>
 </footer>
@@ -1353,7 +1336,7 @@
 <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 <script>
-  // ===== Все скрипты =====
+  // ===== Все скрипты (без изменений) =====
   function toggleFAQ(el) {
     const answer = el.nextElementSibling;
     const arrow = el.querySelector('.arrow');
@@ -1478,11 +1461,17 @@
     ] // Карты
   ];
 
+  let fullFlipbook;
+  let fullBookInitialized = false;
+  const bookContainer = document.getElementById('book-container');
+  const bookOverlay = document.getElementById('bookOverlay');
+  const bookClose = document.getElementById('bookClose');
+
   function initFullBook() {
     if (fullBookInitialized) return;
     fullFlipbook = new St.PageFlip(bookContainer, {
       width: 480,
-      height: 700, // Точная высота за вычетом padding (740 - 40)
+      height: 700,
       size: 'stretch',
       pageMode: 'double',
       showCover: false,
@@ -1559,11 +1548,9 @@
   }
 
   function updateActiveAutoFlip() {
-    // Останавливаем все таймеры
     for (let i = 0; i < miniBooks.length; i++) {
       stopAutoFlip(i);
     }
-    // Запускаем только для первой видимой книги в DOM-порядке
     if (visibleIndices.length > 0) {
       const activeIndex = Math.min(...visibleIndices);
       startAutoFlip(activeIndex);
@@ -1598,8 +1585,8 @@
       container.dataset.bookIndex = index;
 
       const flip = new St.PageFlip(inner, {
-        width: 250, // Ровно половина внутренней ширины (500 / 2)
-        height: 330, // Ровно внутренняя высота (350 - 20)
+        width: 250,
+        height: 330,
         size: 'stretch',
         pageMode: 'double',
         showCover: false,
@@ -1613,13 +1600,10 @@
         clickFlip: true
       });
 
-      // Загружаем уникальные 4 страницы для этого блока
       flip.loadFromImages(miniBookPages[index] || miniBookPages[0]);
       miniBooks[index] = flip;
 
       observer.observe(container);
-
-      // zoomIcon event removed
     });
   }
 
@@ -1668,7 +1652,7 @@
 
     const variantPicker = document.getElementById('variantPicker');
     const variantButtons = document.querySelectorAll('.variant-btn');
-    let currentVariant = 'cross'; // 'cross' или 'no-cross'
+    let currentVariant = 'cross';
     let hintTimeout;
 
     if (!colorOptions.length || !bookCoverImg) return;
@@ -1679,19 +1663,16 @@
 
       const hasNoCross = selectedOption.hasAttribute('data-image-no-cross');
 
-      // Показываем/скрываем выбор варианта
       if (hasNoCross) {
         variantPicker.style.display = 'block';
-
-        // Эффект временной видимости при выборе
         clearTimeout(hintTimeout);
         variantPicker.style.opacity = '1';
         hintTimeout = setTimeout(() => {
           variantPicker.style.opacity = '0.7';
-        }, 1500); // 1.5 секунды
+        }, 1500);
       } else {
         variantPicker.style.display = 'none';
-        currentVariant = 'cross'; // Сбрасываем на дефолт если нет варианта
+        currentVariant = 'cross';
         variantButtons.forEach(btn => {
           btn.classList.toggle('active', btn.dataset.variant === 'cross');
         });
@@ -1704,7 +1685,6 @@
         imageName = selectedOption.getAttribute('data-image-no-cross');
       }
 
-      // Меняем путь к изображению
       bookCoverImg.style.opacity = '0.5';
       setTimeout(() => {
         bookCoverImg.src = imageName;
@@ -1732,7 +1712,6 @@
       });
     });
 
-    // Инициализация
     updateCoverImage();
   })();
 
