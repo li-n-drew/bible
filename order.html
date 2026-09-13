@@ -6,10 +6,26 @@
   <title>Оформление заказа — Учебная Библия</title>
   <meta name="robots" content="noindex, nofollow" />
   <link rel="canonical" href="https://ubible.ru/order.html" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 220'%3E%3Crect x='10' y='10' width='160' height='200' rx='12' fill='%23b8860b' stroke='%23a0750a' stroke-width='2'/%3E%3Crect x='72' y='60' width='36' height='100' rx='4' fill='white'/%3E%3Crect x='40' y='78' width='100' height='36' rx='4' fill='white'/%3E%3C/svg%3E" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 220'%3E%3Crect x='10' y='10' width='160' height='200' rx='12' fill='%23b8860b' stroke='%23a0750a' stroke-width='2'/%3E%3Crect x='72' y='60' width='36' height='100' rx='4' fill='white'/%3E%3Crect x='40' y='78' width='100' height='36' rx='4' fill='white'/%3E%3C/svg%3E" />
+
+  <!-- Yandex.Metrika counter -->
+  <script type="text/javascript">
+      (function(m,e,t,r,i,k,a){
+          m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+          m[i].l=1*new Date();
+          for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+          k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+      })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=111876007', 'ym');
+
+      ym(111876007, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+  </script>
+  <noscript><div><img src="https://mc.yandex.ru/watch/111876007" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+  <!-- /Yandex.Metrika counter -->
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
 
   <!-- ==== ЯНДЕКС.КАРТЫ (JavaScript API) ==== -->
   <script src="https://api-maps.yandex.ru/2.1/?apikey=02ff0967-9837-45a0-b2eb-8de48c4db371&lang=ru_RU&load=package.full" type="text/javascript"></script>
@@ -30,21 +46,21 @@
     a:hover { color: #a0750a; }
     .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; width: 100%; }
 
-    /* ===== Header ===== */
-    .checkout-header { background: #1a2a3a; color: #fff; padding: 18px 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    /* ===== Header (как на информационных страницах — светлый) ===== */
+    .checkout-header { background: #f9f7f4; color: #1e1e1e; padding: 18px 0; border-bottom: 1px solid #ddd; }
     .checkout-header .container { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
-    .checkout-header .logo { font-family: 'Playfair Display', serif; font-size: 1.25rem; font-weight: 700; color: #fff; }
+    .checkout-header .logo { font-family: 'Playfair Display', serif; font-size: 1.25rem; font-weight: 700; color: #1e1e1e; }
     .checkout-header .logo span { color: #b8860b; }
     .checkout-header .back-link { color: #b8860b; font-size: 0.9rem; margin-left: auto; }
-    .checkout-header .back-link:hover { color: #d4a373; }
+    .checkout-header .back-link:hover { color: #a0750a; }
 
     /* ===== Main layout ===== */
     .checkout-main { flex: 1; padding: 40px 0 80px; }
     .checkout-grid { display: grid; grid-template-columns: 1fr 400px; gap: 32px; align-items: start; }
     @media (max-width: 960px) { .checkout-grid { grid-template-columns: 1fr; } }
 
-    /* ===== Card ===== */
-    .card { background: #fff; border-radius: 16px; padding: 28px; box-shadow: 0 4px 16px rgba(0,0,0,0.04); margin-bottom: 20px; }
+    /* ===== Card (единый стиль с delivery.html: radius 20px, тень) ===== */
+    .card { background: #fff; border: 1px solid #eee; border-radius: 16px; padding: 28px; box-shadow: 0 4px 16px rgba(0,0,0,0.04); margin-bottom: 20px; }
     .card-title { font-family: 'Playfair Display', serif; font-size: 1.4rem; margin-bottom: 20px; padding-bottom: 14px; border-bottom: 1px solid #eee; display: flex; align-items: center; gap: 12px; }
     .step-num { display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; background: #b8860b; color: #fff; border-radius: 50%; font-family: 'Inter', sans-serif; font-size: 0.9rem; font-weight: 700; flex-shrink: 0; }
 
@@ -140,28 +156,28 @@
     .checkbox-group input { margin-top: 3px; accent-color: #b8860b; cursor: pointer; }
     .checkbox-group label { cursor: pointer; }
 
-    /* ===== Summary ===== */
-    .summary-card { background: #1a2a3a; color: #fff; border-radius: 16px; padding: 24px; position: sticky; top: 20px; }
-    .summary-title { font-family: 'Playfair Display', serif; font-size: 1.3rem; margin-bottom: 18px; }
+    /* ===== Summary (светлая карточка, как на инфо-страницах) ===== */
+    .summary-card { background: #fff; color: #1e1e1e; border: 1px solid #eee; border-radius: 16px; padding: 24px; box-shadow: 0 4px 16px rgba(0,0,0,0.04); position: sticky; top: 20px; }
+    .summary-title { font-family: 'Playfair Display', serif; font-size: 1.3rem; margin-bottom: 18px; color: #1e2a3a; }
     .summary-items { max-height: 300px; overflow-y: auto; margin: 0 -6px; padding: 0 6px; }
     .summary-items::-webkit-scrollbar { width: 4px; }
-    .summary-items::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 4px; }
-    .summary-item { display: flex; justify-content: space-between; gap: 12px; padding: 8px 0; font-size: 0.85rem; color: #c9d1d9; border-bottom: 1px dashed rgba(255,255,255,0.06); }
+    .summary-items::-webkit-scrollbar-thumb { background: #ddd; border-radius: 4px; }
+    .summary-item { display: flex; justify-content: space-between; gap: 12px; padding: 8px 0; font-size: 0.85rem; color: #555; border-bottom: 1px dashed #eee; }
     .summary-item:last-child { border-bottom: none; }
     .summary-item .sname { flex: 1; min-width: 0; }
-    .summary-item .sname .svariant { color: #8a95a3; font-size: 0.78rem; display: block; }
-    .summary-item .sqty { white-space: nowrap; color: #8a95a3; }
-    .summary-item .ssum { white-space: nowrap; color: #fff; font-weight: 600; }
-    .summary-empty { font-size: 0.85rem; color: #8a95a3; font-style: italic; padding: 6px 0; }
-    .summary-row { display: flex; justify-content: space-between; padding: 10px 0; font-size: 0.95rem; color: #c9d1d9; }
-    .summary-divider { height: 1px; background: rgba(255,255,255,0.08); margin: 12px 0; }
-    .summary-row.total { border-top: 1px solid rgba(255,255,255,0.15); margin-top: 8px; padding-top: 16px; font-size: 1.35rem; font-weight: 700; color: #fff; font-family: 'Playfair Display', serif; }
-    .summary-row.total .amount { color: #d4a373; }
+    .summary-item .sname .svariant { color: #888; font-size: 0.78rem; display: block; }
+    .summary-item .sqty { white-space: nowrap; color: #888; }
+    .summary-item .ssum { white-space: nowrap; color: #1e1e1e; font-weight: 600; }
+    .summary-empty { font-size: 0.85rem; color: #999; font-style: italic; padding: 6px 0; }
+    .summary-row { display: flex; justify-content: space-between; padding: 10px 0; font-size: 0.95rem; color: #555; }
+    .summary-divider { height: 1px; background: #eee; margin: 12px 0; }
+    .summary-row.total { border-top: 1px solid #eee; margin-top: 8px; padding-top: 16px; font-size: 1.35rem; font-weight: 700; color: #1e1e1e; font-family: 'Playfair Display', serif; }
+    .summary-row.total .amount { color: #b8860b; }
 
     .btn-submit { width: 100%; padding: 16px; background: #b8860b; color: #fff; border: none; border-radius: 50px; font-size: 1rem; font-weight: 700; cursor: pointer; font-family: 'Inter', sans-serif; margin-top: 18px; transition: background 0.2s, transform 0.15s; box-shadow: 0 8px 20px rgba(184, 134, 11, 0.3); }
     .btn-submit:hover:not(:disabled) { background: #a0750a; transform: translateY(-1px); }
     .btn-submit:disabled { background: #999; cursor: not-allowed; box-shadow: none; }
-    .summary-note { font-size: 0.78rem; color: #8a95a3; margin-top: 14px; line-height: 1.5; }
+    .summary-note { font-size: 0.78rem; color: #888; margin-top: 14px; line-height: 1.5; }
 
     /* ===== Modal map ===== */
     .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: none; justify-content: center; align-items: center; z-index: 1000; backdrop-filter: blur(3px); padding: 20px; }
@@ -220,9 +236,39 @@
     .success-screen h2 { margin-bottom: 16px; }
     .success-screen p { color: #555; margin-bottom: 12px; }
 
-    /* ===== Footer ===== */
-    .footer-new { background: #111; color: #aaa; padding: 40px 0 30px; border-top: 1px solid #2a2a2a; font-size: 0.85rem; text-align: center; }
-    .footer-new a { color: #b8860b; }
+    /* ===== Footer (как на информационных страницах — светлый) ===== */
+    .footer {
+      background: #f0ede8;
+      padding: 40px 0 30px;
+      border-top: 1px solid #ddd;
+      font-size: 0.85rem;
+      text-align: center;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 40px;
+      margin-bottom: 30px;
+      text-align: left;
+    }
+    .footer-title {
+      font-size: 1.1rem;
+      margin-bottom: 24px;
+      font-weight: 600;
+      color: #1e1e1e;
+      font-family: 'Playfair Display', serif;
+    }
+    .footer-col p {
+      color: #555;
+      font-size: 0.9rem;
+      line-height: 1.8;
+    }
+    .footer-links { list-style: none; padding: 0; margin: 0; }
+    .footer-links li { margin-bottom: 12px; }
+    .footer-links a { color: #555; text-decoration: none; font-size: 0.9rem; transition: color 0.3s ease; }
+    .footer-links a:hover { color: #b8860b; }
+    .footer-bottom { text-align: center; padding-top: 30px; border-top: 1px solid #ddd; }
+    .footer-bottom p { color: #777; font-size: 0.85rem; }
 
     @media (max-width: 600px) {
       .card { padding: 20px; border-radius: 12px; }
@@ -445,8 +491,8 @@
 
             <div class="checkbox-group" style="margin-top: 22px;">
               <input type="checkbox" id="pd-agree" required>
-              <label for="pd-agree" style="color:#c9d1d9;">
-                Я согласен на <a href="personal-data-processing.html" target="_blank" style="color:#d4a373;">обработку персональных данных</a> и принимаю условия <a href="privacy-policy.html" target="_blank" style="color:#d4a373;">политики конфиденциальности</a>.
+              <label for="pd-agree" style="color:#555;">
+                Я согласен на <a href="personal-data-processing.html" target="_blank" style="color:#b8860b;">обработку персональных данных</a> и принимаю условия <a href="privacy-policy.html" target="_blank" style="color:#b8860b;">политики конфиденциальности</a>.
               </label>
             </div>
 
@@ -494,10 +540,34 @@
   </div>
 </div>
 
-<!-- ===== FOOTER ===== -->
-<footer class="footer-new">
+<!-- ===== FOOTER (как на информационных страницах) ===== -->
+<footer class="footer">
   <div class="container">
-    <p>&copy; 2026 Учебная Библия · <a href="privacy-policy.html">Политика конфиденциальности</a> · <a href="offer.html">Договор оферты</a></p>
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4 class="footer-title">Учебная Библия</h4>
+        <p>Уникальное цветное издание с археологическими комментариями, картами, таблицами и родословными. Создано для глубокого понимания Писания.</p>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-title">Контакты</h4>
+        <ul class="footer-links">
+          <li><a href="mailto:u.bible@mail.ru">u.bible@mail.ru</a></li>
+          <li><a href="tel:+79006249457">+7 (900) 624-94-57</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-title">Правовая информация</h4>
+        <ul class="footer-links">
+          <li><a href="privacy-policy.html">Политика конфиденциальности</a></li>
+          <li><a href="personal-data-processing.html">Обработка персональных данных</a></li>
+          <li><a href="cookies-policy.html">Файлы cookie</a></li>
+          <li><a href="offer.html">Договор оферты</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Учебная Библия. Все права защищены.</p>
+    </div>
   </div>
 </footer>
 
