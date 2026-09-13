@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Оформление заказа — Учебная Библия</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="canonical" href="https://ubible.ru/order.html" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+  <!-- ==== ЯНДЕКС.КАРТЫ (JavaScript API) ==== -->
+  <script src="https://api-maps.yandex.ru/2.1/?apikey=02ff0967-9837-45a0-b2eb-8de48c4db371&lang=ru_RU&load=package.full" type="text/javascript"></script>
+
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f9f7f4;
+      color: #1e1e1e;
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    h1, h2, h3 { font-family: 'Playfair Display', serif; font-weight: 700; letter-spacing: -0.02em; }
+    a { color: #b8860b; text-decoration: none; transition: color 0.2s; }
+    a:hover { color: #a0750a; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; width: 100%; }
+
+    /* ===== Header ===== */
+    .checkout-header { background: #1a2a3a; color: #fff; padding: 18px 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .checkout-header .container { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+    .checkout-header .logo { font-family: 'Playfair Display', serif; font-size: 1.25rem; font-weight: 700; color: #fff; }
+    .checkout-header .logo span { color: #b8860b; }
+    .checkout-header .back-link { color: #b8860b; font-size: 0.9rem; margin-left: auto; }
+    .checkout-header .back-link:hover { color: #d4a373; }
+
+    /* ===== Main layout ===== */
+    .checkout-main { flex: 1; padding: 40px 0 80px; }
+    .checkout-grid { display: grid; grid-template-columns: 1fr 400px; gap: 32px; align-items: start; }
+    @media (max-width: 960px) { .checkout-grid { grid-template-columns: 1fr; } }
+
+    /* ===== Card ===== */
+    .card { background: #fff; border-radius: 16px; padding: 28px; box-shadow: 0 4px 16px rgba(0,0,0,0.04); margin-bottom: 20px; }
+    .card-title { font-family: 'Playfair Display', serif; font-size: 1.4rem; margin-bottom: 20px; padding-bottom: 14px; border-bottom: 1px solid #eee; display: flex; align-items: center; gap: 12px; }
+    .step-num { display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; background: #b8860b; color: #fff; border-radius: 50%; font-family: 'Inter', sans-serif; font-size: 0.9rem; font-weight: 700; flex-shrink: 0; }
+
+    /* ===== Book preview ===== */
+    .book-row { display: flex; gap: 20px; align-items: flex-start; }
+    .book-thumb { width: 140px; height: 210px; border-radius: 8px; overflow: hidden; flex-shrink: 0; background: #f0ede8; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+    .book-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; transition: opacity 0.2s; }
+    .book-info { flex: 1; min-width: 0; }
+    .book-info h3 { font-size: 1.15rem; margin-bottom: 6px; font-family: 'Inter', sans-serif; font-weight: 600; letter-spacing: 0; }
+    .book-info .price { font-size: 1.35rem; font-weight: 700; color: #b8860b; }
+    .book-info .subtext { font-size: 0.88rem; color: #666; margin-top: 4px; }
+    .picker-block { margin-top: 18px; }
+    .picker-label { font-size: 0.82rem; color: #666; font-weight: 600; margin-bottom: 8px; display: block; letter-spacing: 0.02em; }
+
+    /* ===== Color picker ===== */
+    .color-grid { display: grid; grid-template-columns: repeat(10, 1fr); gap: 8px; }
+    @media (max-width: 640px) { .color-grid { grid-template-columns: repeat(5, 1fr); } }
+    .color-option { width: 100%; aspect-ratio: 1; border-radius: 6px; cursor: pointer; border: 2px solid transparent; transition: transform 0.15s, border-color 0.15s; position: relative; }
+    .color-option:hover { transform: scale(1.15); z-index: 2; }
+    .color-option.selected { border-color: #1e1e1e; transform: scale(1.15); box-shadow: 0 2px 6px rgba(0,0,0,0.2); z-index: 2; }
+
+    .variant-picker-inline { display: none; margin-top: 10px; }
+    .variant-picker-inline.visible { display: block; }
+    .variant-toggle { display: inline-flex; background: #f0ede8; border-radius: 8px; padding: 3px; gap: 2px; }
+    .variant-btn { padding: 6px 14px; border: none; border-radius: 6px; font-size: 0.78rem; font-weight: 600; cursor: pointer; background: transparent; color: #777; transition: all 0.2s; font-family: 'Inter', sans-serif; }
+    .variant-btn.active { background: #fff; color: #1e1e1e; box-shadow: 0 1px 4px rgba(0,0,0,0.1); }
+
+    /* ===== Add row ===== */
+    .add-row { display: flex; gap: 12px; align-items: flex-end; margin-top: 20px; flex-wrap: wrap; }
+    .qty-field { flex: 0 0 auto; }
+    .qty-field .picker-label { margin-bottom: 6px; }
+    .qty-stepper { display: inline-flex; align-items: center; border: 1px solid #ddd; border-radius: 8px; overflow: hidden; background: #fff; }
+    .qty-stepper button { width: 36px; height: 40px; border: none; background: transparent; font-size: 1.1rem; cursor: pointer; color: #555; transition: background 0.15s; font-family: 'Inter', sans-serif; }
+    .qty-stepper button:hover { background: #f5f2ec; color: #1e1e1e; }
+    .qty-stepper input { width: 48px; height: 40px; border: none; text-align: center; font-size: 1rem; font-weight: 600; background: transparent; font-family: 'Inter', sans-serif; -moz-appearance: textfield; }
+    .qty-stepper input::-webkit-outer-spin-button, .qty-stepper input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+
+    .add-btn { flex: 1; min-width: 200px; padding: 12px 24px; background: #b8860b; color: #fff; border: none; border-radius: 8px; font-size: 0.95rem; font-weight: 700; cursor: pointer; font-family: 'Inter', sans-serif; transition: background 0.2s, transform 0.15s; box-shadow: 0 4px 12px rgba(184, 134, 11, 0.25); }
+    .add-btn:hover { background: #a0750a; transform: translateY(-1px); }
+    .add-btn:active { transform: translateY(0); }
+
+    /* ===== Cart ===== */
+    .cart-section { margin-top: 28px; padding-top: 24px; border-top: 1px dashed #e5e0d6; }
+    .cart-section-title { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+    .cart-section-title h4 { font-family: 'Inter', sans-serif; font-size: 0.95rem; font-weight: 600; color: #333; letter-spacing: 0; }
+    .cart-count { background: #b8860b; color: #fff; font-size: 0.75rem; padding: 2px 9px; border-radius: 20px; font-weight: 700; }
+    .cart-empty { padding: 22px 16px; text-align: center; color: #999; font-size: 0.9rem; background: #f9f7f4; border-radius: 10px; border: 1px dashed #e0dacc; }
+    .cart-list { display: flex; flex-direction: column; gap: 10px; }
+    .cart-item { display: flex; gap: 14px; align-items: center; padding: 12px; background: #f9f7f4; border-radius: 12px; border: 1px solid #efeae0; }
+    .cart-item-thumb { width: 52px; height: 78px; border-radius: 6px; overflow: hidden; flex-shrink: 0; background: #fff; box-shadow: 0 2px 6px rgba(0,0,0,0.08); }
+    .cart-item-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .cart-item-body { flex: 1; min-width: 0; }
+    .cart-item-name { font-weight: 600; font-size: 0.92rem; margin-bottom: 2px; }
+    .cart-item-variant { font-size: 0.82rem; color: #666; margin-bottom: 8px; }
+    .cart-item-controls { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .qty-stepper-sm { display: inline-flex; align-items: center; border: 1px solid #ddd; border-radius: 6px; overflow: hidden; background: #fff; }
+    .qty-stepper-sm button { width: 28px; height: 28px; border: none; background: transparent; font-size: 0.9rem; cursor: pointer; color: #555; font-family: 'Inter', sans-serif; }
+    .qty-stepper-sm button:hover { background: #f5f2ec; color: #1e1e1e; }
+    .qty-stepper-sm .qty-val { min-width: 28px; text-align: center; font-size: 0.85rem; font-weight: 600; }
+    .cart-item-price { font-size: 0.88rem; color: #666; }
+    .cart-item-sum { font-weight: 700; color: #1e1e1e; font-size: 0.95rem; margin-left: auto; white-space: nowrap; }
+    .cart-remove { width: 30px; height: 30px; border: none; background: transparent; border-radius: 50%; color: #999; font-size: 1.3rem; line-height: 1; cursor: pointer; flex-shrink: 0; transition: background 0.2s, color 0.2s; }
+    .cart-remove:hover { background: #f0dede; color: #c62828; }
+
+    /* ===== Delivery ===== */
+    .delivery-list { display: flex; flex-direction: column; gap: 12px; }
+    .delivery-option { border: 2px solid #eee; border-radius: 12px; padding: 16px 18px; cursor: pointer; transition: border-color 0.2s, background 0.2s; background: #fff; }
+    .delivery-option:hover { border-color: #d4c4a0; }
+    .delivery-option.selected { border-color: #b8860b; background: #fdfaf3; }
+    .delivery-option-head { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+    .delivery-option-head .radio-dot { width: 20px; height: 20px; border: 2px solid #ccc; border-radius: 50%; flex-shrink: 0; position: relative; transition: border-color 0.2s; }
+    .delivery-option.selected .radio-dot { border-color: #b8860b; }
+    .delivery-option.selected .radio-dot::after { content: ''; position: absolute; inset: 4px; background: #b8860b; border-radius: 50%; }
+    .delivery-name { font-weight: 600; font-size: 1rem; flex: 1; }
+    .delivery-price { font-weight: 700; color: #b8860b; white-space: nowrap; }
+    .delivery-sub { font-size: 0.85rem; color: #666; margin-top: 4px; margin-left: 34px; }
+    .delivery-pvz-actions { margin-top: 14px; margin-left: 34px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .pvz-status { font-size: 0.88rem; color: #555; }
+    .pvz-status strong { color: #1e1e1e; }
+    .pvz-status.empty { color: #999; font-style: italic; }
+
+    .btn-sm { padding: 8px 18px; border-radius: 30px; border: 2px solid #b8860b; background: transparent; color: #b8860b; font-weight: 600; font-size: 0.85rem; cursor: pointer; font-family: 'Inter', sans-serif; transition: all 0.2s; }
+    .btn-sm:hover { background: #b8860b; color: #fff; }
+
+    /* ===== Form ===== */
+    .form-group { margin-bottom: 18px; }
+    .form-group label { display: block; margin-bottom: 6px; font-size: 0.85rem; font-weight: 600; color: #444; }
+    .form-input { width: 100%; padding: 12px 14px; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem; font-family: 'Inter', sans-serif; transition: border-color 0.2s; background: #fff; }
+    .form-input:focus { outline: none; border-color: #b8860b; }
+    .form-input.error { border-color: #e53935; }
+
+    .checkbox-group { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 14px; font-size: 0.82rem; color: #666; }
+    .checkbox-group input { margin-top: 3px; accent-color: #b8860b; cursor: pointer; }
+    .checkbox-group label { cursor: pointer; }
+
+    /* ===== Summary ===== */
+    .summary-card { background: #1a2a3a; color: #fff; border-radius: 16px; padding: 24px; position: sticky; top: 20px; }
+    .summary-title { font-family: 'Playfair Display', serif; font-size: 1.3rem; margin-bottom: 18px; }
+    .summary-items { max-height: 300px; overflow-y: auto; margin: 0 -6px; padding: 0 6px; }
+    .summary-items::-webkit-scrollbar { width: 4px; }
+    .summary-items::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 4px; }
+    .summary-item { display: flex; justify-content: space-between; gap: 12px; padding: 8px 0; font-size: 0.85rem; color: #c9d1d9; border-bottom: 1px dashed rgba(255,255,255,0.06); }
+    .summary-item:last-child { border-bottom: none; }
+    .summary-item .sname { flex: 1; min-width: 0; }
+    .summary-item .sname .svariant { color: #8a95a3; font-size: 0.78rem; display: block; }
+    .summary-item .sqty { white-space: nowrap; color: #8a95a3; }
+    .summary-item .ssum { white-space: nowrap; color: #fff; font-weight: 600; }
+    .summary-empty { font-size: 0.85rem; color: #8a95a3; font-style: italic; padding: 6px 0; }
+    .summary-row { display: flex; justify-content: space-between; padding: 10px 0; font-size: 0.95rem; color: #c9d1d9; }
+    .summary-divider { height: 1px; background: rgba(255,255,255,0.08); margin: 12px 0; }
+    .summary-row.total { border-top: 1px solid rgba(255,255,255,0.15); margin-top: 8px; padding-top: 16px; font-size: 1.35rem; font-weight: 700; color: #fff; font-family: 'Playfair Display', serif; }
+    .summary-row.total .amount { color: #d4a373; }
+
+    .btn-submit { width: 100%; padding: 16px; background: #b8860b; color: #fff; border: none; border-radius: 50px; font-size: 1rem; font-weight: 700; cursor: pointer; font-family: 'Inter', sans-serif; margin-top: 18px; transition: background 0.2s, transform 0.15s; box-shadow: 0 8px 20px rgba(184, 134, 11, 0.3); }
+    .btn-submit:hover:not(:disabled) { background: #a0750a; transform: translateY(-1px); }
+    .btn-submit:disabled { background: #999; cursor: not-allowed; box-shadow: none; }
+    .summary-note { font-size: 0.78rem; color: #8a95a3; margin-top: 14px; line-height: 1.5; }
+
+    /* ===== Modal map ===== */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: none; justify-content: center; align-items: center; z-index: 1000; backdrop-filter: blur(3px); padding: 20px; }
+    .modal-overlay.active { display: flex; }
+    .modal-box-map {
+      background: #fff;
+      width: 900px;
+      max-width: 100%;
+      max-height: 92vh;
+      border-radius: 16px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      animation: modalFade 0.25s ease;
+    }
+    @keyframes modalFade { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    .modal-map-header {
+      padding: 20px 24px 16px;
+      border-bottom: 1px solid #eee;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+    .modal-map-header h2 { font-family: 'Playfair Display', serif; font-size: 1.25rem; margin: 0; }
+    .modal-map-header .service-badge { background: #b8860b; color: #fff; font-size: 0.75rem; font-weight: 700; padding: 4px 12px; border-radius: 20px; letter-spacing: 0.03em; text-transform: uppercase; }
+    .modal-close-map { margin-left: auto; width: 36px; height: 36px; border: none; background: transparent; font-size: 24px; color: #999; cursor: pointer; border-radius: 50%; transition: background 0.2s, color 0.2s; line-height: 1; }
+    .modal-close-map:hover { background: #f0ede8; color: #1e1e1e; }
+
+    .map-hint {
+      font-size: 0.82rem;
+      color: #666;
+      padding: 12px 24px;
+      background: #f9f7f4;
+      line-height: 1.5;
+      border-bottom: 1px solid #eee;
+    }
+    .map-hint strong { color: #1e1e1e; }
+
+    #pvzMap { flex: 1; min-height: 460px; width: 100%; background: #e8e4dd; }
+
+    .modal-map-footer { padding: 16px 24px; border-top: 1px solid #eee; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; background: #fff; }
+    .modal-map-footer .selected-info { flex: 1; min-width: 0; font-size: 0.9rem; color: #555; line-height: 1.4; }
+    .modal-map-footer .selected-info strong { color: #1e1e1e; }
+    .modal-map-footer .selected-info.empty { color: #999; font-style: italic; }
+    .modal-map-footer .btn-confirm { padding: 12px 28px; background: #b8860b; color: #fff; border: none; border-radius: 50px; font-weight: 700; font-size: 0.9rem; cursor: pointer; font-family: 'Inter', sans-serif; transition: background 0.2s; }
+    .modal-map-footer .btn-confirm:disabled { background: #ccc; cursor: not-allowed; }
+    .modal-map-footer .btn-confirm:hover:not(:disabled) { background: #a0750a; }
+
+    /* ===== Success ===== */
+    .success-screen { display: none; text-align: center; padding: 60px 20px; max-width: 560px; margin: 0 auto; }
+    .success-screen.active { display: block; }
+    .success-icon { width: 80px; height: 80px; background: #e8f5e9; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 24px; font-size: 2.5rem; color: #2e7d32; }
+    .success-screen h2 { margin-bottom: 16px; }
+    .success-screen p { color: #555; margin-bottom: 12px; }
+
+    /* ===== Footer ===== */
+    .footer-new { background: #111; color: #aaa; padding: 40px 0 30px; border-top: 1px solid #2a2a2a; font-size: 0.85rem; text-align: center; }
+    .footer-new a { color: #b8860b; }
+
+    @media (max-width: 600px) {
+      .card { padding: 20px; border-radius: 12px; }
+      .color-grid { gap: 6px; }
+      .book-row { gap: 14px; }
+      .book-thumb { width: 100px; height: 150px; }
+      .add-btn { min-width: 100%; }
+      .cart-item-thumb { width: 44px; height: 66px; }
+      #pvzMap { min-height: 340px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header class="checkout-header">
+  <div class="container">
+    <div class="logo">Учебная <span>Библия</span></div>
+    <a href="index.html" class="back-link">← Вернуться на главную</a>
+  </div>
+</header>
+
+<!-- ===== MAIN ===== -->
+<main class="checkout-main">
+  <div class="container">
+
+    <form id="checkoutForm" novalidate>
+      <input type="hidden" name="access_key" value="14afa797-592e-4b38-acd7-94039c5f9ebe">
+      <input type="hidden" name="subject" value="Новый заказ — Учебная Библия">
+      <input type="hidden" name="from_name" value="Учебная Библия — сайт">
+
+      <input type="hidden" name="delivery_method" id="hiddenDelivery" value="cdek">
+      <input type="hidden" name="delivery_pvz" id="hiddenPvz" value="">
+      <input type="hidden" name="delivery_city" id="hiddenCity" value="">
+      <input type="hidden" name="delivery_coords" id="hiddenCoords" value="">
+      <input type="hidden" name="delivery_price" id="hiddenDeliveryPrice" value="350">
+
+      <div class="checkout-grid">
+
+        <!-- ============ LEFT ============ -->
+        <div class="checkout-left">
+
+          <!-- STEP 1 -->
+          <div class="card">
+            <div class="card-title">
+              <span class="step-num">1</span>
+              Книга и оформление
+            </div>
+
+            <div class="book-row">
+              <div class="book-thumb">
+                <img id="bookPreview" src="https://cdn.jsdelivr.net/gh/li-n-drew/bible/covers/book-purple.png" alt="Обложка">
+              </div>
+              <div class="book-info">
+                <h3>Учебная Библия</h3>
+                <div class="price">2 990 ₽</div>
+                <div class="subtext">Цветное издание с комментариями, картами и таблицами</div>
+
+                <div class="picker-block">
+                  <span class="picker-label">Цвет обложки</span>
+                  <div class="color-grid" id="colorGrid">
+                    <div class="color-option selected" style="background-color:#7A6ABE;" data-color="#7A6ABE" data-name="Фиолетовый" data-image="https://cdn.jsdelivr.net/gh/li-n-drew/bible/covers/book-purple.png"></div>
+                    <div class="color-option" style="background-color:#D6206E;" data-color="#D6206E" data-name="Розовый" data-image="https://cdn.jsdelivr.net/gh/li-n-drew/bible/covers/book-pink.png"></div>
+                    <div class="color-option" style="background-color:#F0D41E;" data-color="#F0D41E" data-name="Жёлтый" data-image="https://cdn.jsdelivr.net/gh/li-n-drew/bible/covers/book-yellow.png"></div>
+                    <div class="color-option" style="background-color:#F0A828;" data-color="#F0A828" data-name="Оранжевый" data-image="https://cdn.jsdelivr.net/gh/li-n-drew/bible/covers/book-orange.png"></div>
+                    <div class="color-option" style="background-color:#1EBEEB;" data-color="#1EBEEB" data-name="Голубой" data-image="https://cdn.jsdelivr.net/gh/li-n-drew/bible/covers/book-lightblue.png"></div>
+                    <div class="color-option" style="background-color:#147A8D;" data-color="#147A8D" data-name="Бирюзовый" data-image="https://cdn.jsdelivr.net/gh/li-n-drew/bible/covers/book-teal.png"></div>
+                    <div class="color-option" style="background-color:#2E5F91;" data-color="#2E5F91" data-name="Синий" data-image="https://cdn.jsdelivr.net/gh/li-n-drew/bible/covers/book-blue.png" data-image-no-cross="https://cdn.jsdelivr.net/gh/li-n-drew/bible/covers/book-blue-no-cross.png"></div>
+                    <div class="color-option" style="background-color:#9AA0A8;" data-color="#9AA0A8" data-name="Серый" data-image="https://cdn.jsdelivr.net/gh/li-n-drew/bible/covers/book-gray.png"></div>
+                    <div class="color-option" style="background-color:#10161A;" data-color="#10161A" data-name="Чёрный" data-image="https://cdn.jsdelivr.net/gh/li-n-drew/bible/covers/book-black.png" data-image-no-cross="https://cdn.jsdelivr.net/gh/li-n-drew/bible/covers/book-black-no-cross.png"></div>
+                    <div class="color-option" style="background-color:#1E5434;" data-color="#1E5434" data-name="Тёмно-зелёный" data-image="https://cdn.jsdelivr.net/gh/li-n-drew/bible/covers/book-green.png" data-image-no-cross="https://cdn.jsdelivr.net/gh/li-n-drew/bible/covers/book-green-no-cross.png"></div>
+                  </div>
+
+                  <div class="variant-picker-inline" id="variantPickerInline">
+                    <span class="picker-label" style="margin-bottom:6px;">Вариант обложки</span>
+                    <div class="variant-toggle">
+                      <button type="button" class="variant-btn active" data-variant="cross">С крестом</button>
+                      <button type="button" class="variant-btn" data-variant="no-cross">Без креста</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="add-row">
+                  <div class="qty-field">
+                    <span class="picker-label">Количество</span>
+                    <div class="qty-stepper">
+                      <button type="button" id="qtyDec">−</button>
+                      <input type="number" id="qtyInput" value="1" min="1" max="99">
+                      <button type="button" id="qtyInc">+</button>
+                    </div>
+                  </div>
+                  <button type="button" class="add-btn" id="addToCartBtn">+ Добавить в заказ</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="cart-section" id="cartSection" style="display:none;">
+              <div class="cart-section-title">
+                <h4>В заказе:</h4>
+                <span class="cart-count" id="cartCount">0</span>
+              </div>
+              <div class="cart-list" id="cartList"></div>
+            </div>
+            <div class="cart-empty" id="cartEmpty" style="margin-top:22px;">
+              Добавьте книгу в заказ — выберите цвет обложки и количество.
+            </div>
+          </div>
+
+          <!-- STEP 2 -->
+          <div class="card">
+            <div class="card-title">
+              <span class="step-num">2</span>
+              Способ доставки
+            </div>
+
+            <div class="delivery-list" id="deliveryList">
+
+              <div class="delivery-option selected" data-code="cdek" data-name="СДЭК" data-price="350">
+                <div class="delivery-option-head">
+                  <span class="radio-dot"></span>
+                  <span class="delivery-name">СДЭК</span>
+                  <span class="delivery-price">350 ₽</span>
+                </div>
+                <div class="delivery-sub">2–4 рабочих дня · пункт выдачи</div>
+                <div class="delivery-pvz-actions">
+                  <button type="button" class="btn-sm" data-pvz-btn="cdek">Выбрать пункт выдачи</button>
+                  <span class="pvz-status empty" id="pvzStatus-cdek">Пункт не выбран</span>
+                </div>
+              </div>
+
+              <div class="delivery-option" data-code="fivepost" data-name="5Post (Пятёрочка / Перекрёсток)" data-price="250">
+                <div class="delivery-option-head">
+                  <span class="radio-dot"></span>
+                  <span class="delivery-name">5Post (Пятёрочка / Перекрёсток)</span>
+                  <span class="delivery-price">250 ₽</span>
+                </div>
+                <div class="delivery-sub">3–5 рабочих дней · пункт выдачи</div>
+                <div class="delivery-pvz-actions">
+                  <button type="button" class="btn-sm" data-pvz-btn="fivepost">Выбрать пункт выдачи</button>
+                  <span class="pvz-status empty" id="pvzStatus-fivepost">Пункт не выбран</span>
+                </div>
+              </div>
+
+              <div class="delivery-option" data-code="post" data-name="Почта России" data-price="300">
+                <div class="delivery-option-head">
+                  <span class="radio-dot"></span>
+                  <span class="delivery-name">Почта России</span>
+                  <span class="delivery-price">300 ₽</span>
+                </div>
+                <div class="delivery-sub">5–10 рабочих дней · отделение</div>
+                <div class="delivery-pvz-actions">
+                  <button type="button" class="btn-sm" data-pvz-btn="post">Выбрать отделение</button>
+                  <span class="pvz-status empty" id="pvzStatus-post">Отделение не выбрано</span>
+                </div>
+              </div>
+
+              <div class="delivery-option" data-code="ozon" data-name="Ozon Доставка" data-price="280">
+                <div class="delivery-option-head">
+                  <span class="radio-dot"></span>
+                  <span class="delivery-name">Ozon Доставка</span>
+                  <span class="delivery-price">280 ₽</span>
+                </div>
+                <div class="delivery-sub">3–6 рабочих дней · пункт выдачи</div>
+                <div class="delivery-pvz-actions">
+                  <button type="button" class="btn-sm" data-pvz-btn="ozon">Выбрать пункт выдачи</button>
+                  <span class="pvz-status empty" id="pvzStatus-ozon">Пункт не выбран</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- STEP 3 -->
+          <div class="card">
+            <div class="card-title">
+              <span class="step-num">3</span>
+              Получатель
+            </div>
+
+            <div class="form-group">
+              <label for="fio">ФИО *</label>
+              <input type="text" id="fio" name="fio" class="form-input" placeholder="Иванов Иван Иванович" required>
+            </div>
+            <div class="form-group">
+              <label for="phone">Телефон *</label>
+              <input type="tel" id="phone" name="phone" class="form-input" placeholder="+7 (999) 000-00-00" required>
+            </div>
+            <div class="form-group">
+              <label for="email">Email *</label>
+              <input type="email" id="email" name="email" class="form-input" placeholder="example@mail.ru" required>
+            </div>
+            <div class="form-group">
+              <label for="comment">Комментарий к заказу</label>
+              <input type="text" id="comment" name="comment" class="form-input" placeholder="Например, пожелания по упаковке" maxlength="300">
+            </div>
+          </div>
+
+        </div>
+
+        <!-- ============ RIGHT ============ -->
+        <div class="checkout-right">
+          <div class="summary-card">
+            <div class="summary-title">Ваш заказ</div>
+
+            <div class="summary-items" id="summaryItems">
+              <div class="summary-empty">Пока ничего не добавлено</div>
+            </div>
+
+            <div class="summary-divider"></div>
+
+            <div class="summary-row" id="summaryDeliveryRow">
+              <span>Доставка: СДЭК</span>
+              <span id="summaryDeliveryPrice">350 ₽</span>
+            </div>
+
+            <div class="summary-row total">
+              <span>Итого</span>
+              <span class="amount" id="summaryTotal">0 ₽</span>
+            </div>
+
+            <div class="checkbox-group" style="margin-top: 22px;">
+              <input type="checkbox" id="pd-agree" required>
+              <label for="pd-agree" style="color:#c9d1d9;">
+                Я согласен на <a href="personal-data-processing.html" target="_blank" style="color:#d4a373;">обработку персональных данных</a> и принимаю условия <a href="privacy-policy.html" target="_blank" style="color:#d4a373;">политики конфиденциальности</a>.
+              </label>
+            </div>
+
+            <button type="submit" class="btn-submit" id="submitBtn">Оформить заказ</button>
+
+            <p class="summary-note">
+              После оформления мы свяжемся с вами для подтверждения состава заказа и способа оплаты.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </form>
+
+    <div class="success-screen" id="successScreen">
+      <div class="success-icon">✓</div>
+      <h2>Заказ оформлен!</h2>
+      <p>Спасибо за заказ. Мы уже получили его и свяжемся с вами в ближайшее время для подтверждения.</p>
+      <p style="margin-top: 24px;"><a href="index.html">← Вернуться на главную</a></p>
+    </div>
+
+  </div>
+</main>
+
+<!-- ===== МОДАЛЬНОЕ ОКНО С КАРТОЙ ===== -->
+<div class="modal-overlay" id="pvzModal">
+  <div class="modal-box-map">
+    <div class="modal-map-header">
+      <h2>Выбор пункта выдачи</h2>
+      <span class="service-badge" id="pvzServiceBadge">СДЭК</span>
+      <button type="button" class="modal-close-map" id="pvzModalClose">&times;</button>
+    </div>
+
+    <div class="map-hint">
+      На карте показаны пункты выдачи выбранной службы. Кликните по нужной метке, чтобы выбрать её.
+      Если нужного пункта нет на карте, кликните в любом месте — адрес определится автоматически.
+    </div>
+
+    <div id="pvzMap"></div>
+
+    <div class="modal-map-footer">
+      <div class="selected-info empty" id="pvzSelectedInfo">Кликните по метке, чтобы выбрать пункт</div>
+      <button type="button" class="btn-confirm" id="pvzConfirmBtn" disabled>Подтвердить выбор</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer-new">
+  <div class="container">
+    <p>&copy; 2026 Учебная Библия · <a href="privacy-policy.html">Политика конфиденциальности</a> · <a href="offer.html">Договор оферты</a></p>
+  </div>
+</footer>
+
+<script>
+  // =============================================================
+  //  КОНСТАНТЫ
+  // =============================================================
+  const BOOK_PRICE = 2990;
+
+  // Запросы для поиска ПВЗ на Яндекс.Карте по каждой службе.
+  // Меняйте здесь, если Яндекс не находит нужные точки.
+  const SERVICES = {
+    cdek:     { name: 'СДЭК',          searchQuery: 'СДЭК' },
+    fivepost: { name: '5Post',         searchQuery: 'Пятёрочка' },
+    post:     { name: 'Почта России',  searchQuery: 'Почта России' },
+    ozon:     { name: 'Ozon Доставка', searchQuery: 'Ozon пункт выдачи' }
+  };
+
+  function fmt(n) { return n.toLocaleString('ru-RU') + ' ₽'; }
+
+  // =============================================================
+  //  СОСТОЯНИЕ
+  // =============================================================
+  let cart = [];
+  let currentVariant = 'cross';
+  const selectedPvz = {}; // { cdek: { city, address, coords } }
+
+  // =============================================================
+  //  ВЫБОР ОБЛОЖКИ
+  // =============================================================
+  const colorOptions = document.querySelectorAll('.color-option');
+  const bookPreview = document.getElementById('bookPreview');
+  const variantPickerInline = document.getElementById('variantPickerInline');
+  const variantButtons = document.querySelectorAll('.variant-btn');
+
+  function getSelectedColor() { return document.querySelector('.color-option.selected'); }
+
+  function updatePreview() {
+    const selected = getSelectedColor();
+    if (!selected) return;
+    const hasNoCross = selected.hasAttribute('data-image-no-cross');
+    if (hasNoCross) { variantPickerInline.classList.add('visible'); }
+    else {
+      variantPickerInline.classList.remove('visible');
+      currentVariant = 'cross';
+      variantButtons.forEach(b => b.classList.toggle('active', b.dataset.variant === 'cross'));
+    }
+    let img = selected.dataset.image;
+    if (currentVariant === 'no-cross' && hasNoCross) { img = selected.dataset['imageNoCross']; }
+    bookPreview.style.opacity = '0.5';
+    setTimeout(() => { bookPreview.src = img; bookPreview.style.opacity = '1'; }, 120);
+  }
+
+  colorOptions.forEach(opt => {
+    opt.addEventListener('click', () => {
+      colorOptions.forEach(o => o.classList.remove('selected'));
+      opt.classList.add('selected');
+      updatePreview();
+    });
+  });
+
+  variantButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      variantButtons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentVariant = btn.dataset.variant;
+      updatePreview();
+    });
+  });
+
+  updatePreview();
+
+  // =============================================================
+  //  КОЛИЧЕСТВО
+  // =============================================================
+  const qtyInput = document.getElementById('qtyInput');
+  document.getElementById('qtyDec').addEventListener('click', () => { qtyInput.value = Math.max(1, (parseInt(qtyInput.value) || 1) - 1); });
+  document.getElementById('qtyInc').addEventListener('click', () => { qtyInput.value = Math.min(99, (parseInt(qtyInput.value) || 1) + 1); });
+
+  // =============================================================
+  //  КОРЗИНА
+  // =============================================================
+  const addToCartBtn = document.getElementById('addToCartBtn');
+  const cartSection = document.getElementById('cartSection');
+  const cartList = document.getElementById('cartList');
+  const cartCount = document.getElementById('cartCount');
+  const cartEmpty = document.getElementById('cartEmpty');
+  const summaryItems = document.getElementById('summaryItems');
+
+  addToCartBtn.addEventListener('click', () => {
+    const selected = getSelectedColor();
+    if (!selected) return;
+    const colorName = selected.dataset.name;
+    const hasVariant = selected.hasAttribute('data-image-no-cross');
+    const variant = hasVariant ? currentVariant : 'cross';
+    const variantLabel = !hasVariant ? '' : (variant === 'no-cross' ? 'без креста' : 'с крестом');
+    const id = colorName + '::' + variant;
+    let image = selected.dataset.image;
+    if (variant === 'no-cross' && hasVariant) { image = selected.dataset['imageNoCross']; }
+    const qty = Math.max(1, parseInt(qtyInput.value) || 1);
+    const existing = cart.find(item => item.id === id);
+    if (existing) { existing.qty += qty; }
+    else {
+      cart.push({ id, colorName, hasVariant, variant, variantLabel, image, qty, price: BOOK_PRICE });
+    }
+    qtyInput.value = 1;
+    addToCartBtn.textContent = '✓ Добавлено';
+    setTimeout(() => { addToCartBtn.textContent = '+ Добавить в заказ'; }, 900);
+    renderCart();
+  });
+
+  function cartTotal() { return cart.reduce((sum, item) => sum + item.price * item.qty, 0); }
+  function cartItemsCount() { return cart.reduce((sum, item) => sum + item.qty, 0); }
+
+  function renderCart() {
+    if (cart.length === 0) {
+      cartSection.style.display = 'none';
+      cartEmpty.style.display = 'block';
+      renderSummary();
+      return;
+    }
+    cartEmpty.style.display = 'none';
+    cartSection.style.display = 'block';
+    cartCount.textContent = cartItemsCount();
+    cartList.innerHTML = cart.map(item => `
+      <div class="cart-item" data-id="${item.id}">
+        <div class="cart-item-thumb"><img src="${item.image}" alt=""></div>
+        <div class="cart-item-body">
+          <div class="cart-item-name">Учебная Библия</div>
+          <div class="cart-item-variant">${item.colorName}${item.variantLabel ? ', ' + item.variantLabel : ''}</div>
+          <div class="cart-item-controls">
+            <div class="qty-stepper-sm">
+              <button type="button" data-cart-qty="dec" data-id="${item.id}">−</button>
+              <span class="qty-val">${item.qty}</span>
+              <button type="button" data-cart-qty="inc" data-id="${item.id}">+</button>
+            </div>
+            <span class="cart-item-price">${fmt(item.price)} × ${item.qty}</span>
+            <span class="cart-item-sum">${fmt(item.price * item.qty)}</span>
+          </div>
+        </div>
+        <button type="button" class="cart-remove" data-cart-remove="${item.id}" aria-label="Удалить">×</button>
+      </div>
+    `).join('');
+    renderSummary();
+  }
+
+  cartList.addEventListener('click', (e) => {
+    const decBtn = e.target.closest('[data-cart-qty="dec"]');
+    const incBtn = e.target.closest('[data-cart-qty="inc"]');
+    const removeBtn = e.target.closest('[data-cart-remove]');
+    if (decBtn) {
+      const id = decBtn.dataset.id;
+      const item = cart.find(i => i.id === id);
+      if (!item) return;
+      if (item.qty > 1) { item.qty -= 1; } else { cart = cart.filter(i => i.id !== id); }
+      renderCart();
+    }
+    if (incBtn) {
+      const id = incBtn.dataset.id;
+      const item = cart.find(i => i.id === id);
+      if (!item) return;
+      if (item.qty < 99) item.qty += 1;
+      renderCart();
+    }
+    if (removeBtn) {
+      const id = removeBtn.dataset.cartRemove;
+      cart = cart.filter(i => i.id !== id);
+      renderCart();
+    }
+  });
+
+  // =============================================================
+  //  СВОДКА
+  // =============================================================
+  const summaryDeliveryRow = document.getElementById('summaryDeliveryRow');
+  const summaryDeliveryPrice = document.getElementById('summaryDeliveryPrice');
+  const summaryTotal = document.getElementById('summaryTotal');
+  const hiddenDelivery = document.getElementById('hiddenDelivery');
+  const hiddenDeliveryPrice = document.getElementById('hiddenDeliveryPrice');
+
+  function renderSummary() {
+    if (cart.length === 0) {
+      summaryItems.innerHTML = '<div class="summary-empty">Пока ничего не добавлено</div>';
+    } else {
+      summaryItems.innerHTML = cart.map(item => `
+        <div class="summary-item">
+          <div class="sname">Учебная Библия<span class="svariant">${item.colorName}${item.variantLabel ? ', ' + item.variantLabel : ''}</span></div>
+          <div class="sqty">×${item.qty}</div>
+          <div class="ssum">${fmt(item.price * item.qty)}</div>
+        </div>
+      `).join('');
+    }
+    const code = hiddenDelivery.value;
+    const deliveryPrice = parseInt(hiddenDeliveryPrice.value, 10) || 0;
+    summaryDeliveryRow.firstElementChild.textContent = 'Доставка: ' + (SERVICES[code]?.name || code);
+    summaryDeliveryPrice.textContent = fmt(deliveryPrice);
+    const total = cartTotal() + (cart.length > 0 ? deliveryPrice : 0);
+    summaryTotal.textContent = fmt(total);
+  }
+
+  // =============================================================
+  //  ДОСТАВКА
+  // =============================================================
+  const deliveryOptions = document.querySelectorAll('.delivery-option');
+
+  function selectDelivery(el) {
+    deliveryOptions.forEach(o => o.classList.remove('selected'));
+    el.classList.add('selected');
+    const code = el.dataset.code;
+    const price = el.dataset.price;
+    hiddenDelivery.value = code;
+    hiddenDeliveryPrice.value = price;
+    const saved = selectedPvz[code];
+    document.getElementById('hiddenPvz').value = saved?.address || '';
+    document.getElementById('hiddenCity').value = saved?.city || '';
+    document.getElementById('hiddenCoords').value = saved?.coords ? (saved.coords[0] + ', ' + saved.coords[1]) : '';
+    renderSummary();
+  }
+
+  deliveryOptions.forEach(opt => {
+    opt.addEventListener('click', (e) => {
+      if (e.target.closest('[data-pvz-btn]')) return;
+      selectDelivery(opt);
+    });
+  });
+
+  // =============================================================
+  //  КАРТА ПВЗ
+  // =============================================================
+  const pvzModal = document.getElementById('pvzModal');
+  const pvzModalClose = document.getElementById('pvzModalClose');
+  const pvzServiceBadge = document.getElementById('pvzServiceBadge');
+  const pvzSelectedInfo = document.getElementById('pvzSelectedInfo');
+  const pvzConfirmBtn = document.getElementById('pvzConfirmBtn');
+
+  let currentService = null;
+  let pvzMap = null;
+  let clickPlacemark = null;
+  let selectedAddress = '';
+  let selectedCity = '';
+  let selectedCoords = null;
+  let geocodeDebounce = null;
+
+  function initMap() {
+    if (pvzMap) return;
+    pvzMap = new ymaps.Map('pvzMap', {
+      center: [55.751244, 37.618423],
+      zoom: 11,
+      controls: ['zoomControl', 'searchControl', 'geolocationControl']
+    });
+
+    pvzMap.events.add('click', (e) => {
+      const coords = e.get('coords');
+      placeClickPlacemark(coords);
+      reverseGeocode(coords);
+    });
+  }
+
+  function placeClickPlacemark(coords) {
+    if (clickPlacemark) {
+      pvzMap.geoObjects.remove(clickPlacemark);
+    }
+    clickPlacemark = new ymaps.Placemark(coords, {}, {
+      preset: 'islands#redIcon',
+      draggable: true
+    });
+
+    clickPlacemark.events.add('dragend', () => {
+      const newCoords = clickPlacemark.geometry.getCoordinates();
+      selectedCoords = newCoords;
+      reverseGeocode(newCoords);
+    });
+
+    pvzMap.geoObjects.add(clickPlacemark);
+    selectedCoords = coords;
+  }
+
+  function reverseGeocode(coords) {
+    pvzSelectedInfo.classList.add('empty');
+    pvzSelectedInfo.textContent = 'Определяем адрес…';
+    pvzConfirmBtn.disabled = true;
+
+    clearTimeout(geocodeDebounce);
+    geocodeDebounce = setTimeout(() => {
+      ymaps.geocode(coords, { kind: 'house', results: 1 }).then(res => {
+        let first = res.geoObjects.get(0);
+
+        if (!first) {
+          return ymaps.geocode(coords, { results: 1 }).then(res2 => {
+            const f2 = res2.geoObjects.get(0);
+            if (f2) {
+              selectedAddress = f2.getAddressLine();
+              const meta = f2.getAddressDetails?.() || {};
+              selectedCity = meta?.locality?.localityName
+                || meta?.province?.provinceName
+                || meta?.country?.countryName
+                || '';
+            } else {
+              selectedAddress = '';
+              selectedCity = '';
+            }
+            renderSelectedInfo();
+          });
+        }
+
+        selectedAddress = first.getAddressLine();
+        const meta = first.getAddressDetails?.() || {};
+        selectedCity = meta?.locality?.localityName
+          || meta?.province?.provinceName
+          || meta?.country?.countryName
+          || '';
+        renderSelectedInfo();
+      }).catch(err => {
+        console.error(err);
+        selectedAddress = '';
+        selectedCity = '';
+        renderSelectedInfo();
+      });
+    }, 200);
+  }
+
+  function renderSelectedInfo() {
+    if (selectedAddress) {
+      pvzSelectedInfo.classList.remove('empty');
+      pvzSelectedInfo.innerHTML = '<strong>' + (selectedCity || 'Адрес') + '</strong>: ' + selectedAddress;
+      pvzConfirmBtn.disabled = false;
+    } else {
+      pvzSelectedInfo.classList.add('empty');
+      pvzSelectedInfo.textContent = 'Не удалось определить адрес. Кликните в другом месте или уточните в комментарии.';
+      pvzConfirmBtn.disabled = true;
+    }
+  }
+
+  function searchAndShowPvz(serviceCode) {
+    const service = SERVICES[serviceCode];
+    if (!service || !pvzMap) return;
+
+    pvzMap.geoObjects.removeAll();
+    clickPlacemark = null;
+    selectedAddress = '';
+    selectedCity = '';
+    selectedCoords = null;
+    pvzSelectedInfo.classList.add('empty');
+    pvzSelectedInfo.textContent = 'Ищем пункты выдачи «' + service.name + '»…';
+    pvzConfirmBtn.disabled = true;
+
+    const bounds = pvzMap.getBounds();
+
+    ymaps.search({
+      text: service.searchQuery,
+      boundedBy: bounds,
+      results: 50
+    }).then((res) => {
+      const results = res.geoObjects;
+
+      if (!results || results.getLength() === 0) {
+        pvzSelectedInfo.textContent = 'Пункты не найдены. Измените область карты или кликните по нужному месту вручную.';
+        return;
+      }
+
+      results.each((placemark) => {
+        placemark.options.set('preset', 'islands#blueDotIcon');
+
+        placemark.events.add('click', () => {
+          if (clickPlacemark && clickPlacemark !== placemark) {
+            clickPlacemark.options.set('preset', 'islands#blueDotIcon');
+          }
+          placemark.options.set('preset', 'islands#redDotIcon');
+          clickPlacemark = placemark;
+
+          const name = placemark.properties.get('name') || '';
+          const description = placemark.properties.get('description') || '';
+          selectedAddress = description ? (name + ', ' + description) : name;
+
+          const geoCoords = placemark.geometry.getCoordinates();
+          selectedCoords = geoCoords;
+
+          const meta = placemark.properties.get('CompanyMetaData');
+          if (meta?.address) {
+            const parts = (meta.address || '').split(',');
+            selectedCity = parts.length >= 2 ? parts[parts.length - 2].trim() : '';
+          } else {
+            selectedCity = '';
+          }
+
+          pvzSelectedInfo.classList.remove('empty');
+          pvzSelectedInfo.innerHTML = '<strong>' + (selectedCity || 'Пункт') + '</strong>: ' + selectedAddress;
+          pvzConfirmBtn.disabled = false;
+        });
+
+        pvzMap.geoObjects.add(placemark);
+      });
+
+      if (results.getLength() === 1) {
+        const single = results.get(0);
+        pvzMap.setCenter(single.geometry.getCoordinates(), 16);
+      }
+    }).catch((err) => {
+      console.error('Ошибка поиска ПВЗ:', err);
+      pvzSelectedInfo.textContent = 'Не удалось загрузить пункты. Попробуйте позже или кликните вручную.';
+    });
+  }
+
+  function openPvzModal(serviceCode) {
+    currentService = serviceCode;
+    const service = SERVICES[serviceCode];
+    pvzServiceBadge.textContent = service.name;
+
+    pvzSelectedInfo.classList.add('empty');
+    pvzSelectedInfo.textContent = 'Ищем пункты выдачи…';
+    pvzConfirmBtn.disabled = true;
+    selectedAddress = '';
+    selectedCity = '';
+    selectedCoords = null;
+
+    pvzModal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+
+    setTimeout(() => {
+      initMap();
+      pvzMap.container.fitToViewport();
+      setTimeout(() => searchAndShowPvz(serviceCode), 250);
+    }, 150);
+  }
+
+  function closePvzModal() {
+    pvzModal.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  document.querySelectorAll('[data-pvz-btn]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const parentOpt = btn.closest('.delivery-option');
+      if (parentOpt) selectDelivery(parentOpt);
+      openPvzModal(btn.dataset.pvzBtn);
+    });
+  });
+
+  pvzModalClose.addEventListener('click', closePvzModal);
+  pvzModal.addEventListener('click', (e) => { if (e.target === pvzModal) closePvzModal(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && pvzModal.classList.contains('active')) closePvzModal(); });
+
+  pvzConfirmBtn.addEventListener('click', () => {
+    if (!selectedAddress) return;
+    selectedPvz[currentService] = {
+      city: selectedCity,
+      address: selectedAddress,
+      coords: selectedCoords
+    };
+    const status = document.getElementById('pvzStatus-' + currentService);
+    if (status) {
+      status.classList.remove('empty');
+      status.innerHTML = '<strong>' + (selectedCity || 'Пункт') + '</strong>, ' + selectedAddress;
+    }
+    if (hiddenDelivery.value === currentService) {
+      document.getElementById('hiddenPvz').value = selectedAddress;
+      document.getElementById('hiddenCity').value = selectedCity;
+      document.getElementById('hiddenCoords').value = selectedCoords ? (selectedCoords[0] + ', ' + selectedCoords[1]) : '';
+    }
+    closePvzModal();
+  });
+
+  // =============================================================
+  //  ОТПРАВКА ФОРМЫ
+  // =============================================================
+  const form = document.getElementById('checkoutForm');
+  const submitBtn = document.getElementById('submitBtn');
+  const successScreen = document.getElementById('successScreen');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    let ok = true;
+    ['fio', 'phone', 'email'].forEach(id => {
+      const el = document.getElementById(id);
+      if (!el.value.trim()) { el.classList.add('error'); ok = false; }
+      else el.classList.remove('error');
+    });
+    if (cart.length === 0) { alert('Добавьте хотя бы одну книгу в заказ.'); ok = false; }
+    if (!document.getElementById('pd-agree').checked) { alert('Пожалуйста, подтвердите согласие на обработку персональных данных'); ok = false; }
+    const currentCode = hiddenDelivery.value;
+    if (SERVICES[currentCode] && !selectedPvz[currentCode]) {
+      alert('Пожалуйста, выберите пункт выдачи для службы «' + SERVICES[currentCode].name + '»');
+      ok = false;
+    }
+    if (!ok) return;
+
+    submitBtn.disabled = true;
+    const origText = submitBtn.textContent;
+    submitBtn.textContent = 'Отправка…';
+
+    const itemsText = cart.map((item, i) =>
+      `${i + 1}. Учебная Библия — ${item.colorName}${item.variantLabel ? ', ' + item.variantLabel : ''} × ${item.qty} = ${fmt(item.price * item.qty)}`
+    ).join('\n');
+
+    const formData = new FormData(form);
+    const object = Object.fromEntries(formData.entries());
+
+    const pvz = selectedPvz[currentCode];
+    object['Товары'] = itemsText;
+    object['Позиций'] = cart.length;
+    object['Всего книг'] = cartItemsCount();
+    object['Сумма товаров'] = fmt(cartTotal());
+    object['Способ доставки'] = SERVICES[currentCode]?.name || currentCode;
+    object['Цена доставки'] = fmt(parseInt(hiddenDeliveryPrice.value, 10));
+    object['Адрес ПВЗ'] = pvz?.address || '—';
+    object['Город ПВЗ'] = pvz?.city || '—';
+    object['Координаты ПВЗ'] = pvz?.coords ? (pvz.coords[0] + ', ' + pvz.coords[1]) : '—';
+    object['Итого'] = fmt(cartTotal() + (parseInt(hiddenDeliveryPrice.value, 10) || 0));
+    object['Корзина_JSON'] = JSON.stringify(cart);
+
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(object)
+      });
+      const data = await res.json();
+      if (res.status === 200 && data.success) {
+        form.style.display = 'none';
+        successScreen.classList.add('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        console.error(data);
+        alert('Не удалось отправить заказ. Попробуйте ещё раз или напишите нам на u.bible@mail.ru');
+        submitBtn.disabled = false;
+        submitBtn.textContent = origText;
+      }
+    } catch (err) {
+      console.error(err);
+      alert('Ошибка сети. Проверьте соединение и попробуйте ещё раз.');
+      submitBtn.disabled = false;
+      submitBtn.textContent = origText;
+    }
+  });
+
+  // Блокировка сохранения картинок
+  document.addEventListener('contextmenu', (e) => { if (e.target.tagName === 'IMG') e.preventDefault(); });
+  document.addEventListener('dragstart',  (e) => { if (e.target.tagName === 'IMG') e.preventDefault(); });
+</script>
+</body>
+</html>
