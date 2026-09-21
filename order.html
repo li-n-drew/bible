@@ -6,9 +6,11 @@
   <title>Оформление заказа — Учебная Библия</title>
   <meta name="robots" content="noindex, nofollow" />
   <link rel="canonical" href="https://ubible.ru/order.html" />
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 220'%3E%3Crect x='10' y='10' width='160' height='200' rx='12' fill='%23b8860b' stroke='%23a0750a' stroke-width='2'/%3E%3Crect x='72' y='60' width='36' height='100' rx='4' fill='white'/%3E%3Crect x='40' y='78' width='100' height='36' rx='4' fill='white'/%3E%3C/svg%3E" type="image/svg+xml" />
-  <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 220'%3E%3Crect x='10' y='10' width='160' height='200' rx='12' fill='%23b8860b' stroke='%23a0750a' stroke-width='2'/%3E%3Crect x='72' y='60' width='36' height='100' rx='4' fill='white'/%3E%3Crect x='40' y='78' width='100' height='36' rx='4' fill='white'/%3E%3C/svg%3E" />
-
+      <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="manifest" href="site.webmanifest">
   <!-- Yandex.Metrika counter -->
   <script type="text/javascript">
       (function(m,e,t,r,i,k,a){
@@ -27,8 +29,12 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
 
-  <!-- ==== ЯНДЕКС.КАРТЫ (JavaScript API) ==== -->
-  <script src="https://api-maps.yandex.ru/2.1/?apikey=02ff0967-9837-45a0-b2eb-8de48c4db371&lang=ru_RU&load=package.full" type="text/javascript"></script>
+  <!-- ==== OSM ТЕСТ: Leaflet вместо Яндекс.Карт ==== -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
 
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -78,6 +84,10 @@
     /* ===== Color picker ===== */
     .color-grid { display: grid; grid-template-columns: repeat(10, 1fr); gap: 8px; }
     @media (max-width: 640px) { .color-grid { grid-template-columns: repeat(5, 1fr); } }
+    @media (max-width: 768px) {
+      .footer-grid { grid-template-columns: 1fr; text-align: center; gap: 30px; }
+      .footer-title { text-align: center; }
+    }
     .color-option { width: 100%; aspect-ratio: 1; border-radius: 6px; cursor: pointer; border: 2px solid transparent; transition: transform 0.15s, border-color 0.15s; position: relative; }
     .color-option:hover { transform: scale(1.15); z-index: 2; }
     .color-option.selected { border-color: #1e1e1e; transform: scale(1.15); box-shadow: 0 2px 6px rgba(0,0,0,0.2); z-index: 2; }
@@ -187,6 +197,7 @@
       width: 900px;
       max-width: 100%;
       max-height: 92vh;
+      height: 92vh;
       border-radius: 16px;
       overflow: hidden;
       display: flex;
@@ -212,16 +223,56 @@
     .map-hint {
       font-size: 0.82rem;
       color: #666;
-      padding: 12px 24px;
+      padding: 10px 24px;
       background: #f9f7f4;
-      line-height: 1.5;
+      line-height: 1.4;
       border-bottom: 1px solid #eee;
+      flex-shrink: 0;
     }
     .map-hint strong { color: #1e1e1e; }
 
-    #pvzMap { flex: 1; min-height: 460px; width: 100%; background: #e8e4dd; }
+    #pvzMap { flex: 1 1 auto; min-height: 300px; width: 100%; background: #e8e4dd; }
 
-    .modal-map-footer { padding: 16px 24px; border-top: 1px solid #eee; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; background: #fff; }
+    /* ===== Поиск по адресу (OSM Nominatim, бесплатно) ===== */
+    .map-search { display: flex; gap: 8px; padding: 10px 24px 0; flex-shrink: 0; }
+    .map-search input {
+      flex: 1; padding: 10px 14px; border: 1px solid #ddd; border-radius: 8px;
+      font-family: 'Inter', sans-serif; font-size: 0.9rem; outline: none; min-width: 0;
+    }
+    .map-search input:focus { border-color: #b8860b; }
+    .map-search button {
+      padding: 10px 20px; background: #b8860b; color: #fff; border: none; border-radius: 8px;
+      font-family: 'Inter', sans-serif; font-size: 0.9rem; font-weight: 600; cursor: pointer; white-space: nowrap;
+    }
+    .map-search button:hover { background: #a0750a; }
+    .map-search-results {
+      padding: 8px 24px 0; display: flex; flex-direction: column; gap: 4px;
+      max-height: 110px; overflow-y: auto; flex-shrink: 0;
+    }
+    .map-search-results button {
+      text-align: left; background: #f9f7f4; border: 1px solid #eee; border-radius: 8px;
+      padding: 8px 12px; font-size: 0.82rem; cursor: pointer; font-family: 'Inter', sans-serif; color: #333;
+    }
+    .map-search-results button:hover { border-color: #b8860b; }
+
+    /* Поля «Почты России» (индекс+адрес+кв) показываем только при выбранном варианте */
+.delivery-option[data-code="post"] .post-addr-card { display: none; }
+.delivery-option[data-code="post"].selected .post-addr-card { display: flex; }
+    .autosuggest {
+      position: absolute; top: 100%; left: 0; right: 0; z-index: 40;
+      background: #fff; border: 1px solid #eee; border-radius: 8px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.08); display: none;
+      max-height: 220px; overflow-y: auto;
+    }
+    .autosuggest .as-item {
+      display: block; width: 100%; text-align: left; border: 0; background: #f9f7f4;
+      padding: 8px 12px; font-size: 0.82rem; cursor: pointer; color: #333;
+    }
+    .autosuggest .as-item:hover, .autosuggest .as-item.active { background: #eae4dd; }
+    .autosuggest .as-empty { padding: 8px 12px; font-size: 0.8rem; color: #999; }
+    .autosuggest .as-item.as-addr { color: #b8860b; font-weight: 600; margin-top: 4px; border-top: 1px solid #ddd; }
+
+    .modal-map-footer { padding: 14px 24px; border-top: 1px solid #eee; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; background: #fff; flex-shrink: 0; }
     .modal-map-footer .selected-info { flex: 1; min-width: 0; font-size: 0.9rem; color: #555; line-height: 1.4; }
     .modal-map-footer .selected-info strong { color: #1e1e1e; }
     .modal-map-footer .selected-info.empty { color: #999; font-style: italic; }
@@ -238,37 +289,54 @@
 
     /* ===== Footer (как на информационных страницах — светлый) ===== */
     .footer {
-      background: #f0ede8;
-      padding: 40px 0 30px;
-      border-top: 1px solid #ddd;
-      font-size: 0.85rem;
-      text-align: center;
-    }
-    .footer-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 40px;
-      margin-bottom: 30px;
-      text-align: left;
-    }
-    .footer-title {
-      font-size: 1.1rem;
-      margin-bottom: 24px;
-      font-weight: 600;
-      color: #1e1e1e;
-      font-family: 'Playfair Display', serif;
-    }
-    .footer-col p {
-      color: #555;
-      font-size: 0.9rem;
-      line-height: 1.8;
-    }
-    .footer-links { list-style: none; padding: 0; margin: 0; }
-    .footer-links li { margin-bottom: 12px; }
-    .footer-links a { color: #555; text-decoration: none; font-size: 0.9rem; transition: color 0.3s ease; }
-    .footer-links a:hover { color: #b8860b; }
-    .footer-bottom { text-align: center; padding-top: 30px; border-top: 1px solid #ddd; }
-    .footer-bottom p { color: #777; font-size: 0.85rem; }
+    background: #f0ede8;
+    padding: 60px 0 40px;
+    border-top: 1px solid #ddd;
+}
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    margin-bottom: 40px;
+}
+.footer-title {
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+    font-weight: 600;
+    color: #1e1e1e;
+    font-family: 'Playfair Display', serif;
+}
+.footer-col p {
+    color: #555;
+    font-size: 0.9rem;
+    line-height: 1.8;
+}
+.footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.footer-links li {
+    margin-bottom: 10px;
+}
+.footer-links a {
+    color: #555;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s ease;
+}
+.footer-links a:hover {
+    color: #b8860b;
+}
+.footer-bottom {
+    text-align: center;
+    padding-top: 30px;
+    border-top: 1px solid #ddd;
+}
+.footer-bottom p {
+    color: #777;
+    font-size: 0.85rem;
+}
 
     @media (max-width: 600px) {
       .card { padding: 20px; border-radius: 12px; }
@@ -324,7 +392,7 @@
               </div>
               <div class="book-info">
                 <h3>Учебная Библия</h3>
-                <div class="price">2 990 ₽</div>
+                <div class="price">5 000 ₽</div>
                 <div class="subtext">Цветное издание с комментариями, картами и таблицами</div>
 
                 <div class="picker-block">
@@ -386,11 +454,11 @@
 
             <div class="delivery-list" id="deliveryList">
 
-              <div class="delivery-option selected" data-code="cdek" data-name="СДЭК" data-price="350">
+              <div class="delivery-option selected" data-code="cdek" data-name="СДЭК" data-price="450">
                 <div class="delivery-option-head">
                   <span class="radio-dot"></span>
                   <span class="delivery-name">СДЭК</span>
-                  <span class="delivery-price">350 ₽</span>
+                  <span class="delivery-price">от 450 ₽</span>
                 </div>
                 <div class="delivery-sub">2–4 рабочих дня · пункт выдачи</div>
                 <div class="delivery-pvz-actions">
@@ -399,11 +467,11 @@
                 </div>
               </div>
 
-              <div class="delivery-option" data-code="fivepost" data-name="5Post (Пятёрочка / Перекрёсток)" data-price="250">
+              <div class="delivery-option" data-code="fivepost" data-name="5Post (Пятёрочка / Перекрёсток)" data-price="170">
                 <div class="delivery-option-head">
                   <span class="radio-dot"></span>
                   <span class="delivery-name">5Post (Пятёрочка / Перекрёсток)</span>
-                  <span class="delivery-price">250 ₽</span>
+                  <span class="delivery-price">от 170 ₽</span>
                 </div>
                 <div class="delivery-sub">3–5 рабочих дней · пункт выдачи</div>
                 <div class="delivery-pvz-actions">
@@ -412,29 +480,43 @@
                 </div>
               </div>
 
-              <div class="delivery-option" data-code="post" data-name="Почта России" data-price="300">
-                <div class="delivery-option-head">
-                  <span class="radio-dot"></span>
-                  <span class="delivery-name">Почта России</span>
-                  <span class="delivery-price">300 ₽</span>
-                </div>
-                <div class="delivery-sub">5–10 рабочих дней · отделение</div>
-                <div class="delivery-pvz-actions">
-                  <button type="button" class="btn-sm" data-pvz-btn="post">Выбрать отделение</button>
-                  <span class="pvz-status empty" id="pvzStatus-post">Отделение не выбрано</span>
-                </div>
-              </div>
-
-              <div class="delivery-option" data-code="ozon" data-name="Ozon Доставка" data-price="280">
+              <div class="delivery-option" data-code="ozon" data-name="Ozon Доставка" data-price="190">
                 <div class="delivery-option-head">
                   <span class="radio-dot"></span>
                   <span class="delivery-name">Ozon Доставка</span>
-                  <span class="delivery-price">280 ₽</span>
+                  <span class="delivery-price">от 190 ₽</span>
                 </div>
                 <div class="delivery-sub">3–6 рабочих дней · пункт выдачи</div>
                 <div class="delivery-pvz-actions">
                   <button type="button" class="btn-sm" data-pvz-btn="ozon">Выбрать пункт выдачи</button>
                   <span class="pvz-status empty" id="pvzStatus-ozon">Пункт не выбран</span>
+                </div>
+              </div>
+
+              <div class="delivery-option" data-code="post" data-name="Почта России" data-price="320">
+                <div class="delivery-option-head">
+                  <span class="radio-dot"></span>
+                  <span class="delivery-name">Почта России</span>
+                  <span class="delivery-price">от 320 ₽</span>
+                </div>
+                <div class="delivery-sub">5–10 рабочих дней · доставка на адрес</div>
+                <div class="delivery-pvz-actions" data-post-open>
+                  <button type="button" class="btn-sm" data-pvz-btn="post" data-post-open-btn>Указать адрес</button>
+                </div>
+                <div class="delivery-pvz-actions post-addr-card" data-post-fields style="display:none;flex-direction:column;align-items:stretch;gap:8px;">
+                  <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+                    <button type="button" class="btn-sm" data-pvz-btn="post">Выбрать на карте</button>
+                  </div>
+                  <div style="display:flex;gap:8px;align-items:stretch;">
+                    <div style="position:relative;flex:1;min-width:0;">
+                      <input type="text" class="form-input post-addr-input" data-post-addr placeholder="Индекс, город, улица, дом (автопоиск)" maxlength="260" autocomplete="off" style="width:100%;">
+                      <div class="autosuggest" data-addr-suggest></div>
+                    </div>
+                    <input type="text" class="form-input post-flat-input" data-post-flat placeholder="Кв./офис" maxlength="15" autocomplete="off" style="width:110px;flex:0 0 110px;">
+                  </div>
+                  <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+                    <span class="pvz-status empty" data-post-status>Адрес не указан</span>
+                  </div>
                 </div>
               </div>
 
@@ -521,15 +603,16 @@
 <div class="modal-overlay" id="pvzModal">
   <div class="modal-box-map">
     <div class="modal-map-header">
-      <h2>Выбор пункта выдачи</h2>
+      <h2 id="pvzModalTitle">Выбор пункта выдачи</h2>
       <span class="service-badge" id="pvzServiceBadge">СДЭК</span>
       <button type="button" class="modal-close-map" id="pvzModalClose">&times;</button>
     </div>
 
-    <div class="map-hint">
-      На карте показаны пункты выдачи выбранной службы. Кликните по нужной метке, чтобы выбрать её.
-      Если нужного пункта нет на карте, кликните в любом месте — адрес определится автоматически.
+    <div class="map-search">
+      <input type="text" id="pvzSearchInput" placeholder="Город, улица, дом — например: Казань, Баумана 5" autocomplete="off">
+      <button type="button" id="pvzSearchBtn">Найти</button>
     </div>
+    <div class="map-search-results" id="pvzSearchResults"></div>
 
     <div id="pvzMap"></div>
 
@@ -558,6 +641,7 @@
       <div class="footer-col">
         <h4 class="footer-title">Правовая информация</h4>
         <ul class="footer-links">
+          <li><a href="delivery.html">Доставка и оплата</a></li>
           <li><a href="privacy-policy.html">Политика конфиденциальности</a></li>
           <li><a href="personal-data-processing.html">Обработка персональных данных</a></li>
           <li><a href="cookies-policy.html">Файлы cookie</a></li>
@@ -575,15 +659,16 @@
   // =============================================================
   //  КОНСТАНТЫ
   // =============================================================
-  const BOOK_PRICE = 2990;
+  const BOOK_PRICE = 5000;
 
-  // Запросы для поиска ПВЗ на Яндекс.Карте по каждой службе.
-  // Меняйте здесь, если Яндекс не находит нужные точки.
+  // OSM ТЕСТ: Overpass-запросы для ПВЗ.
+  // Почта — на адрес, карта не нужна (map:false).
+  // Для остальных показываем ТОЛЬКО точки своего бренда (нет лишних магазинов).
   const SERVICES = {
-    cdek:     { name: 'СДЭК',          searchQuery: 'СДЭК' },
-    fivepost: { name: '5Post',         searchQuery: 'Пятёрочка' },
-    post:     { name: 'Почта России',  searchQuery: 'Почта России' },
-    ozon:     { name: 'Ozon Доставка', searchQuery: 'Ozon пункт выдачи' }
+    cdek:     { name: 'СДЭК',          map: true,  overpass: 'nwr["brand"~"СДЭК",i]({b});nwr["operator"="СДЭК"]({b});' },
+    fivepost: { name: '5Post',         map: true,  overpass: 'nwr["amenity"="parcel_locker"]["brand"~"5Post|5 Пост",i]({b});nwr["amenity"="parcel_locker"]["name"~"5Post|5 Пост",i]({b});nwr["amenity"="parcel_locker"]["operator"~"5Post|5 Пост|X5|Икс 5|Икс",i]({b});' },
+    post:     { name: 'Почта России',  map: true, overpass: 'nwr["amenity"="post_office"]({b});' },
+    ozon:     { name: 'Ozon Доставка', map: true,  overpass: 'nwr["amenity"="parcel_locker"]["brand"~"Ozon|Озон",i]({b});nwr["amenity"="parcel_locker"]["name"~"Ozon|Озон",i]({b});nwr["amenity"="parcel_locker"]["operator"~"Ozon|Озон",i]({b});nwr["shop"="parcel_pickup"]["brand"~"Ozon|Озон",i]({b});nwr["shop"="parcel_pickup"]["name"~"Ozon|Озон",i]({b});' }
   };
 
   function fmt(n) { return n.toLocaleString('ru-RU') + ' ₽'; }
@@ -784,6 +869,12 @@
     document.getElementById('hiddenPvz').value = saved?.address || '';
     document.getElementById('hiddenCity').value = saved?.city || '';
     document.getElementById('hiddenCoords').value = saved?.coords ? (saved.coords[0] + ', ' + saved.coords[1]) : '';
+    // Блок адреса (карта + единое поле) — только для Почты России,
+    // кнопка «Указать адрес» — пока Почта НЕ выбрана.
+    const postFields = document.querySelector('[data-post-fields]');
+    const postOpen = document.querySelector('[data-post-open]');
+    if (postFields) postFields.style.display = (code === 'post') ? 'flex' : 'none';
+    if (postOpen) postOpen.style.display = (code === 'post') ? 'none' : 'flex';
     renderSummary();
   }
 
@@ -804,89 +895,144 @@
   const pvzConfirmBtn = document.getElementById('pvzConfirmBtn');
 
   let currentService = null;
+  let pvzSuppressSearch = false; // true до первого действия пользователя с картой
   let pvzMap = null;
-  let clickPlacemark = null;
+  let pvzMarkers = null;
+  let clickMarker = null;
+  let pvzAbort = null;
+  let pvzReqId = 0;
+  let pvzMoveTimer = null;
+  let pvzSeen = {};
+  let pvzCache = new Map();   // ключ bbox+служба → область уже искалась
+  let pvzCooldownUntil = 0;   // после 429 пауза 60 сек
   let selectedAddress = '';
   let selectedCity = '';
+  let selectedPostcode = '';
+  let selectedStreet = '';
+  let selectedHouse = '';
   let selectedCoords = null;
-  let geocodeDebounce = null;
+  let geoDebounce = null;
 
   function initMap() {
     if (pvzMap) return;
-    pvzMap = new ymaps.Map('pvzMap', {
-      center: [55.751244, 37.618423],
-      zoom: 11,
-      controls: ['zoomControl', 'searchControl', 'geolocationControl']
+    pvzMap = L.map('pvzMap', { zoomControl: false }).setView([55.751244, 37.618423], 11);
+    L.control.zoom({ position: 'topright' }).addTo(pvzMap);
+    // Кнопка геолокации: свой контрол, без плагинов.
+    const geoBtn = L.control({ position: 'topright' });
+    geoBtn.onAdd = function() {
+      const div = L.DomUtil.create('div', 'leaflet-bar leaflet-control');
+      div.innerHTML = '<a href="#" title="Моё местоположение" style="width:30px;height:30px;line-height:30px;text-align:center;font-size:16px;">◎</a>';
+      div.style.cursor = 'pointer';
+      L.DomEvent.on(div, 'click', (e) => {
+        L.DomEvent.stopPropagation(e);
+        L.DomEvent.preventDefault(e);
+        locateMe();
+      });
+      return div;
+    };
+    geoBtn.addTo(pvzMap);
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '&copy; OpenStreetMap'
+    }).addTo(pvzMap);
+    // Кластеры: общий план — кружки с количеством по районам,
+    // приближение — конкретные точки.
+    pvzMarkers = L.markerClusterGroup({ showCoverageOnHover: false, maxClusterRadius: 60 });
+    pvzMap.addLayer(pvzMarkers);
+    pvzMap.on('click', (e) => {
+      pvzSuppressSearch = false;
+      placeClickMarker([e.latlng.lat, e.latlng.lng]);
+      reverseGeocode([e.latlng.lat, e.latlng.lng]);
     });
-
-    pvzMap.events.add('click', (e) => {
-      const coords = e.get('coords');
-      placeClickPlacemark(coords);
-      reverseGeocode(coords);
+    // Любое реальное действие пользователя снимает блокировку поиска.
+    const mapEl = pvzMap.getContainer();
+    ['mousedown', 'wheel', 'touchstart'].forEach(ev =>
+      mapEl.addEventListener(ev, () => { pvzSuppressSearch = false; }, { passive: true })
+    );
+    // Динамика при движении/зуме: грузим с задержкой 900мс и только если
+    // карта сместилась заметно — иначе запросы ломом выбивают 429.
+    pvzMap.on('moveend', () => {
+      if (!pvzModal.classList.contains('active') || !currentService) return;
+      // Для Почты России карта используется только для ручного выбора
+      // точки — отделения не ищем.
+      if (currentService === 'post') return;
+      // Пока пользователь не тронул карту после открытия — не ищем.
+      if (pvzSuppressSearch) return;
+      clearTimeout(pvzMoveTimer);
+      pvzMoveTimer = setTimeout(() => searchAndShowPvz(currentService), 900);
     });
   }
 
-  function placeClickPlacemark(coords) {
-    if (clickPlacemark) {
-      pvzMap.geoObjects.remove(clickPlacemark);
+  function locateMe() {
+    if (!navigator.geolocation) {
+      pvzSelectedInfo.textContent = 'Геолокация не поддерживается браузером. Найдите город в поиске.';
+      return;
     }
-    clickPlacemark = new ymaps.Placemark(coords, {}, {
-      preset: 'islands#redIcon',
-      draggable: true
-    });
-
-    clickPlacemark.events.add('dragend', () => {
-      const newCoords = clickPlacemark.geometry.getCoordinates();
-      selectedCoords = newCoords;
-      reverseGeocode(newCoords);
-    });
-
-    pvzMap.geoObjects.add(clickPlacemark);
-    selectedCoords = coords;
+    pvzSelectedInfo.classList.add('empty');
+    pvzSelectedInfo.textContent = 'Определяем ваше местоположение…';
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        const latlng = [pos.coords.latitude, pos.coords.longitude];
+        pvzMap.setView(latlng, 14, { animate: true });
+        setTimeout(() => { pvzMap.invalidateSize(); }, 250);
+        placeClickMarker(latlng);
+        reverseGeocode(latlng);
+        setTimeout(() => searchAndShowPvz(currentService), 400);
+      },
+      (err) => {
+        console.error('Геолокация:', err);
+        pvzSelectedInfo.textContent = 'Не удалось определить местоположение. Разрешите доступ или найдите город в поиске.';
+      },
+      { enableHighAccuracy: true, timeout: 10000 }
+    );
   }
 
-  function reverseGeocode(coords) {
+  function placeClickMarker(latlng) {
+    if (clickMarker) { clickMarker.setLatLng(latlng); }
+    else {
+      clickMarker = L.marker(latlng, { draggable: true }).addTo(pvzMap);
+      clickMarker.on('dragend', () => {
+        const p = clickMarker.getLatLng();
+        selectedCoords = [p.lat, p.lng];
+        reverseGeocode(selectedCoords);
+      });
+    }
+    selectedCoords = latlng;
+  }
+
+  function reverseGeocode(latlng) {
     pvzSelectedInfo.classList.add('empty');
     pvzSelectedInfo.textContent = 'Определяем адрес…';
     pvzConfirmBtn.disabled = true;
 
-    clearTimeout(geocodeDebounce);
-    geocodeDebounce = setTimeout(() => {
-      ymaps.geocode(coords, { kind: 'house', results: 1 }).then(res => {
-        let first = res.geoObjects.get(0);
-
-        if (!first) {
-          return ymaps.geocode(coords, { results: 1 }).then(res2 => {
-            const f2 = res2.geoObjects.get(0);
-            if (f2) {
-              selectedAddress = f2.getAddressLine();
-              const meta = f2.getAddressDetails?.() || {};
-              selectedCity = meta?.locality?.localityName
-                || meta?.province?.provinceName
-                || meta?.country?.countryName
-                || '';
-            } else {
-              selectedAddress = '';
-              selectedCity = '';
-            }
-            renderSelectedInfo();
-          });
-        }
-
-        selectedAddress = first.getAddressLine();
-        const meta = first.getAddressDetails?.() || {};
-        selectedCity = meta?.locality?.localityName
-          || meta?.province?.provinceName
-          || meta?.country?.countryName
-          || '';
-        renderSelectedInfo();
-      }).catch(err => {
-        console.error(err);
-        selectedAddress = '';
-        selectedCity = '';
-        renderSelectedInfo();
-      });
-    }, 200);
+    clearTimeout(geoDebounce);
+    geoDebounce = setTimeout(() => {
+      fetch('https://nominatim.openstreetmap.org/reverse?format=jsonv2&accept-language=ru&lat=' + latlng[0] + '&lon=' + latlng[1])
+        .then(r => r.json())
+        .then(data => {
+          if (data && data.display_name) {
+            selectedAddress = data.display_name;
+            const addr = data.address || {};
+            selectedCity = addr.city || addr.town || addr.village || addr.county || addr.state || '';
+            selectedPostcode = addr.postcode || '';
+            selectedStreet = addr.road || '';
+            selectedHouse = addr.house_number || '';
+          } else {
+            selectedAddress = '';
+            selectedCity = '';
+            selectedPostcode = '';
+            selectedStreet = '';
+            selectedHouse = '';
+          }
+          renderSelectedInfo();
+        })
+        .catch(err => {
+          console.error(err);
+          selectedAddress = '';
+          selectedCity = '';
+          renderSelectedInfo();
+        });
+    }, 300);
   }
 
   function renderSelectedInfo() {
@@ -901,95 +1047,214 @@
     }
   }
 
-  function searchAndShowPvz(serviceCode) {
+  async function searchAndShowPvz(serviceCode) {
+    // Для Почты России отделения не ищем — карта только для ручного выбора.
+    if (serviceCode === 'post') return;
     const service = SERVICES[serviceCode];
     if (!service || !pvzMap) return;
 
-    pvzMap.geoObjects.removeAll();
-    clickPlacemark = null;
-    selectedAddress = '';
-    selectedCity = '';
-    selectedCoords = null;
+    // Динамическая подгрузка: отменяем прошлый запрос, чтобы при
+    // перемещении карты не было гонок и 429/504.
+    if (pvzAbort) { try { pvzAbort.abort(); } catch (e) {} }
+    pvzAbort = new AbortController();
+    const mySignal = pvzAbort.signal;
+    const myReqId = ++pvzReqId;
+
+    const zoom = pvzMap.getZoom();
+    const b = pvzMap.getBounds();
+    // Округляем bbox до ~0.02° (~2 км): соседние сдвиги карты попадают
+    // в один ключ кэша — повторный запрос не отправляется вообще.
+    const round2 = (v) => Math.round(v * 50) / 50;
+    const cacheKey = serviceCode + ':' + round2(b.getSouth()) + ',' + round2(b.getWest()) + ',' + round2(b.getNorth()) + ',' + round2(b.getEast());
+    const bbox = b.getSouth() + ',' + b.getWest() + ',' + b.getNorth() + ',' + b.getEast();
+
+    // Защита от 429: после «слишком много запросов» — пауза 60 сек.
+    if (pvzCooldownUntil && Date.now() < pvzCooldownUntil) {
+      const secs = Math.ceil((pvzCooldownUntil - Date.now()) / 1000);
+      pvzSelectedInfo.textContent = 'Слишком много запросов. Подождите ' + secs + ' сек.';
+      return;
+    }
+
     pvzSelectedInfo.classList.add('empty');
-    pvzSelectedInfo.textContent = 'Ищем пункты выдачи «' + service.name + '»…';
+    pvzSelectedInfo.textContent = 'Ищем «' + service.name + '» в видимой области…';
     pvzConfirmBtn.disabled = true;
 
-    const bounds = pvzMap.getBounds();
+    // На мелком зуме точки не грузим — просим приблизиться.
+    // Кластеры покажут количество после первой загрузки города.
+    if (zoom < 11) {
+      pvzSelectedInfo.textContent = 'Приблизьте карту до города (зум 11+), точки подгрузятся сами.';
+      return;
+    }
 
-    ymaps.search({
-      text: service.searchQuery,
-      boundedBy: bounds,
-      results: 50
-    }).then((res) => {
-      const results = res.geoObjects;
+    // Уже искали эту область этой службы — точки в кэше, не повторяем.
+    if (pvzCache.has(cacheKey)) {
+      pvzSelectedInfo.textContent = 'Точек на карте: ' + pvzMarkers.getLayers().length + '. Приблизьте район — покажем детальнее.';
+      pvzConfirmBtn.disabled = !selectedAddress;
+      return;
+    }
 
-      if (!results || results.getLength() === 0) {
-        pvzSelectedInfo.textContent = 'Пункты не найдены. Измените область карты или кликните по нужному месту вручную.';
+    clearTimeout(pvzMoveTimer);
+
+    try {
+      // Overpass при загрузке зеркал бывает занят 10-17с (очередь) — abort
+      // раньше убивал все три зеркала, даже когда два ещё отвечали.
+      const timer = setTimeout(() => { try { pvzAbort.abort(); } catch (e) {} }, 20000);
+      const query = '[out:json][timeout:10];(' + service.overpass.split('{b}').join(bbox) + ');out center 80;';
+      // Зеркала Overpass спрашиваем ПАРАЛЛЕЛЬНО (Promise.any) — кто первый
+      // ответил, тот и результат. Последовательный перебор давал долгие
+      // ожидания, когда первое зеркало висело.
+      const endpoints = [
+        'https://overpass-api.de/api/interpreter',
+        'https://overpass.kumi.systems/api/interpreter',
+        'https://overpass.private.coffee/api/interpreter'
+      ];
+      let lastErr = null;
+      let res = null;
+      try {
+        res = await Promise.any(endpoints.map(async (ep) => {
+          const r = await fetch(ep, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: 'data=' + encodeURIComponent(query),
+            signal: mySignal
+          });
+          if (!r.ok) throw new Error('Overpass HTTP ' + r.status);
+          return r;
+        }));
+      } catch (e) {
+        if (String(e && e.name) === 'AbortError') throw e;
+        lastErr = (e instanceof AggregateError) ? (e.errors && e.errors[0]) || e : e;
+      }
+      if (!res || !res.ok) {
+        const msg = String((lastErr && lastErr.message) || '');
+        if (msg.includes('429')) {
+          // Сервер отказал — пауза 60 сек на все последующие запросы.
+          pvzCooldownUntil = Date.now() + 60000;
+          pvzCache.set(cacheKey, true); // область помечена, повторов не будет
+        }
+        throw lastErr || new Error('Overpass недоступен');
+      }
+      pvzCache.set(cacheKey, true);
+      clearTimeout(timer);
+      // Если пока грузилось пользователь сдвинул карту — этот ответ устарел.
+      if (myReqId !== pvzReqId) return;
+      const data = await res.json();
+      if (myReqId !== pvzReqId) return;
+      const els = (data && data.elements) || [];
+      if (!els.length) {
+        if (String(pvzMarkers.getLayers().length) === '0') {
+          pvzSelectedInfo.textContent = 'В OSM ничего нет. Приблизьте город или кликните вручную.';
+        }
         return;
       }
-
-      results.each((placemark) => {
-        placemark.options.set('preset', 'islands#blueDotIcon');
-
-        placemark.events.add('click', () => {
-          if (clickPlacemark && clickPlacemark !== placemark) {
-            clickPlacemark.options.set('preset', 'islands#blueDotIcon');
-          }
-          placemark.options.set('preset', 'islands#redDotIcon');
-          clickPlacemark = placemark;
-
-          const name = placemark.properties.get('name') || '';
-          const description = placemark.properties.get('description') || '';
-          selectedAddress = description ? (name + ', ' + description) : name;
-
-          const geoCoords = placemark.geometry.getCoordinates();
-          selectedCoords = geoCoords;
-
-          const meta = placemark.properties.get('CompanyMetaData');
-          if (meta?.address) {
-            const parts = (meta.address || '').split(',');
-            selectedCity = parts.length >= 2 ? parts[parts.length - 2].trim() : '';
-          } else {
-            selectedCity = '';
-          }
-
-          pvzSelectedInfo.classList.remove('empty');
-          pvzSelectedInfo.innerHTML = '<strong>' + (selectedCity || 'Пункт') + '</strong>: ' + selectedAddress;
-          pvzConfirmBtn.disabled = false;
-        });
-
-        pvzMap.geoObjects.add(placemark);
+      // Не стираем старые метки полностью — добавляем новые (динамика при сдвиге).
+      // Дубли убираем по координатам.
+      let added = 0;
+      els.slice(0, 200).forEach(el => {
+        const lat = (el.lat !== undefined) ? el.lat : (el.center && el.center.lat);
+        const lon = (el.lon !== undefined) ? el.lon : (el.center && el.center.lon);
+        if (lat === undefined || lon === undefined) return;
+        const key = lat.toFixed(5) + ',' + lon.toFixed(5);
+        if (pvzSeen[key]) return;
+        pvzSeen[key] = true;
+        const tags = el.tags || {};
+        const name = tags.name || service.name;
+        const m = L.marker([lat, lon]);
+        m.bindPopup('<b>' + name + '</b><br>Клик — выбрать пункт');
+        m.on('click', () => pickMarkerPoint(lat, lon, name, tags));
+        pvzMarkers.addLayer(m);
+        added++;
       });
-
-      if (results.getLength() === 1) {
-        const single = results.get(0);
-        pvzMap.setCenter(single.geometry.getCoordinates(), 16);
+      pvzSelectedInfo.textContent = 'Точек на карте: ' + pvzMarkers.getLayers().length + '. Приблизьте район — покажем детальнее. Клик по метке выбирает адрес.';
+    } catch (err) {
+      if (String(err && err.name) === 'AbortError') return;
+      console.error('OSM Overpass ошибка:', err);
+      // 429/504 при движении — не затираем уже показанные точки.
+      if (pvzMarkers.getLayers().length > 0) {
+        pvzSelectedInfo.textContent = 'Точек на карте: ' + pvzMarkers.getLayers().length + '. Сервер перегружен, новые подгрузятся при остановке.';
+      } else if (String((err && err.message) || '').includes('429')) {
+        pvzSelectedInfo.textContent = 'Слишком много запросов (429). Пауза 60 сек.';
+      } else if (String((err && err.message) || '').includes('504')) {
+        pvzSelectedInfo.textContent = 'Область слишком большая (504). Приблизьте город — точки подгрузятся.';
+      } else {
+        pvzSelectedInfo.textContent = 'Не загрузилось (' + (err.message || 'ошибка сети') + '). Кликните вручную или уточните город в поиске.';
       }
-    }).catch((err) => {
-      console.error('Ошибка поиска ПВЗ:', err);
-      pvzSelectedInfo.textContent = 'Не удалось загрузить пункты. Попробуйте позже или кликните вручную.';
-    });
+    }
+  }
+
+  // Выбор точки-метки: сразу показываем что есть (name + addr-теги),
+  // затем догеокодируем адрес через Nominatim reverse — в OSM у многих
+  // ПВЗ нет тегов addr:*, а в карточку заказа адрес нужен полностью.
+  function pickMarkerPoint(lat, lon, name, tags) {
+    selectedCoords = [lat, lon];
+    selectedCity = (tags && tags['addr:city']) || (tags && tags['addr:town']) || '';
+    selectedStreet = (tags && tags['addr:street']) || '';
+    selectedHouse = (tags && tags['addr:housenumber']) || '';
+    selectedPostcode = (tags && tags['addr:postcode']) || '';
+    const parts = [];
+    if (selectedPostcode) parts.push(selectedPostcode);
+    if (selectedCity) parts.push(selectedCity);
+    if (selectedStreet) parts.push(selectedStreet + (selectedHouse ? ', ' + selectedHouse : ''));
+    parts.push(name);
+    selectedAddress = parts.join(', ');
+    placeClickMarker(selectedCoords);
+    renderSelectedInfo();
+    // Догеокодирование: точный адрес по координатам.
+    fetch('https://nominatim.openstreetmap.org/reverse?format=jsonv2&accept-language=ru&addressdetails=1&lat=' + lat + '&lon=' + lon, {
+      headers: { 'Accept': 'application/json' }
+    })
+      .then(r => r.ok ? r.json() : null)
+      .then(data => {
+        if (!data || !data.address) return;
+        const a = data.address || {};
+        selectedPostcode = a.postcode || selectedPostcode;
+        selectedCity = a.city || a.town || a.village || selectedCity;
+        selectedStreet = a.road || selectedStreet;
+        selectedHouse = a.house_number || selectedHouse;
+        const p = [];
+        if (selectedPostcode) p.push(selectedPostcode);
+        if (selectedCity) p.push(selectedCity);
+        if (selectedStreet) p.push(selectedStreet + (selectedHouse ? ', ' + selectedHouse : ''));
+        p.push(name);
+        selectedAddress = p.join(', ');
+        placeClickMarker(selectedCoords);
+        renderSelectedInfo();
+      })
+      .catch(() => {});
   }
 
   function openPvzModal(serviceCode) {
-    currentService = serviceCode;
     const service = SERVICES[serviceCode];
+    if (!service || !service.map) return;
+    currentService = serviceCode;
     pvzServiceBadge.textContent = service.name;
+    // Заголовок модалки зависит от типа службы.
+    document.getElementById('pvzModalTitle').textContent =
+      (serviceCode === 'post') ? 'Выбор адреса доставки' : 'Выбор пункта выдачи';
 
     pvzSelectedInfo.classList.add('empty');
-    pvzSelectedInfo.textContent = 'Ищем пункты выдачи…';
+    pvzSelectedInfo.textContent = 'Кликните на карте, найдите адрес в поиске или приблизьте город — точки подгрузятся.';
     pvzConfirmBtn.disabled = true;
     selectedAddress = '';
     selectedCity = '';
     selectedCoords = null;
+    // Новая служба — чистим кэш точек; при открытии автопоиск отключён,
+    // пока пользователь не потрогает карту.
+    pvzSeen = {};
+    pvzCache = new Map();
+    pvzCooldownUntil = 0;
+    pvzSuppressSearch = true;
+    if (pvzAbort) { try { pvzAbort.abort(); } catch (e) {} }
 
     pvzModal.classList.add('active');
     document.body.style.overflow = 'hidden';
 
     setTimeout(() => {
       initMap();
-      pvzMap.container.fitToViewport();
-      setTimeout(() => searchAndShowPvz(serviceCode), 250);
+      pvzMap.invalidateSize();
+      if (pvzMarkers) pvzMarkers.clearLayers();
+      // Автозапрос отделений при открытии не делаем — грузим только
+      // при перелёте/движении карты (moveend) или по геолокации.
     }, 150);
   }
 
@@ -1003,16 +1268,235 @@
       e.stopPropagation();
       const parentOpt = btn.closest('.delivery-option');
       if (parentOpt) selectDelivery(parentOpt);
+      // «Указать адрес» на неактивной карточке Почты: показать поля и
+      // поставить курсор в поле ввода (карта открывается отдельно).
+      if (btn.hasAttribute('data-post-open-btn')) {
+        setTimeout(() => { postAddrInput.focus(); postAddrInput.scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 100);
+        return;
+      }
       openPvzModal(btn.dataset.pvzBtn);
     });
+  });
+
+  // =====================================================================
+  //  ПОЧТА: «Выбрать на карте» ИЛИ ручной ввод — единое поле формата:
+  //  ИНДЕКС, ГОРОД, УЛИЦА, ДОМ, КВАРТИРА (квартира — вручную).
+  // =====================================================================
+  const postAddrInput = document.querySelector('[data-post-addr]');
+  const postFlatInput = document.querySelector('[data-post-flat]');
+  const postStatusEl = document.querySelector('[data-post-status]');
+  const postSuggestEl = document.querySelector('[data-addr-suggest]');
+  let postManualAddr = '';   // «индекс, город, улица, дом, квартира» — как в поле
+  let postCoords = null;
+  let postSuggestTimer = null;
+
+  function postBuildAddress() {
+    // Единый формат: ИНДЕКС, ГОРОД, УЛИЦА, ДОМ, КВАРТИРА.
+    // Индекс — первые 6 цифр; квартира — вручную, «кв. N» в конце.
+    const raw = (postAddrInput.value || '').trim().replace(/\s+/g, ' ');
+    postManualAddr = raw;
+    postCoords = postCoords; // при ручном вводе координаты не меняем
+  }
+
+  function parsePostIndex() {
+    const m = (postAddrInput.value || '').match(/^\s*(\d{6})\s*[,]/);
+    return m ? m[1] : '';
+  }
+
+  function parsePostFlat() {
+    const v = (postFlatInput && postFlatInput.value || '').trim();
+    if (!v) return '';
+    return /^(кв|офис)\./i.test(v) ? v : 'кв. ' + v;
+  }
+
+  function postRefreshStatus() {
+    postBuildAddress();
+    const raw = postManualAddr;
+    const flat = parsePostFlat();
+    if (parsePostIndex() && raw.length >= 10 && flat) {
+      selectedPvz.post = {
+        address: 'Почта России, ' + raw + ', ' + flat,
+        city: (raw.replace(/^\d{6}\s*,\s*/, '')).split(',').map(s => s.trim()).filter(Boolean)[0] || '',
+        coords: postCoords,
+        index: parsePostIndex(),
+        flat: flat,
+        manualAddr: raw
+      };
+      postStatusEl.classList.remove('empty');
+      postStatusEl.textContent = raw + ', ' + flat;
+    } else if (raw.length >= 10) {
+      delete selectedPvz.post;
+      postStatusEl.classList.add('empty');
+      postStatusEl.textContent = parsePostIndex()
+        ? 'Укажите квартиру/офис справа'
+        : 'Добавьте индекс (6 цифр) в начало: «123456, Город, улица, дом» и квартиру справа';
+    } else {
+      delete selectedPvz.post;
+      postStatusEl.classList.add('empty');
+      postStatusEl.textContent = 'Адрес не указан';
+    }
+    renderSummary();
+  }
+
+  // Автопоиск адреса (Nominatim) — подсказки при вводе.
+  function runPostSuggest() {
+    const q = (postAddrInput.value || '').trim();
+    if (q.replace(/^\d{6}[\s,]*/, '').length < 3) { postSuggestEl.style.display = 'none'; return; }
+    clearTimeout(postSuggestTimer);
+    postSuggestTimer = setTimeout(() => {
+      fetch('https://nominatim.openstreetmap.org/search?format=jsonv2&addressdetails=1&accept-language=ru&countrycodes=ru&limit=6&q=' + encodeURIComponent(q), { headers: { 'Accept': 'application/json' } })
+        .then(r => r.json())
+        .then(list => {
+          postSuggestEl.innerHTML = '';
+          if (!list || !list.length) {
+            postSuggestEl.innerHTML = '<div class="as-empty">Ничего не найдено</div>';
+            postSuggestEl.style.display = 'block';
+            return;
+          }
+          list.forEach(rt => {
+            const a = rt.address || {};
+            const pc = a.postcode || '';
+            const city = a.city || a.town || a.village || '';
+            const street = a.road || '';
+            const house = a.house_number || '';
+            const main = [city, street + (house ? ', ' + house : '')].filter(Boolean).join(', ');
+            const b = document.createElement('button');
+            b.type = 'button';
+            b.className = 'as-item';
+            b.textContent = (pc ? pc + ', ' : '') + main;
+            b.addEventListener('click', () => {
+              postCoords = [parseFloat(rt.lat), parseFloat(rt.lon)];
+              postAddrInput.value = ((pc ? pc + ', ' : '') + main + ' ').trimEnd();
+              postSuggestEl.style.display = 'none';
+              postRefreshStatus();
+            });
+            postSuggestEl.appendChild(b);
+          });
+          postSuggestEl.style.display = 'block';
+        })
+        .catch(err => { console.error('почта suggest:', err); postSuggestEl.style.display = 'none'; });
+    }, 400);
+  }
+
+  postAddrInput.addEventListener('input', () => { postSuggestEl.style.display = 'none'; runPostSuggest(); postRefreshStatus(); });
+  postAddrInput.addEventListener('blur', () => { setTimeout(() => { postSuggestEl.style.display = 'none'; }, 150); postRefreshStatus(); });
+  postFlatInput.addEventListener('input', postRefreshStatus);
+  postFlatInput.addEventListener('blur', postRefreshStatus);
+  document.addEventListener('click', (e) => {
+    if (!postSuggestEl.contains(e.target)) postSuggestEl.style.display = 'none';
   });
 
   pvzModalClose.addEventListener('click', closePvzModal);
   pvzModal.addEventListener('click', (e) => { if (e.target === pvzModal) closePvzModal(); });
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && pvzModal.classList.contains('active')) closePvzModal(); });
 
+  // ===== Поиск по адресу/городу (Nominatim, бесплатно) =====
+  const pvzSearchInput = document.getElementById('pvzSearchInput');
+  const pvzSearchBtn = document.getElementById('pvzSearchBtn');
+  const pvzSearchResults = document.getElementById('pvzSearchResults');
+  let searchTimer = null;
+
+  // Поиск по видимой области: если в адресе есть название службы,
+  // подставляем его в запрос и сразу грузим точки вокруг найденного места.
+  function addressMatchesService(displayName) {
+    const s = (displayName || '').toLowerCase();
+    if (currentService === 'cdek') return s.includes('сдэк') || s.includes('cdek');
+    if (currentService === 'fivepost') return s.includes('пятёроч') || s.includes('перекрёст') || s.includes('5post') || s.includes('пункт выдачи');
+    if (currentService === 'post') return s.includes('почта') || s.includes('почтовое отделение');
+    if (currentService === 'ozon') return s.includes('ozon') || s.includes('озон');
+    return false;
+  }
+
+  function gotoResult(item) {
+    const lat = parseFloat(item.lat);
+    const lon = parseFloat(item.lon);
+    if (!isFinite(lat) || !isFinite(lon)) return;
+    pvzMap.setView([lat, lon], 15, { animate: true });
+    setTimeout(() => { pvzMap.invalidateSize(); }, 250);
+    // Если нашли конкретный пункт службы — выбираем его сразу.
+    if (addressMatchesService(item.display_name)) {
+      selectedCoords = [lat, lon];
+      const addr = item.address || {};
+      selectedCity = (addr.city || addr.town || addr.village) || '';
+      selectedPostcode = addr.postcode || '';
+      selectedStreet = addr.road || '';
+      selectedHouse = addr.house_number || '';
+      selectedAddress = item.display_name || '';
+      selectedPostcode = (item.address && item.address.postcode) || '';
+      placeClickMarker(selectedCoords);
+      renderSelectedInfo();
+    } else {
+      // Иначе — перелетаем и грузим точки службы вокруг (кроме Почты РФ:
+      // для неё карта — только ручной выбор адреса).
+      placeClickMarker([lat, lon]);
+      if (currentService !== 'post') setTimeout(() => searchAndShowPvz(currentService), 400);
+    }
+    pvzSearchResults.innerHTML = '';
+  }
+
+  function runPvzSearch() {
+    const q = (pvzSearchInput.value || '').trim();
+    if (!q || !pvzMap) return;
+    pvzSearchResults.innerHTML = '<div style="font-size:0.82rem;color:#999;">Ищем…</div>';
+    pvzSearchBtn.disabled = true;
+    pvzSearchBtn.textContent = 'Ищем…';
+    fetch('https://nominatim.openstreetmap.org/search?format=jsonv2&accept-language=ru&addressdetails=1&countrycodes=ru&limit=5&q=' + encodeURIComponent(q), {
+      headers: { 'Accept': 'application/json' }
+    })
+      .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+      .then(list => {
+        pvzSearchResults.innerHTML = '';
+        if (!list || !list.length) {
+          pvzSearchResults.innerHTML = '<div style="font-size:0.82rem;color:#999;">Ничего не найдено. Уточните запрос.</div>';
+          return;
+        }
+        list.forEach(item => {
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.textContent = item.display_name;
+          btn.addEventListener('click', () => gotoResult(item));
+          pvzSearchResults.appendChild(btn);
+        });
+      })
+      .catch(err => {
+        console.error('OSM поиск ошибка:', err);
+        pvzSearchResults.innerHTML = '<div style="font-size:0.82rem;color:#999;">Ошибка поиска. Попробуйте позже.</div>';
+      })
+      .finally(() => {
+        pvzSearchBtn.disabled = false;
+        pvzSearchBtn.textContent = 'Найти';
+      });
+  }
+
+  pvzSearchBtn.addEventListener('click', runPvzSearch);
+  pvzSearchInput.addEventListener('input', () => {
+    clearTimeout(searchTimer);
+    searchTimer = setTimeout(runPvzSearch, 800);
+  });
+  pvzSearchInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); clearTimeout(searchTimer); runPvzSearch(); } });
+
   pvzConfirmBtn.addEventListener('click', () => {
     if (!selectedAddress) return;
+    // Для Почты «на карте» выбирается отделение/адрес — заполняем единое поле:
+    // «ИНДЕКС, ГОРОД, УЛИЦА, ДОМ» (квартиру человек дописывает сам).
+    if (currentService === 'post') {
+      postCoords = selectedCoords;
+      // Формат: ИНДЕКС, ГОРОД, УЛИЦА, ДОМ (квартиру дописывает человек).
+      const parts = [];
+      if (selectedPostcode) parts.push(selectedPostcode);
+      if (selectedCity) parts.push(selectedCity);
+      if (selectedStreet) parts.push(selectedStreet + (selectedHouse ? ', ' + selectedHouse : ''));
+      const keepFlat = (postAddrInput.value.match(/(кв\.\s*\d+[a-zA-Zа-яА-Я]*|офис\s*\d+)\s*$/i) || [''])[0];
+      if (keepFlat) parts.push(keepFlat);
+      postAddrInput.value = parts.join(', ');
+      postRefreshStatus();
+      closePvzModal();
+      if (!selectedPostcode) {
+        postStatusEl.textContent = 'Добавьте индекс (6 цифр) в начало: «123456, ...» и квартиру/офис в поле справа';
+        postAddrInput.focus();
+      }
+      return;
+    }
     selectedPvz[currentService] = {
       city: selectedCity,
       address: selectedAddress,
@@ -1021,7 +1505,7 @@
     const status = document.getElementById('pvzStatus-' + currentService);
     if (status) {
       status.classList.remove('empty');
-      status.innerHTML = '<strong>' + (selectedCity || 'Пункт') + '</strong>, ' + selectedAddress;
+      status.innerHTML = '<strong>' + (selectedCity || 'Пункт') + '</strong>, ' + selectedAddress.replace(/^[^,]+,\s*/, '');
     }
     if (hiddenDelivery.value === currentService) {
       document.getElementById('hiddenPvz').value = selectedAddress;
@@ -1049,8 +1533,12 @@
     if (cart.length === 0) { alert('Добавьте хотя бы одну книгу в заказ.'); ok = false; }
     if (!document.getElementById('pd-agree').checked) { alert('Пожалуйста, подтвердите согласие на обработку персональных данных'); ok = false; }
     const currentCode = hiddenDelivery.value;
-    if (SERVICES[currentCode] && !selectedPvz[currentCode]) {
-      alert('Пожалуйста, выберите пункт выдачи для службы «' + SERVICES[currentCode].name + '»');
+    const svc = SERVICES[currentCode];
+    if (currentCode === 'post' && !selectedPvz.post) {
+      alert('Пожалуйста, укажите адрес и индекс для «Почты России»');
+      ok = false;
+    } else if (svc && svc.map && !selectedPvz[currentCode]) {
+      alert('Пожалуйста, выберите пункт выдачи для службы «' + svc.name + '»');
       ok = false;
     }
     if (!ok) return;
@@ -1073,9 +1561,11 @@
     object['Сумма товаров'] = fmt(cartTotal());
     object['Способ доставки'] = SERVICES[currentCode]?.name || currentCode;
     object['Цена доставки'] = fmt(parseInt(hiddenDeliveryPrice.value, 10));
-    object['Адрес ПВЗ'] = pvz?.address || '—';
+    object['Адрес ПВЗ/доставки'] = pvz?.address || '—';
     object['Город ПВЗ'] = pvz?.city || '—';
     object['Координаты ПВЗ'] = pvz?.coords ? (pvz.coords[0] + ', ' + pvz.coords[1]) : '—';
+    object['Индекс'] = pvz?.index || '—';
+    object['Квартира/офис'] = pvz?.flat || '—';
     object['Итого'] = fmt(cartTotal() + (parseInt(hiddenDeliveryPrice.value, 10) || 0));
     object['Корзина_JSON'] = JSON.stringify(cart);
 

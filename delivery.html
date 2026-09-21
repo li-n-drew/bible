@@ -5,9 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Доставка и оплата — Учебная Библия</title>
 <meta name="description" content="Доставка: 5Post, СДЭК, Почта, Ozon. Оплата ЮKassa.">
-    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 220'%3E%3Crect x='10' y='10' width='160' height='200' rx='12' fill='%23b8860b' stroke='%23a0750a' stroke-width='2'/%3E%3Crect x='72' y='60' width='36' height='100' rx='4' fill='white'/%3E%3Crect x='40' y='78' width='100' height='36' rx='4' fill='white'/%3E%3C/svg%3E" type="image/svg+xml" />
-    <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 220'%3E%3Crect x='10' y='10' width='160' height='200' rx='12' fill='%23b8860b' stroke='%23a0750a' stroke-width='2'/%3E%3Crect x='72' y='60' width='36' height='100' rx='4' fill='white'/%3E%3Crect x='40' y='78' width='100' height='36' rx='4' fill='white'/%3E%3C/svg%3E" />
-
+        <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="manifest" href="site.webmanifest">
     <!-- Яндекс.Метрика -->
     <script type="text/javascript">
         (function(m,e,t,r,i,k,a){
@@ -146,17 +148,13 @@
             border-radius: 20px;
             padding: 26px 24px;
         }
-        .delivery-card .badge {
-            display: inline-block;
-            background: #eef3f6;
-            color: #1e2a3a;
-            font-size: 0.8rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            padding: 5px 14px;
-            border-radius: 20px;
-            margin-bottom: 12px;
-            font-family: 'Inter', sans-serif;
+        .delivery-card .logo {
+            display: block;
+            height: 44px;
+            width: auto;
+            max-width: 200px;
+            object-fit: contain;
+            margin: 0 0 14px;
         }
         .delivery-card ul {
             margin: 12px 0 0 20px;
@@ -199,37 +197,54 @@
             transform: translateY(-2px);
         }
         .footer {
-            background: #f0ede8;
-            padding: 80px 0 40px;
-            border-top: 1px solid #ddd;
-        }
-        .footer-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 40px;
-            margin-bottom: 60px;
-        }
-        .footer-title {
-            font-size: 1.1rem;
-            margin-bottom: 24px;
-            font-weight: 600;
-            color: #1e1e1e;
-            font-family: 'Playfair Display', serif;
-        }
-        .footer-col p {
-            color: #555;
-            font-size: 0.9rem;
-            line-height: 1.8;
-        }
-        .footer-bottom {
-            text-align: center;
-            padding-top: 40px;
-            border-top: 1px solid #ddd;
-        }
-        .footer-bottom p {
-            color: #777;
-            font-size: 0.85rem;
-        }
+    background: #f0ede8;
+    padding: 60px 0 40px;
+    border-top: 1px solid #ddd;
+}
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    margin-bottom: 40px;
+}
+.footer-title {
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+    font-weight: 600;
+    color: #1e1e1e;
+    font-family: 'Playfair Display', serif;
+}
+.footer-col p {
+    color: #555;
+    font-size: 0.9rem;
+    line-height: 1.8;
+}
+.footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.footer-links li {
+    margin-bottom: 10px;
+}
+.footer-links a {
+    color: #555;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s ease;
+}
+.footer-links a:hover {
+    color: #b8860b;
+}
+.footer-bottom {
+    text-align: center;
+    padding-top: 30px;
+    border-top: 1px solid #ddd;
+}
+.footer-bottom p {
+    color: #777;
+    font-size: 0.85rem;
+}
         @media (max-width: 768px) {
             h1 { font-size: 2.2rem; }
             .steps { grid-template-columns: repeat(2, 1fr); }
@@ -237,7 +252,7 @@
             .footer-grid {
                 grid-template-columns: 1fr;
                 text-align: center;
-            }
+             gap: 30px; }
         }
     </style>
 </head>
@@ -257,30 +272,24 @@
     </div>
     <h2>Способы доставки</h2>
     <div class="delivery-grid">
-        <div class="delivery-card"><span class="badge">5Post</span><h3>5Post (Пятерочка)</h3><ul><li>Пункт выдачи / постамат</li><li>Срок 2-7 дней</li><li>Получение по коду из SMS</li></ul></div>
-        <div class="delivery-card"><span class="badge">СДЭК</span><h3>СДЭК</h3><ul><li>Пункт выдачи или курьер</li><li>Срок 2-6 дней</li><li>Паспорт + номер накладной</li></ul></div>
-        <div class="delivery-card"><span class="badge">Почта</span><h3>Почта России</h3><ul><li>Отделение по индексу или EMS</li><li>Срок 5-14 дней</li><li>Извещение + паспорт</li></ul></div>
-        <div class="delivery-card"><span class="badge">Ozon</span><h3>Ozon Доставка</h3><ul><li>Пункт выдачи / постамат Ozon</li><li>Срок 2-8 дней</li><li>Получение по коду из SMS</li></ul></div>
+        <div class="delivery-card"><img class="logo" src="images/logos/5post.png" alt="Логотип 5Post" loading="lazy"><h3>5Post (Пятерочка/Перекресток)</h3><ul><li>Пункт выдачи / постамат</li><li>Срок 2-7 дней</li><li>Получение по коду из SMS</li></ul></div>
+        <div class="delivery-card"><img class="logo" src="images/logos/cdek.png" alt="Логотип СДЭК" loading="lazy"><h3>СДЭК</h3><ul><li>Пункт выдачи или курьер</li><li>Срок 2-6 дней</li><li>Паспорт + номер накладной</li></ul></div>
+        <div class="delivery-card"><img class="logo" src="images/logos/pochta.png" alt="Логотип Почты России" loading="lazy"><h3>Почта России</h3><ul><li>Отделение по индексу или EMS</li><li>Срок 5-14 дней</li><li>Извещение + паспорт</li></ul></div>
+        <div class="delivery-card"><img class="logo" src="images/logos/ozon.png" alt="Логотип Ozon" loading="lazy"><h3>Ozon Доставка</h3><ul><li>Пункт выдачи / постамат Ozon</li><li>Срок 2-8 дней</li><li>Получение по коду из SMS</li></ul></div>
     </div>
     <div class="notice">За рубеж — по запросу: <a href="mailto:u.bible@mail.ru" style="color:#b8860b; text-decoration:none;">u.bible@mail.ru</a>.</div>
     <h2>Стоимость</h2>
-    <p>Книга — <strong>2990 ₽</strong>. Доставка зависит от способа и города:</p>
-    <div class="price-row"><strong>5Post</strong><span>от ___ ₽</span></div>
-    <div class="price-row"><strong>СДЭК пункт</strong><span>от ___ ₽</span></div>
-    <div class="price-row"><strong>СДЭК курьер</strong><span>от ___ ₽</span></div>
-    <div class="price-row"><strong>Почта России</strong><span>от ___ ₽</span></div>
-    <div class="price-row"><strong>Ozon</strong><span>от ___ ₽</span></div>
+    <p>Книга — <strong>5 000 ₽</strong>. Доставка зависит от способа и города:</p>
+    <div class="price-row"><strong>5Post</strong><span>от 170 ₽</span></div>
+    <div class="price-row"><strong>СДЭК</strong><span>от 450 ₽</span></div>
+    <div class="price-row"><strong>Почта России</strong><span>от 320 ₽</span></div>
+    <div class="price-row"><strong>Ozon</strong><span>от 190 ₽</span></div>
 <h2>Оплата через ЮKassa</h2>
 <ul>
-<li>карта, СБП, SberPay;</li>
+<li>карта, СБП;</li>
 <li>чек приходит на email;</li>
 <li>продавец: самозанятая Тарасенко Н.В.;</li>
 </ul>
-<h2>Вопросы</h2>
-<div class="faq-block"><h3>Как отследить?</h3><p>Присылаем трек-номер на email.</p></div>
-<div class="faq-block"><h3>Пункт далеко?</h3><p>Выберите СДЭК-курьера или Почту.</p></div>
-<div class="faq-block"><h3>В подарок?</h3><p>Да, напишите в комментарии.</p></div>
-<div class="faq-block"><h3>Повреждение?</h3><p>Фото + письмо нам — заменим.</p></div>
 <p>Контакты: <a href="mailto:u.bible@mail.ru" style="color:#b8860b; text-decoration:none;">u.bible@mail.ru</a>.</p>
 
     <a href="index.html" class="btn-back">← Вернуться на главную</a>
@@ -296,11 +305,22 @@
             </div>
             <div class="footer-col">
                 <h4 class="footer-title">Контакты</h4>
-                <p>u.bible@mail.ru<br>+7 (900) 624-94-57</p>
+                <ul class="footer-links">
+                    <li><a href="mailto:u.bible@mail.ru">u.bible@mail.ru</a></li>
+                    <li><a href="tel:+79006249457">+7 (900) 624-94-57</a></li>
+                </ul>
             </div>
+
+            <!-- Колонка 3: Правовая информация -->
             <div class="footer-col">
                 <h4 class="footer-title">Правовая информация</h4>
-                <p>Договор оферты<br>Политика конфиденциальности</p>
+                <ul class="footer-links">
+                    <li><a href="delivery.html">Доставка и оплата</a></li>
+                    <li><a href="privacy-policy.html">Политика конфиденциальности</a></li>
+                    <li><a href="personal-data-processing.html">Обработка персональных данных</a></li>
+                    <li><a href="cookies-policy.html">Файлы cookie</a></li>
+                    <li><a href="offer.html">Договор оферты</a></li>
+                </ul>
             </div>
         </div>
         <div class="footer-bottom">
