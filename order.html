@@ -52,10 +52,30 @@
     /* ===== Header (как на информационных страницах — светлый) ===== */
     .checkout-header { background: #f9f7f4; color: #1e1e1e; padding: 18px 0; border-bottom: 1px solid #ddd; }
     .checkout-header .container { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
-    .checkout-header .logo { font-family: 'Playfair Display', serif; font-size: 1.25rem; font-weight: 700; color: #1e1e1e; }
+    .checkout-header .logo { font-family: 'Playfair Display', serif; font-size: 1.25rem; font-weight: 700; color: #1e1e1e; text-decoration: none; cursor: pointer; }
     .checkout-header .logo span { color: #b8860b; }
+    .checkout-header .logo:hover { color: #a0750a; }
+    .checkout-header .logo:hover span { color: #a0750a; }
     .checkout-header .back-link { color: #b8860b; font-size: 0.9rem; margin-left: auto; }
     .checkout-header .back-link:hover { color: #a0750a; }
+
+    .btn-back {
+      display: inline-block;
+      background: #b8860b;
+      color: #fff;
+      padding: 12px 32px;
+      border-radius: 50px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.3s ease, transform 0.2s ease;
+      box-shadow: 0 8px 20px rgba(184, 134, 11, 0.25);
+      margin: 30px 0 50px;
+      font-family: 'Inter', sans-serif;
+    }
+    .btn-back:hover {
+      background: #a0750a;
+      transform: translateY(-2px);
+    }
 
     /* ===== Main layout ===== */
     .checkout-main { flex: 1; padding: 40px 0 80px; }
@@ -367,8 +387,7 @@
 <!-- ===== HEADER ===== -->
 <header class="checkout-header">
   <div class="container">
-    <div class="logo">Учебная <span>Библия</span></div>
-    <a href="index.html" class="back-link">← Вернуться на главную</a>
+    <a href="index.html" class="logo">Учебная <span>Библия</span></a>
   </div>
 </header>
 
@@ -615,11 +634,11 @@
 
             <div class="summary-row" id="summaryDeliveryRow">
               <span>Доставка: СДЭК</span>
-              <span id="summaryDeliveryPrice">350 ₽</span>
+              <span id="summaryDeliveryPrice">от 350 ₽</span>
             </div>
 
             <div class="summary-row total">
-              <span>Итого</span>
+              <span>Итого*</span>
               <span class="amount" id="summaryTotal">0 ₽</span>
             </div>
 
@@ -635,17 +654,20 @@
             <p class="summary-note">
               После оформления мы свяжемся с вами для подтверждения состава заказа и способа оплаты.
             </p>
+            <p class="summary-note" style="font-size:0.85rem;color:#666;margin-top:8px;">*Точная стоимость доставки зависит от адреса доставки и будет уточнена менеджером при оформлении заказа.</p>
           </div>
         </div>
 
       </div>
     </form>
 
+    <a href="index.html" class="btn-back">← Вернуться на главную</a>
+
     <div class="success-screen" id="successScreen">
       <div class="success-icon">✓</div>
       <h2>Заказ оформлен!</h2>
       <p>Спасибо за заказ. Мы уже получили его и свяжемся с вами в ближайшее время для подтверждения.</p>
-      <p style="margin-top: 24px;"><a href="index.html">← Вернуться на главную</a></p>
+      <a href="index.html" class="btn-back">← Вернуться на главную</a>
     </div>
 
   </div>
@@ -901,7 +923,7 @@
     const code = hiddenDelivery.value;
     const deliveryPrice = parseInt(hiddenDeliveryPrice.value, 10) || 0;
     summaryDeliveryRow.firstElementChild.textContent = 'Доставка: ' + (SERVICES[code]?.name || code);
-    summaryDeliveryPrice.textContent = fmt(deliveryPrice);
+    summaryDeliveryPrice.textContent = 'от ' + fmt(deliveryPrice);
     const total = cartTotal() + (cart.length > 0 ? deliveryPrice : 0);
     summaryTotal.textContent = fmt(total);
   }
@@ -1576,6 +1598,9 @@
       submitBtn.textContent = origText;
     }
   });
+
+  // Первичный расчёт сводки (доставка и итог для выбранного по умолчанию способа)
+  renderSummary();
 
   // Блокировка сохранения картинок
   document.addEventListener('contextmenu', (e) => { if (e.target.tagName === 'IMG') e.preventDefault(); });
